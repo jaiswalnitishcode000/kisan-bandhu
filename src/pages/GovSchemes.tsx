@@ -32,7 +32,7 @@ const GovSchemes = () => (
               </div>
 
               <button
-                onClick={() => toast.info("This would redirect to the official application portal.")}
+                onClick={() => window.open(scheme.link, "_blank")}
                 className="mt-4 w-full py-2.5 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity"
               >
                 Apply Now →

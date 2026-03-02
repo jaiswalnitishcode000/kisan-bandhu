@@ -72,6 +72,7 @@ export interface GovScheme {
   eligibility: string;
   benefits: string;
   icon: string;
+  link: string;
 }
 
 export const govSchemes: GovScheme[] = [
@@ -81,6 +82,7 @@ export const govSchemes: GovScheme[] = [
     eligibility: "All land-holding farmer families with cultivable land.",
     benefits: "₹6,000/year direct bank transfer, no middlemen involved.",
     icon: "💰",
+    link: "https://pmkisan.gov.in/"
   },
   {
     name: "PM Fasal Bima Yojana",
@@ -88,6 +90,7 @@ export const govSchemes: GovScheme[] = [
     eligibility: "All farmers growing notified crops in notified areas.",
     benefits: "Low premium rates: 2% for Kharif, 1.5% for Rabi, 5% for commercial crops.",
     icon: "🛡️",
+    link: "https://pmfby.gov.in/"
   },
   {
     name: "Soil Health Card Scheme",
@@ -95,6 +98,7 @@ export const govSchemes: GovScheme[] = [
     eligibility: "All farmers across India.",
     benefits: "Free soil testing, personalized fertilizer recommendations, improved yield.",
     icon: "🌱",
+    link: "https://soilhealth.dac.gov.in/"
   },
   {
     name: "Kisan Credit Card (KCC)",
@@ -102,13 +106,15 @@ export const govSchemes: GovScheme[] = [
     eligibility: "Farmers, fishermen, and animal husbandry farmers.",
     benefits: "Credit up to ₹3 lakh at 4% interest, crop insurance coverage included.",
     icon: "💳",
+    link: "https://pmkisan.gov.in/Documents/Kcc.pdf"
   },
   {
     name: "e-NAM (National Agriculture Market)",
     description: "Online trading platform for agricultural commodities to ensure better prices for farmers.",
     eligibility: "Registered farmers and traders.",
     benefits: "Transparent price discovery, reduced middlemen, wider market access.",
-    icon: "🏪",
+    icon: "📈",
+    link: "https://www.enam.gov.in/"
   },
   {
     name: "PM Krishi Sinchai Yojana",
@@ -116,5 +122,6 @@ export const govSchemes: GovScheme[] = [
     eligibility: "All farmers with focus on water-scarce areas.",
     benefits: "Subsidized micro-irrigation, drip irrigation systems, water harvesting support.",
     icon: "💧",
-  },
+    link: "https://pmksy.gov.in/"
+  }
 ];
