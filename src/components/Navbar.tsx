@@ -55,33 +55,10 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-3">
           {user ? (
             <div className="flex items-center gap-2">
-              {/* Role Switcher */}
-              {user.role !== "admin" && (
-                <div className="relative">
-                  <button
-                    onClick={() => setShowRoleMenu(!showRoleMenu)}
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-md text-sm bg-muted hover:bg-secondary transition-colors"
-                  >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    {user.role === "farmer" ? "Farmer" : "Buyer"}
-                  </button>
-                  {showRoleMenu && (
-                    <div className="absolute right-0 mt-1 bg-card border border-border rounded-lg shadow-lg p-1 min-w-[120px] animate-scale-in">
-                      {roleOptions.map((r) => (
-                        <button
-                          key={r}
-                          onClick={() => { switchRole(r); setShowRoleMenu(false); }}
-                          className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
-                            user.role === r ? "bg-primary text-primary-foreground" : "hover:bg-muted"
-                          }`}
-                        >
-                          {r.charAt(0).toUpperCase() + r.slice(1)}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
+              {/* Role Badge Display */}
+              <span className="px-3 py-1.5 rounded-md text-sm font-medium bg-primary/10 text-primary">
+                {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+              </span>
               <span className="text-sm text-muted-foreground flex items-center gap-1">
                 <User className="w-4 h-4" /> {user.name}
               </span>
@@ -123,21 +100,9 @@ const Navbar = () => {
             <div className="pt-2 border-t border-border mt-2">
               {user ? (
                 <div className="space-y-2">
-                  {user.role !== "admin" && (
-                    <div className="flex gap-2">
-                      {roleOptions.map((r) => (
-                        <button
-                          key={r}
-                          onClick={() => { switchRole(r); setMobileOpen(false); }}
-                          className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                            user.role === r ? "bg-primary text-primary-foreground" : "bg-muted"
-                          }`}
-                        >
-                          {r.charAt(0).toUpperCase() + r.slice(1)}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  <div className="px-3 py-2.5 rounded-md text-sm font-medium bg-primary/10 text-primary text-center">
+                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                  </div>
                   <button onClick={() => { logout(); setMobileOpen(false); }} className="w-full px-3 py-2.5 rounded-md text-sm font-medium text-destructive bg-muted">
                     Logout
                   </button>

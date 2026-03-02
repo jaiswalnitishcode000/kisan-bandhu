@@ -72,7 +72,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => setUser(null);
 
   const switchRole = (role: UserRole) => {
-    if (user) setUser({ ...user, role });
+    if (user) {
+      const updated = { ...user, role };
+      setUser(updated);
+
+      // also update the stored users list so the change persists
+      const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
+      const idx = users.findIndex((u: any) => u.email === user.email);
+      if (idx !== -1) {
+        users[idx].role = role;
+        localStorage.setItem("kisan_users", JSON.stringify(users));
+      }
+    }
   };
 
   return (
