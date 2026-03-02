@@ -27,7 +27,7 @@ Kisan Bandhu aims to solve these problems by:
 - ✅ MSP Price Calculator
 - ✅ Government Scheme Awareness
 - ✅ Transparent Digital Platform
-
+...
 ---
 
 ## 🚜 Features
