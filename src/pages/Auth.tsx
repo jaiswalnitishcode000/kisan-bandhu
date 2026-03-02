@@ -38,10 +38,11 @@ const Auth = () => {
     navigate("/");
   };
 
+  // admin role is intentionally omitted from signup choices;
+  // only the hardcoded credentials can yield an admin account.
   const roles: { value: UserRole; label: string; emoji: string }[] = [
     { value: "farmer", label: "Farmer", emoji: "🧑‍🌾" },
     { value: "buyer", label: "Buyer", emoji: "🛒" },
-    { value: "admin", label: "Admin", emoji: "⚙️" },
   ];
 
   return (

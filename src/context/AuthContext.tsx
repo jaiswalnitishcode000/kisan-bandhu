@@ -36,6 +36,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user]);
 
   const signup = (name: string, email: string, password: string, role: UserRole) => {
+    // Prevent arbitrary admin accounts from being created through signup
+    if (role === "admin") {
+      // only the hard-coded credentials below should ever grant admin access
+      if (email !== "teamants@gmail.com") {
+        return false;
+      }
+    }
+
     // Store users list in localStorage
     const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
     if (users.find((u: any) => u.email === email)) return false;
@@ -46,6 +54,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = (email: string, password: string) => {
+    // hard-coded admin credentials
+    if (email === "teamants@gmail.com" && password === "teamants") {
+      setUser({ name: "Admin", email, role: "admin" });
+      return true;
+    }
+
     const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
     const found = users.find((u: any) => u.email === email && u.password === password);
     if (found) {
