@@ -84,10 +84,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { value: "10,000+", label: "Farmers Registered" },
-              { value: "5,000+", label: "Active Buyers" },
-              { value: "₹50Cr+", label: "Crops Traded" },
-              { value: "500+", label: "Districts Covered" },
+              { value: "100%", label: "Transparent Bidding System" },
+              { value: "Direct", label: "Farmer to Buyer Connect" },
+               { value: "Building", label: "Digital Agriculture" },
+              { value: "24/7", label: "Support & Assistance" },
             ].map((stat, i) => (
               <ScrollReveal key={i}>
                 <div>
