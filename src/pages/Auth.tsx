@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth, UserRole } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Eye, EyeOff, Leaf } from "lucide-react";
 
 const Auth = () => {
@@ -12,13 +13,14 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const { login, signup } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const validate = () => {
-    if (!email || !password) return "Email and password are required.";
-    if (!isLogin && !name) return "Name is required.";
-    if (password.length < 6) return "Password must be at least 6 characters.";
-    if (!/\S+@\S+\.\S+/.test(email)) return "Enter a valid email address.";
+    if (!email || !password) return t("errorEmailPassword");
+    if (!isLogin && !name) return t("errorNameRequired");
+    if (password.length < 6) return t("errorPasswordLength");
+    if (!/\S+@\S+\.\S+/.test(email)) return t("errorInvalidEmail");
     return "";
   };
 
@@ -30,10 +32,10 @@ const Auth = () => {
 
     if (isLogin) {
       const ok = login(email, password);
-      if (!ok) { setError("Invalid email or password."); return; }
+      if (!ok) { setError(t("errorInvalidCredentials")); return; }
     } else {
       const ok = signup(name, email, password, role);
-      if (!ok) { setError("Account already exists with this email."); return; }
+      if (!ok) { setError(t("errorAccountExists")); return; }
     }
     navigate("/");
   };
@@ -41,8 +43,8 @@ const Auth = () => {
   // admin role is intentionally omitted from signup choices;
   // only the hardcoded credentials can yield an admin account.
   const roles: { value: UserRole; label: string; emoji: string }[] = [
-    { value: "farmer", label: "Farmer", emoji: "🧑‍🌾" },
-    { value: "buyer", label: "Buyer", emoji: "🛒" },
+    { value: "farmer", label: t("farmerRole"), emoji: "🧑‍🌾" },
+    { value: "buyer", label: t("buyerRole"), emoji: "🛒" },
   ];
 
   return (
@@ -54,39 +56,39 @@ const Auth = () => {
             <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3">
               <Leaf className="w-7 h-7" />
             </div>
-            <h1 className="text-2xl font-bold text-foreground">{isLogin ? "Welcome Back!" : "Create Account"}</h1>
-            <p className="text-sm text-muted-foreground mt-1">{isLogin ? "Login to your Kisan Bandhu account" : "Join Kisan Bandhu today"}</p>
+            <h1 className="text-2xl font-bold text-foreground">{isLogin ? t("welcomeBack") : t("createAccountHeader")}</h1>
+            <p className="text-sm text-muted-foreground mt-1">{isLogin ? t("loginPrompt") : t("joinPrompt")}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name - signup only */}
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium mb-1 text-foreground">Full Name</label>
+                <label className="block text-sm font-medium mb-1 text-foreground">{t("fullNameLabel")}</label>
                 <input
                   type="text" value={name} onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none"
-                  placeholder="Enter your full name"
+                  placeholder={t("enterFullName")}
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium mb-1 text-foreground">Email</label>
+              <label className="block text-sm font-medium mb-1 text-foreground">{t("emailLabel")}</label>
               <input
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none"
-                placeholder="Enter your email"
+                placeholder={t("enterYourEmail")}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1 text-foreground">Password</label>
+              <label className="block text-sm font-medium mb-1 text-foreground">{t("passwordLabel")}</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none pr-12"
-                  placeholder="Enter your password"
+                  placeholder={t("enterYourPassword")}
                 />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -97,7 +99,7 @@ const Auth = () => {
             {/* Role Selection - signup only */}
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium mb-2 text-foreground">I am a</label>
+                <label className="block text-sm font-medium mb-2 text-foreground">{t("roleLabel")}</label>
                 <div className="grid grid-cols-3 gap-2">
                   {roles.map((r) => (
                     <button
@@ -119,13 +121,13 @@ const Auth = () => {
             {error && <p className="text-destructive text-sm font-medium">{error}</p>}
 
             <button type="submit" className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-base hover:opacity-90 transition-opacity">
-              {isLogin ? "Login" : "Create Account"}
+              {isLogin ? t("loginButton") : t("createAccountButton")}
             </button>
           </form>
 
           <div className="text-center mt-5">
             <button onClick={() => { setIsLogin(!isLogin); setError(""); }} className="text-sm text-primary font-medium hover:underline">
-              {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+              {isLogin ? t("dontHaveAccount") : t("alreadyHaveAccount")}
             </button>
           </div>
         </div>

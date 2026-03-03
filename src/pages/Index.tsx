@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import ScrollReveal from "@/components/ScrollReveal";
 import heroBg from "@/assets/hero-bg.jpg";
 import { ShoppingCart, Sprout, Landmark, Users, ArrowRight, TrendingUp } from "lucide-react";
 
 const Index = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   return (
     <div>
@@ -18,20 +20,20 @@ const Index = () => {
         <div className="absolute inset-0 bg-hero-gradient" />
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-primary-foreground mb-4 animate-fade-in leading-tight">
-            Kisan Bandhu
+            {t("heroTitle")}
           </h1>
           <p className="text-lg md:text-2xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Empowering Farmers. Connecting Markets.
+            {t("heroSubtitle")}
           </p>
           <div className="flex flex-wrap justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <Link to="/marketplace" className="px-6 py-3 rounded-xl bg-primary-foreground text-primary font-semibold text-base hover:scale-105 transition-transform flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5" /> Explore Marketplace
+              <ShoppingCart className="w-5 h-5" /> {t("exploreMarketplace")}
             </Link>
             <Link to="/advisory" className="px-6 py-3 rounded-xl border-2 border-primary-foreground text-primary-foreground font-semibold text-base hover:bg-primary-foreground/10 transition-colors flex items-center gap-2">
-              <Sprout className="w-5 h-5" /> Crop Advisory
+              <Sprout className="w-5 h-5" /> {t("cropAdvisory")}
             </Link>
             <Link to="/schemes" className="px-6 py-3 rounded-xl border-2 border-primary-foreground text-primary-foreground font-semibold text-base hover:bg-primary-foreground/10 transition-colors flex items-center gap-2">
-              <Landmark className="w-5 h-5" /> Government Schemes
+              <Landmark className="w-5 h-5" /> {t("govSchemes")}
             </Link>
           </div>
         </div>
@@ -42,10 +44,9 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">About Kisan Bandhu</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t("aboutTitle")}</h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Kisan Bandhu is India's farmer-first digital marketplace that eliminates middlemen and connects farmers directly with buyers. 
-                Our platform ensures fair prices through a transparent bidding system, provides crop advisory services, and helps farmers access government schemes — all in one place.
+                {t("aboutDescription")}
               </p>
             </div>
           </ScrollReveal>
@@ -56,7 +57,7 @@ const Index = () => {
       <section className="py-16 bg-muted/50">
         <div className="container mx-auto px-4">
           <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">How It Works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">{t("howItWorks")}</h2>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
@@ -105,10 +106,10 @@ const Index = () => {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4 text-center">
             <ScrollReveal>
-              <h2 className="text-3xl font-bold mb-4 text-foreground">Ready to Get Started?</h2>
-              <p className="text-muted-foreground mb-6 max-w-lg mx-auto">Join thousands of farmers and buyers on India's most trusted agricultural marketplace.</p>
+              <h2 className="text-3xl font-bold mb-4 text-foreground">{t("readyToGetStarted")}</h2>
+              <p className="text-muted-foreground mb-6 max-w-lg mx-auto">{t("ctaDescription")}</p>
               <Link to="/auth" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
-                Join Kisan Bandhu <ArrowRight className="w-5 h-5" />
+                {t("joinKisanBandhu")} <ArrowRight className="w-5 h-5" />
               </Link>
             </ScrollReveal>
           </div>

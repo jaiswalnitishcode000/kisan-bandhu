@@ -4,9 +4,11 @@ import { useMarket, CropListing } from "@/context/MarketContext";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Plus, Check, Package, TrendingUp, Eye } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/context/LanguageContext";
 
 const FarmerDashboard = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const { listings, addListing, acceptBid } = useMarket();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ cropName: "", quantity: "", basePrice: "", cropType: "grain" });
@@ -18,7 +20,7 @@ const FarmerDashboard = () => {
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.cropName || !form.quantity || !form.basePrice) { toast.error("Fill all fields"); return; }
+    if (!form.cropName || !form.quantity || !form.basePrice) { toast.error(t("errorFillAllFields")); return; }
     addListing({
       cropName: form.cropName,
       quantity: parseFloat(form.quantity),
@@ -30,12 +32,12 @@ const FarmerDashboard = () => {
     });
     setForm({ cropName: "", quantity: "", basePrice: "", cropType: "grain" });
     setShowForm(false);
-    toast.success("Crop listed successfully!");
+    toast.success(t("successCropListed"));
   };
 
   const handleAccept = (id: string) => {
     acceptBid(id);
-    toast.success("Bid accepted! Crop marked as sold.");
+    toast.success(t("successBidAccepted"));
   };
 
   return (
@@ -44,12 +46,12 @@ const FarmerDashboard = () => {
         <ScrollReveal>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">🧑‍🌾 Farmer Dashboard</h1>
-              <p className="text-muted-foreground mt-1">Welcome, {user.name}</p>
+              <h1 className="text-3xl font-bold text-foreground">{t("farmerDashboardTitle")}</h1>
+              <p className="text-muted-foreground mt-1">{t("welcomeUser").replace("{name}", user.name)}</p>
             </div>
             <button onClick={() => setShowForm(!showForm)}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
-              <Plus className="w-4 h-4" /> Add Crop
+              <Plus className="w-4 h-4" /> {t("addCrop")}
             </button>
           </div>
         </ScrollReveal>
@@ -57,40 +59,40 @@ const FarmerDashboard = () => {
         {/* Add Crop Form */}
         {showForm && (
           <div className="bg-card rounded-2xl border border-border shadow-card p-6 mb-8 animate-scale-in">
-            <h2 className="text-lg font-semibold mb-4 text-foreground">List a New Crop</h2>
+            <h2 className="text-lg font-semibold mb-4 text-foreground">{t("listNewCrop")}</h2>
             <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Crop Name</label>
+                <label className="block text-sm font-medium mb-1">{t("cropNameLabel")}</label>
                 <input type="text" value={form.cropName} onChange={(e) => setForm({ ...form, cropName: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder="e.g. Wheat" />
+                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder={t("cropNamePlaceholder")} />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Crop Type</label>
+                <label className="block text-sm font-medium mb-1">{t("cropTypeLabel")}</label>
                 <select value={form.cropType} onChange={(e) => setForm({ ...form, cropType: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none">
-                  <option value="grain">Grain</option>
-                  <option value="vegetable">Vegetable</option>
-                  <option value="fruit">Fruit</option>
-                  <option value="cash_crop">Cash Crop</option>
-                  <option value="pulse">Pulse</option>
+                  <option value="grain">{t("cropType_grain")}</option>
+                  <option value="vegetable">{t("cropType_vegetable")}</option>
+                  <option value="fruit">{t("cropType_fruit")}</option>
+                  <option value="cash_crop">{t("cropType_cash_crop")}</option>
+                  <option value="pulse">{t("cropType_pulse")}</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Quantity (quintals)</label>
+                <label className="block text-sm font-medium mb-1">{t("quantityLabel")}</label>
                 <input type="number" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder="e.g. 50" />
+                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder={t("quantityPlaceholder")} />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Base Price (₹/quintal)</label>
+                <label className="block text-sm font-medium mb-1">{t("basePriceLabel")}</label>
                 <input type="number" value={form.basePrice} onChange={(e) => setForm({ ...form, basePrice: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder="e.g. 2200" />
+                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder={t("basePricePlaceholder")} />
               </div>
               <div className="md:col-span-2 flex gap-3">
                 <button type="submit" className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
-                  List Crop
+                  {t("listCropButton")}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)} className="px-6 py-2.5 rounded-xl bg-muted text-muted-foreground font-medium">
-                  Cancel
+                  {t("cancel")}
                 </button>
               </div>
             </form>
@@ -102,7 +104,7 @@ const FarmerDashboard = () => {
           {myListings.length === 0 ? (
             <div className="text-center py-16 text-muted-foreground">
               <p className="text-4xl mb-4">🌱</p>
-              <p>You haven't listed any crops yet. Click "Add Crop" to get started!</p>
+              <p>{t("noListingsMessage")}</p>
             </div>
           ) : (
             myListings.map((listing) => {
@@ -116,14 +118,14 @@ const FarmerDashboard = () => {
                         <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                           listing.status === "open" ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"
                         }`}>
-                          {listing.status === "open" ? "Open" : "Sold"}
+                          {listing.status === "open" ? t("status_Open") : t("status_Sold")}
                         </span>
                       </div>
                       <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1"><Package className="w-3.5 h-3.5" /> {listing.quantity} quintals</span>
                         <span>Base: ₹{listing.basePrice.toLocaleString()}</span>
                         <span className="flex items-center gap-1 text-primary font-medium">
-                          <TrendingUp className="w-3.5 h-3.5" /> {listing.bids.length} bid(s) {highestBid > 0 && `• Highest: ₹${highestBid.toLocaleString()}`}
+                          <TrendingUp className="w-3.5 h-3.5" /> {listing.bids.length} {t("bidsSuffix")} {highestBid > 0 && `• Highest: ₹${highestBid.toLocaleString()}`}
                         </span>
                       </div>
 
@@ -143,13 +145,13 @@ const FarmerDashboard = () => {
                       {listing.bids.length > 0 && (
                         <button onClick={() => setSelectedListing(selectedListing === listing.id ? null : listing.id)}
                           className="px-3 py-2 rounded-xl bg-muted text-muted-foreground text-sm font-medium hover:bg-secondary transition-colors flex items-center gap-1">
-                          <Eye className="w-3.5 h-3.5" /> Bids
+                          <Eye className="w-3.5 h-3.5" /> {t("viewBids")}
                         </button>
                       )}
                       {listing.status === "open" && highestBid > 0 && (
                         <button onClick={() => handleAccept(listing.id)}
                           className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-1">
-                          <Check className="w-3.5 h-3.5" /> Accept Best
+                          <Check className="w-3.5 h-3.5" /> {t("acceptBest")}
                         </button>
                       )}
                     </div>

@@ -75,8 +75,9 @@ export interface GovScheme {
   link: string;
 }
 
-export const govSchemes: GovScheme[] = [
+export const govSchemes: (GovScheme & { id: string })[] = [
   {
+    id: "PMKISAN",
     name: "PM-KISAN",
     description: "Direct income support of ₹6,000 per year to farmer families in three equal installments.",
     eligibility: "All land-holding farmer families with cultivable land.",
@@ -85,6 +86,7 @@ export const govSchemes: GovScheme[] = [
     link: "https://pmkisan.gov.in/"
   },
   {
+    id: "PMFasal",
     name: "PM Fasal Bima Yojana",
     description: "Crop insurance scheme providing financial support against crop loss due to natural calamities.",
     eligibility: "All farmers growing notified crops in notified areas.",
@@ -93,6 +95,7 @@ export const govSchemes: GovScheme[] = [
     link: "https://pmfby.gov.in/"
   },
   {
+    id: "SoilHealth",
     name: "Soil Health Card Scheme",
     description: "Provides soil health cards with crop-wise nutrient recommendations to farmers.",
     eligibility: "All farmers across India.",
@@ -101,6 +104,7 @@ export const govSchemes: GovScheme[] = [
     link: "https://soilhealth.dac.gov.in/"
   },
   {
+    id: "KCC",
     name: "Kisan Credit Card (KCC)",
     description: "Provides affordable credit to farmers for cultivation, post-harvest, and consumption needs.",
     eligibility: "Farmers, fishermen, and animal husbandry farmers.",
@@ -109,6 +113,7 @@ export const govSchemes: GovScheme[] = [
     link: "https://pmkisan.gov.in/Documents/Kcc.pdf"
   },
   {
+    id: "eNAM",
     name: "e-NAM (National Agriculture Market)",
     description: "Online trading platform for agricultural commodities to ensure better prices for farmers.",
     eligibility: "Registered farmers and traders.",
@@ -117,6 +122,7 @@ export const govSchemes: GovScheme[] = [
     link: "https://www.enam.gov.in/"
   },
   {
+    id: "PMKrishi",
     name: "PM Krishi Sinchai Yojana",
     description: "Ensures access to water for irrigation with 'Har Khet Ko Pani' initiative.",
     eligibility: "All farmers with focus on water-scarce areas.",

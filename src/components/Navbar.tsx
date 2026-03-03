@@ -1,27 +1,29 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth, UserRole } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Menu, X, Leaf, LogOut, User, RefreshCw } from "lucide-react";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const { user, logout, switchRole } = useAuth();
+  const { lang, setLang, t } = useLanguage();
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/marketplace", label: "Marketplace" },
-    { to: "/advisory", label: "Crop Advisory" },
-    { to: "/msp-calculator", label: "MSP Calculator" },
-    { to: "/schemes", label: "Gov Schemes" },
+    { to: "/", label: t("home") },
+    { to: "/marketplace", label: t("marketplace") },
+    { to: "/advisory", label: t("cropAdvisory") },
+    { to: "/msp-calculator", label: t("mspCalculator") },
+    { to: "/schemes", label: t("govSchemes") },
   ];
 
-  if (user?.role === "farmer") navLinks.push({ to: "/farmer-dashboard", label: "My Dashboard" });
-  if (user?.role === "buyer") navLinks.push({ to: "/buyer-dashboard", label: "My Dashboard" });
-  if (user?.role === "admin") navLinks.push({ to: "/admin", label: "Admin Panel" });
+  if (user?.role === "farmer") navLinks.push({ to: "/farmer-dashboard", label: t("myDashboard") });
+  if (user?.role === "buyer") navLinks.push({ to: "/buyer-dashboard", label: t("myDashboard") });
+  if (user?.role === "admin") navLinks.push({ to: "/admin", label: t("adminPanel") });
 
   const roleOptions: UserRole[] = ["farmer", "buyer"];
 
@@ -51,8 +53,18 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Desktop Auth */}
+        {/* Desktop Auth + language selector */}
         <div className="hidden lg:flex items-center gap-3">
+          {/* language selector desktop (always visible) */}
+          <select
+            value={lang}
+            onChange={(e) => setLang(e.target.value as any)}
+            className="border px-1 rounded"
+          >
+            <option value="en">EN</option>
+            <option value="hi">हिं</option>
+          </select>
+
           {user ? (
             <div className="flex items-center gap-2">
               {/* Role Badge Display */}
@@ -68,7 +80,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to="/auth" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
-              Login / Sign Up
+              {t("loginSignup")}
             </Link>
           )}
         </div>
@@ -99,18 +111,40 @@ const Navbar = () => {
             ))}
             <div className="pt-2 border-t border-border mt-2">
               {user ? (
-                <div className="space-y-2">
-                  <div className="px-3 py-2.5 rounded-md text-sm font-medium bg-primary/10 text-primary text-center">
-                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                <>
+                  <div className="space-y-2">
+                    <div className="px-3 py-2.5 rounded-md text-sm font-medium bg-primary/10 text-primary text-center">
+                      {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                    </div>
+                    <button onClick={() => { logout(); setMobileOpen(false); }} className="w-full px-3 py-2.5 rounded-md text-sm font-medium text-destructive bg-muted">
+                      {t("logout")}
+                    </button>
+                    {/* language selector mobile */}
+                    <select
+                      value={lang}
+                      onChange={(e) => { setLang(e.target.value as any); setMobileOpen(false); }}
+                      className="w-full mt-2 border px-1 rounded"
+                    >
+                      <option value="en">EN</option>
+                      <option value="hi">हिं</option>
+                    </select>
                   </div>
-                  <button onClick={() => { logout(); setMobileOpen(false); }} className="w-full px-3 py-2.5 rounded-md text-sm font-medium text-destructive bg-muted">
-                    Logout
-                  </button>
-                </div>
+                </>
               ) : (
-                <Link to="/auth" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 rounded-md text-sm font-medium bg-primary text-primary-foreground text-center">
-                  Login / Sign Up
-                </Link>
+                <>
+                  <Link to="/auth" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 rounded-md text-sm font-medium bg-primary text-primary-foreground text-center">
+                    {t("loginSignup")}
+                  </Link>
+                  {/* language selector mobile */}
+                  <select
+                    value={lang}
+                    onChange={(e) => { setLang(e.target.value as any); setMobileOpen(false); }}
+                    className="w-full mt-2 border px-1 rounded"
+                  >
+                    <option value="en">EN</option>
+                    <option value="hi">हिं</option>
+                  </select>
+                </>
               )}
             </div>
           </div>

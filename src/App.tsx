@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import { MarketProvider } from "@/context/MarketContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -26,9 +27,10 @@ const App = () => (
     <TooltipProvider>
       <AuthProvider>
         <MarketProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
+          <LanguageProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
             <Navbar />
             <main>
               <Routes>
@@ -47,6 +49,7 @@ const App = () => (
             <Footer />
             <BackToTop />
           </BrowserRouter>
+          </LanguageProvider>
         </MarketProvider>
       </AuthProvider>
     </TooltipProvider>
