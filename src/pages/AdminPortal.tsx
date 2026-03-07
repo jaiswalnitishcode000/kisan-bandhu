@@ -13,6 +13,7 @@ const AdminPortal = () => {
   if (!user || user.role !== "admin") return (
     <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground text-lg">{t("adminAccessRequired")}</p></div>
   );
+}
 
   const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
   const totalBids = listings.reduce((sum, l) => sum + l.bids.length, 0);
