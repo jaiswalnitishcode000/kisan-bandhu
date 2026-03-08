@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useMarket, CropListing } from "@/context/MarketContext";
@@ -7,6 +8,26 @@ import { toast } from "sonner";
 import { useLanguage } from "@/context/LanguageContext";
 
 const FarmerDashboard = () => {
+  const [farmers, setFarmers] = useState([]);
+  useEffect(() => {
+  fetch("http://127.0.0.1:8000/farmers")
+    .then(res => res.json())
+    .then(data => {
+
+      const formatted = data.farmers.map((f:any) => ({
+        id: f[0],
+        farmerName: f[1],
+        village: f[2],
+        cropName: f[3],
+        quantity: 0,
+        basePrice: 0,
+        bids: [],
+        status: "open"
+      }));
+
+      setFarmers(formatted);
+    });
+}, []);
   const { user } = useAuth();
   const { t } = useLanguage();
   const { listings, addListing, acceptBid } = useMarket();
@@ -16,22 +37,27 @@ const FarmerDashboard = () => {
 
   if (!user) return null;
 
-  const myListings = listings.filter((l) => l.farmerEmail === user.email);
+  const myListings = farmers; 
+ const handleAdd = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.cropName || !form.quantity || !form.basePrice) { toast.error(t("errorFillAllFields")); return; }
-    addListing({
-      cropName: form.cropName,
-      quantity: parseFloat(form.quantity),
-      basePrice: parseFloat(form.basePrice),
-      imageUrl: "",
-      farmerName: user.name,
-      farmerEmail: user.email,
-      cropType: form.cropType,
-    });
-    setForm({ cropName: "", quantity: "", basePrice: "", cropType: "grain" });
-    setShowForm(false);
+  if (!form.cropName || !form.quantity || !form.basePrice) {
+    toast.error("Fill all fields");
+    return;
+  }
+
+  await fetch(
+    `http://127.0.0.1:8000/add-farmer/${user.name}/${user.village || "unknown"}/${form.cropName}/${form.quantity}/${form.basePrice}`,
+    {
+      method: "POST",
+    }
+  );
+
+  toast.success("Farmer Saved To Database");
+
+  setForm({ cropName: "", quantity: "", basePrice: "", cropType: "grain" });
+  setShowForm(false);
+
     toast.success(t("successCropListed"));
   };
 
