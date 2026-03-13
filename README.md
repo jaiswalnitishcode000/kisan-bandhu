@@ -53,6 +53,7 @@ Kisan Bandhu aims to solve these problems by:
 - Uvicorn Server
 - Database SQLite
 - REST API
+- FastAPI Interactive Docs (swagger UI)
 ---
 
 ## 📂 Project Structure
