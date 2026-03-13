@@ -49,7 +49,7 @@ Kisan Bandhu aims to solve these problems by:
 -  React Router
 -  Lucide React Icons
 - python
-- Express.js
+- FastAPI
 - MongoDB
 - JWT Authentication
 - REST API
