@@ -50,7 +50,7 @@ Kisan Bandhu aims to solve these problems by:
 -  Lucide React Icons
 - python
 - FastAPI
-- MongoDB
+- Uvicorn Server
 - JWT Authentication
 - REST API
 ---
