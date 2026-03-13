@@ -66,43 +66,24 @@ kisan-bandhu/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
+│   │   ├── context/
 │   │   ├── hooks/
-│   │   ├── utils/
-│   │   ├── services/
-│   │   └── App.tsx
+│   │   ├── lib/
+│   │   ├── assets/
+│   │   ├── App.tsx
+│   │   └── main.tsx
 │   │
 │   ├── index.html
 │   ├── package.json
 │   └── vite.config.ts
 │
 ├── backend/
-│   ├── config/
-│   │   └── db.js
-│   │
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── productController.js
-│   │   └── advisoryController.js
-│   │
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Product.js
-│   │   └── Advisory.js
-│   │
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── productRoutes.js
-│   │   └── advisoryRoutes.js
-│   │
-│   ├── middleware/
-│   │   └── authMiddleware.js
-│   │
-│   ├── server.js
-│   └── package.json
+│   ├── main.py              # FastAPI server
+│   ├── kisan_bandhu.db      # SQLite database
+│   ├── venv/                # Python virtual environment
+│   └── __pycache__/
 │
 └── README.md
-
-
 ```
 
 ---
