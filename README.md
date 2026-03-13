@@ -48,7 +48,7 @@ Kisan Bandhu aims to solve these problems by:
 -  TypeScript
 -  React Router
 -  Lucide React Icons
-- Node.js
+- python
 - Express.js
 - MongoDB
 - JWT Authentication
