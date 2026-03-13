@@ -1,4 +1,4 @@
-# 🌾 Kisan Bandhu
+## 🌾 Kisan Bandhu
 
 Kisan Bandhu is a Smart Crop Advisory & Farmer Marketplace Platform designed to empower Indian farmers by connecting them directly with buyers and providing intelligent crop advisory solutions.
 
