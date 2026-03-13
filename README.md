@@ -51,7 +51,7 @@ Kisan Bandhu aims to solve these problems by:
 - python
 - FastAPI
 - Uvicorn Server
-- JWT Authentication
+- Database SQLite
 - REST API
 ---
 
