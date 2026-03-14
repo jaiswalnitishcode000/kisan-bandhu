@@ -14,13 +14,14 @@ const FarmerDashboard = () => {
     .then(res => res.json())
     .then(data => {
 
-      const formatted = data.farmers.map((f:any) => ({
-        id: f[0],
-        farmerName: f[1],
-        village: f[2],
-        cropName: f[3],
-        quantity: 0,
-        basePrice: 0,
+      const formatted = data.map((f:any) => ({
+        id: f.id,
+        farmerName: f.name,
+        village: f.village,
+        cropName: f.crop,
+        quantity: f.quantity,
+        basePrice: f.price,
+
         bids: [],
         status: "open"
       }));
@@ -32,7 +33,13 @@ const FarmerDashboard = () => {
   const { t } = useLanguage();
   const { listings, addListing, acceptBid } = useMarket();
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ cropName: "", quantity: "", basePrice: "", cropType: "grain" });
+  const [form, setForm] = useState({
+  cropName: "",
+  village: "",
+  quantity: "",
+  basePrice: "",
+  cropType: "grain"
+});
   const [selectedListing, setSelectedListing] = useState<string | null>(null);
 
   if (!user) return null;
@@ -46,16 +53,39 @@ const FarmerDashboard = () => {
     return;
   }
 
-  await fetch(
-    `http://127.0.0.1:8000/add-farmer/${user.name}/${user.village || "unknown"}/${form.cropName}/${form.quantity}/${form.basePrice}`,
-    {
-      method: "POST",
-    }
-  );
+  await fetch("http://127.0.0.1:8000/add-farmer", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name: user.name,
+    village: form.village,
+    crop: form.cropName,
+    quantity: Number(form.quantity),
+    price: Number(form.basePrice)
+  })
+});
 
   toast.success("Farmer Saved To Database");
+  fetch("http://127.0.0.1:8000/farmers")
+  .then(res => res.json())
+  .then(data => {
+    const formatted = data.map((f:any) => ({
+      id: f.id,
+      farmerName: f.name,
+      village: f.village,
+      cropName: f.crop,
+      quantity: f.quantity,
+      basePrice: f.price,
+      bids: [],
+      status: "open"
+    }));
 
-  setForm({ cropName: "", quantity: "", basePrice: "", cropType: "grain" });
+    setFarmers(formatted);
+  });
+
+  setForm({ cropName:"", village:"", quantity:"", basePrice:"", cropType:"grain" })
   setShowForm(false);
 
     toast.success(t("successCropListed"));
@@ -91,6 +121,16 @@ const FarmerDashboard = () => {
                 <label className="block text-sm font-medium mb-1">{t("cropNameLabel")}</label>
                 <input type="text" value={form.cropName} onChange={(e) => setForm({ ...form, cropName: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder={t("cropNamePlaceholder")} />
+              </div>
+              <div>
+                 <label className="block text-sm font-medium mb-1">Village</label>
+
+                 <input
+                type="text"
+                value={form.village}
+               onChange={(e) => setForm({ ...form, village: e.target.value })}
+               className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none"
+               placeholder="Enter village name"/>
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">{t("cropTypeLabel")}</label>
@@ -149,7 +189,7 @@ const FarmerDashboard = () => {
                       </div>
                       <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1"><Package className="w-3.5 h-3.5" /> {listing.quantity} quintals</span>
-                        <span>Base: ₹{listing.basePrice.toLocaleString()}</span>
+                        <span>Base: ₹{(listing.basePrice || 0).toLocaleString()}</span>
                         <span className="flex items-center gap-1 text-primary font-medium">
                           <TrendingUp className="w-3.5 h-3.5" /> {listing.bids.length} {t("bidsSuffix")} {highestBid > 0 && `• Highest: ₹${highestBid.toLocaleString()}`}
                         </span>
@@ -161,7 +201,7 @@ const FarmerDashboard = () => {
                           {listing.bids.sort((a, b) => b.amount - a.amount).map((bid, i) => (
                             <div key={i} className="flex justify-between items-center text-sm bg-muted/50 rounded-lg px-3 py-2">
                               <span>{bid.buyerName}</span>
-                              <span className="font-medium">₹{bid.amount.toLocaleString()}</span>
+                              <span className="font-medium">₹{(bid.amount || 0).toLocaleString()}</span>
                             </div>
                           ))}
                         </div>
