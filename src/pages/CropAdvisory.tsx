@@ -2,21 +2,51 @@ import { useState } from "react";
 import { soilTypes, seasons, regions, getCropSuggestions, CropSuggestion } from "@/data/advisoryData";
 import { useLanguage } from "@/context/LanguageContext";
 import ScrollReveal from "@/components/ScrollReveal";
-import { Droplets, TrendingUp, Sprout, Coins } from "lucide-react";
+import { Droplets, Sprout, Coins } from "lucide-react";
 
 const CropAdvisory = () => {
+
   const { t } = useLanguage();
+
   const [soil, setSoil] = useState("");
   const [season, setSeason] = useState("");
   const [region, setRegion] = useState("");
+
   const [suggestions, setSuggestions] = useState<CropSuggestion[]>([]);
   const [searched, setSearched] = useState(false);
+
+  const [selectedCrop, setSelectedCrop] = useState<CropSuggestion | null>(null);
 
   const handleSearch = () => {
     if (!soil || !season || !region) return;
     setSuggestions(getCropSuggestions(soil, season, region));
     setSearched(true);
   };
+  const getExplanation = (cropName: string) => {
+  let reasons: string[] = [];
+
+  if (cropName === "Rice") {
+    if (soil === "Clay") {
+      reasons.push("Clay soil retains water well, which is ideal for rice cultivation.");
+    }
+    if (season.includes("Kharif")) {
+      reasons.push("Rice grows best during the monsoon (Kharif) season due to high rainfall.");
+    }
+    if (region === "North") {
+      reasons.push("Northern India has favorable climate and irrigation for rice farming.");
+    }
+  }
+
+  if (cropName === "Cotton") {
+    reasons.push("Cotton performs well in warm climates with moderate rainfall.");
+  }
+
+  if (cropName === "Maize") {
+    reasons.push("Maize adapts well to multiple soil types and seasonal conditions.");
+  }
+
+  return reasons;
+};
 
   const keyForOption = (prefix: string, value: string) => {
     // for seasons we only want the core word (Kharif/Rabi/Zaid) so that
@@ -106,11 +136,54 @@ const CropAdvisory = () => {
                       <Droplets className="w-4 h-4 text-primary" /> {t("waterLabel")} {t(`water_${crop.waterRequirement}` as any)}
                     </p>
                   </div>
+                  <button
+                   onClick={() => setSelectedCrop(crop)}
+                   className="mt-4 w-full py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/10 transition"
+                 >
+                 Why this crop?
+                 </button>
                 </div>
               </ScrollReveal>
             ))}
           </div>
-        )}
+)}
+
+{/* Crop Details Modal */}
+{selectedCrop && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="bg-card rounded-2xl p-6 max-w-lg w-full shadow-lg">
+      
+      <h2 className="text-xl font-bold mb-4">
+        {selectedCrop.name} - Crop Details
+      </h2>
+
+      <div className="space-y-2 text-sm text-muted-foreground">
+        <p><strong>Expected Yield:</strong> {selectedCrop.expectedYield}</p>
+        <p><strong>Estimated Profit:</strong> {selectedCrop.estimatedProfit}</p>
+        <p><strong>Water Requirement:</strong> {selectedCrop.waterRequirement}</p>
+
+        <div className="mt-4">
+          <strong>Why this crop is recommended:</strong>
+
+          <ul className="list-disc list-inside mt-2 space-y-1">
+            {getExplanation(selectedCrop.name).map((reason, i) => (
+              <li key={i}>{reason}</li>
+            ))}
+          </ul>
+
+        </div>
+      </div>
+
+      <button
+        onClick={() => setSelectedCrop(null)}
+        className="mt-5 w-full py-2 rounded-lg bg-primary text-primary-foreground"
+      >
+        Close
+      </button>
+
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
