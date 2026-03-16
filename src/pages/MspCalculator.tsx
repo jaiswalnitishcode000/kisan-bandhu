@@ -64,7 +64,7 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{t("mspCalculatorTitle")}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground">Calculator</h1>
             <p className="text-muted-foreground mt-2">{t("mspCalculatorDescription")}</p>
           </div>
         </ScrollReveal>

@@ -9,7 +9,7 @@ const translations = {
     home: "Home",
     marketplace: "Marketplace",
     cropAdvisory: "Crop Advisory",
-    mspCalculator: "MSP Calculator",
+    mspCalculator: "Calculator",
     govSchemes: "Gov Schemes",
     myDashboard: "My Dashboard",
     adminPanel: "Admin Panel",
