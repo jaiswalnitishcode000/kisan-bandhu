@@ -10,6 +10,10 @@ const MspCalculator = () => {
   const [crop, setCrop] = useState("");
   const [quantity, setQuantity] = useState("");
   const [result, setResult] = useState<{ mspValue: number; highestBid: number } | null>(null);
+  //Tractor substidy states
+  const [tractorPrice, setTractorPrice] = useState("");
+const [category, setCategory] = useState("");
+const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice: number } | null>(null);
   const { listings } = useMarket();
 
   const cropNames = Object.keys(mspData);
@@ -38,6 +42,22 @@ const MspCalculator = () => {
 
     setResult({ mspValue, highestBid: highestBid * qty });
   };
+  //sub
+  const calculateSubsidy = () => {
+  if (!tractorPrice || !category) return;
+
+  const price = parseFloat(tractorPrice);
+  let subsidyRate = 0;
+
+  if (category === "general") subsidyRate = 0.25;
+  if (category === "scst") subsidyRate = 0.35;
+  if (category === "women") subsidyRate = 0.40;
+
+  const subsidy = price * subsidyRate;
+  const finalPrice = price - subsidy;
+
+  setSubsidyResult({ subsidy, finalPrice });
+};
 
   return (
     <div className="min-h-screen py-8">
@@ -105,6 +125,64 @@ const MspCalculator = () => {
               </div>
             </ScrollReveal>
           )}
+          <div className="bg-card rounded-2xl border border-border shadow-card p-6 mt-8">
+  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+    <TrendingUp className="w-5 h-5" />
+    Tractor Subsidy Calculator
+  </h2>
+
+  <div className="space-y-4">
+
+    <div>
+      <label className="block text-sm font-medium mb-1">
+        Tractor Price (₹)
+      </label>
+      <input
+        type="number"
+        value={tractorPrice}
+        onChange={(e) => setTractorPrice(e.target.value)}
+        className="w-full px-4 py-2 border rounded-xl"
+        placeholder="Enter tractor price"
+      />
+    </div>
+
+    <div>
+      <label className="block text-sm font-medium mb-1">
+        Farmer Category
+      </label>
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="w-full px-4 py-2 border rounded-xl"
+      >
+        <option value="">Select Category</option>
+        <option value="general">General Farmer</option>
+        <option value="scst">SC/ST Farmer</option>
+        <option value="women">Women Farmer</option>
+      </select>
+    </div>
+
+    <button
+      onClick={calculateSubsidy}
+      className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold"
+    >
+      Calculate Subsidy
+    </button>
+
+  </div>
+
+  {subsidyResult && (
+    <div className="mt-4 p-4 bg-primary/10 rounded-xl text-center">
+      <p className="text-sm text-muted-foreground">Government Subsidy</p>
+      <p className="text-xl font-bold">₹{subsidyResult.subsidy.toLocaleString()}</p>
+
+      <p className="text-sm mt-2 text-muted-foreground">Final Price After Subsidy</p>
+      <p className="text-xl font-bold text-green-600">
+        ₹{subsidyResult.finalPrice.toLocaleString()}
+      </p>
+    </div>
+  )}
+</div>
         </div>
       </div>
     </div>
