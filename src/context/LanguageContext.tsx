@@ -70,7 +70,7 @@ const translations = {
     benefitsLabel: "Benefits:",
     applyNow: "Apply Now →",
     // msp calculator page
-    mspCalculatorTitle: "🧮 MSP Calculator",
+    mspCalculatorTitle: "🧮 Calculator",
     mspCalculatorDescription: "Calculate Minimum Support Price value for your harvest",
     selectCropLabel: "Select Crop",
     chooseCropPlaceholder: "Choose a crop",
@@ -203,7 +203,17 @@ const translations = {
     wonStatus: "Won! 🎉",
     lostStatus: "Lost",
     availableCrops: "Available Crops",
+    //tractorSubsidy
+    tractorSubsidyTitle: "Tractor Subsidy Calculator",
+tractorPriceLabel: "Tractor Price (₹)",
+enterTractorPrice: "Enter tractor price",
+farmerCategoryLabel: "Farmer Category",
+selectCategory: "Select Category",
+calculateSubsidy: "Calculate Subsidy",
+governmentSubsidy: "Government Subsidy",
+finalPriceAfterSubsidy: "Final Price After Subsidy",
     // marketplace card labels
+  
     card_base: "Base price:",
     card_highestBid: "Highest bid:",
     card_yourBidPlaceholder: "Your bid (₹)",
@@ -231,7 +241,7 @@ const translations = {
     home: "होम",
     marketplace: "मार्केटप्लेस",
     cropAdvisory: "फसल सलाह",
-    mspCalculator: "एमएसपी कैलकुलेटर",
+    mspCalculator: "कैलकुलेटर",
     govSchemes: "सरकारी योजनाएँ",
     myDashboard: "मेरा डैशबोर्ड",
     adminPanel: "प्रशासन पैनल",
@@ -292,7 +302,7 @@ const translations = {
     benefitsLabel: "लाभ:",
     applyNow: "अब आवेदन करें →",
     // msp calculator page translations
-    mspCalculatorTitle: "🧮 एमएसपी कैलकुलेटर",
+    mspCalculatorTitle: "🧮 कैलकुलेटर",
     mspCalculatorDescription: "अपने फसल के लिए न्यूनतम समर्थन मूल्य की गणना करें",
     selectCropLabel: "फसल चुनें",
     chooseCropPlaceholder: "फसल चुनें",
@@ -305,6 +315,15 @@ const translations = {
     marketAbove: "✅ बाजार बोली MSP से ₹{diff} ऊपर है!",
     marketBelow: "⚠️ बाजार बोली MSP से ₹{diff} नीचे है। MSP मार्ग पर विचार करें।",
     noBidsYet: "अभी तक कोई बोली नहीं",
+    //tractorSubsidy
+    tractorSubsidyTitle: "ट्रैक्टर सब्सिडी कैलकुलेटर",
+tractorPriceLabel: "ट्रैक्टर की कीमत (₹)",
+enterTractorPrice: "ट्रैक्टर की कीमत दर्ज करें",
+farmerCategoryLabel: "किसान श्रेणी",
+selectCategory: "श्रेणी चुनें",
+calculateSubsidy: "सब्सिडी की गणना करें",
+governmentSubsidy: "सरकारी सब्सिडी",
+finalPriceAfterSubsidy: "सब्सिडी के बाद अंतिम कीमत",
     // advisory page translations
     cropAdvisoryTitle: "🌱 फसल सलाह",
     cropAdvisoryDescription: "आपकी परिस्थितियों के आधार पर व्यक्तिगत रूप से फसल की सिफारिशें प्राप्त करें",

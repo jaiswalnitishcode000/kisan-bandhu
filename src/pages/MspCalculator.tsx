@@ -64,7 +64,7 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{t("mspCalculatorTitle")}</h1>
             <p className="text-muted-foreground mt-2">{t("mspCalculatorDescription")}</p>
           </div>
         </ScrollReveal>
@@ -126,37 +126,37 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
             </ScrollReveal>
           )}
           <div className="bg-card rounded-2xl border border-border shadow-card p-6 mt-8">
-  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-    <TrendingUp className="w-5 h-5" />
-    Tractor Subsidy Calculator
-  </h2>
+ <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+  <TrendingUp className="w-5 h-5" />
+  {t("tractorSubsidyTitle")}
+</h2>
 
   <div className="space-y-4">
 
     <div>
       <label className="block text-sm font-medium mb-1">
-        Tractor Price (₹)
-      </label>
+  {t("tractorPriceLabel")}
+</label>
       <input
         type="number"
         min="0"
         value={tractorPrice}
         onChange={(e) => setTractorPrice(Math.max(0, Number(e.target.value)).toString())}
         className="w-full px-4 py-2 border rounded-xl"
-        placeholder="Enter tractor price"
+        placeholder={t("enterTractorPrice")}
       />
     </div>
 
     <div>
       <label className="block text-sm font-medium mb-1">
-        Farmer Category
-      </label>
+  {t("farmerCategoryLabel")}
+</label>
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         className="w-full px-4 py-2 border rounded-xl"
       >
-        <option value="">Select Category</option>
+        <option value="">{t("selectCategory")}</option>
         <option value="general">General Farmer</option>
         <option value="scst">SC/ST Farmer</option>
         <option value="women">Women Farmer</option>
@@ -168,17 +168,17 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
       disabled={!tractorPrice || !category}
   className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold disabled:opacity-50"
     >
-      Calculate Subsidy
+      {t("calculateSubsidy")}
     </button>
 
   </div>
 
   {subsidyResult && (
     <div className="mt-4 p-4 bg-primary/10 rounded-xl text-center">
-      <p className="text-sm text-muted-foreground">Government Subsidy</p>
+      <p className="text-sm text-muted-foreground">{t("governmentSubsidy")}</p>
       <p className="text-xl font-bold">₹{subsidyResult.subsidy.toLocaleString()}</p>
 
-      <p className="text-sm mt-2 text-muted-foreground">Final Price After Subsidy</p>
+      <p className="text-sm mt-2 text-muted-foreground">{t("finalPriceAfterSubsidy")}</p>
       <p className="text-xl font-bold text-green-600">
         ₹{subsidyResult.finalPrice.toLocaleString()}
       </p>
