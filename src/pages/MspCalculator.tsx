@@ -28,7 +28,7 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
   };
 
   const calculate = () => {
-    if (!crop || !quantity) return;
+  if (!crop || !quantity || parseFloat(quantity) < 0) return;
     const qty = parseFloat(quantity);
     const msp = mspData[crop] || 0;
     const mspValue = msp * qty;
@@ -44,7 +44,7 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
   };
   //sub
   const calculateSubsidy = () => {
-  if (!tractorPrice || !category) return;
+  if (!tractorPrice || !category || parseFloat(tractorPrice)<0) return;
 
   const price = parseFloat(tractorPrice);
   let subsidyRate = 0;
@@ -84,7 +84,7 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">{t("quantityLabel")}</label>
-                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}
+                <input type="number" min="0" value={quantity} onChange={(e) => setQuantity(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder={t("quantityPlaceholder")} />
               </div>
               <button onClick={calculate} disabled={!crop || !quantity}
@@ -139,8 +139,9 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
       </label>
       <input
         type="number"
+        min="0"
         value={tractorPrice}
-        onChange={(e) => setTractorPrice(e.target.value)}
+        onChange={(e) => setTractorPrice(Math.max(0, Number(e.target.value)).toString())}
         className="w-full px-4 py-2 border rounded-xl"
         placeholder="Enter tractor price"
       />
@@ -164,7 +165,8 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
 
     <button
       onClick={calculateSubsidy}
-      className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold"
+      disabled={!tractorPrice || !category}
+  className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold disabled:opacity-50"
     >
       Calculate Subsidy
     </button>
