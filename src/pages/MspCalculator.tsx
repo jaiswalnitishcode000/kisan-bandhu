@@ -65,13 +65,21 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
         <ScrollReveal>
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">{t("mspCalculatorTitle")}</h1>
-            <p className="text-muted-foreground mt-2">{t("mspCalculatorDescription")}</p>
+          
           </div>
         </ScrollReveal>
 
         <div className="max-w-xl mx-auto">
-          <div className="bg-card rounded-2xl border border-border shadow-card p-6 mb-6">
-            <div className="space-y-4">
+
+  <h2 className="text-xl font-bold flex items-center gap-2 mb-4">
+    <Calculator className="w-5 h-5" />
+    {t("mspSectionTitle")}
+  </h2>
+
+  <div className="border-t border-border my-4"></div>
+
+  <div className="bg-card rounded-2xl border border-border shadow-card p-6 mb-6">
+    <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">{t("selectCropLabel")}</label>
                 <select value={crop} onChange={(e) => setCrop(e.target.value)}
@@ -97,6 +105,8 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
           {/* Result */}
           {result && (
             <ScrollReveal>
+              
+
               <div className="bg-card rounded-2xl border border-border shadow-card p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-primary/5 rounded-xl p-4 text-center border border-primary/20">
@@ -125,11 +135,16 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
               </div>
             </ScrollReveal>
           )}
+
+        
+
           <div className="bg-card rounded-2xl border border-border shadow-card p-6 mt-8">
- <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-  <TrendingUp className="w-5 h-5" />
-  {t("tractorSubsidyTitle")}
-</h2>
+  <h2 className="text-xl font-bold flex items-center gap-2">
+    <TrendingUp className="w-5 h-5" />
+    {t("tractorSubsidyTitle")}
+  </h2>
+
+  <div className="border-t border-border my-4"></div>
 
   <div className="space-y-4">
 
@@ -157,9 +172,9 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
         className="w-full px-4 py-2 border rounded-xl"
       >
         <option value="">{t("selectCategory")}</option>
-        <option value="general">General Farmer</option>
-        <option value="scst">SC/ST Farmer</option>
-        <option value="women">Women Farmer</option>
+<option value="general">{t("categoryGeneralFarmer")}</option>
+<option value="scst">{t("categorySCSTFarmer")}</option>
+<option value="women">{t("categoryWomenFarmer")}</option>
       </select>
     </div>
 
