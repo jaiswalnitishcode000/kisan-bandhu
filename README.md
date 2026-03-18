@@ -25,6 +25,7 @@ Kisan Bandhu aims to solve these problems by:
 - ✅ Direct Farmer-to-Buyer Marketplace
 - ✅ Smart Crop Advisory System
 - ✅ MSP Price Calculator
+- ✅Subsidy Price calculator
 - ✅ Government Scheme Awareness
 - ✅ Transparent Digital Platform
 
@@ -35,7 +36,7 @@ Kisan Bandhu aims to solve these problems by:
 - 🛒 Marketplace for farmers
 - 🌱 Crop Advisory Section
 - 📊 MSP Calculator
-- Subsidy calculator 
+- 🖩Subsidy calculator 
 - 🏛 Government Schemes Portal
 - 🔐 Authentication System
 - 📱 Fully Responsive Design
