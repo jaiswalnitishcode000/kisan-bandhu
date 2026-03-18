@@ -35,6 +35,7 @@ Kisan Bandhu aims to solve these problems by:
 - 🛒 Marketplace for farmers
 - 🌱 Crop Advisory Section
 - 📊 MSP Calculator
+- Subsidy calculator 
 - 🏛 Government Schemes Portal
 - 🔐 Authentication System
 - 📱 Fully Responsive Design

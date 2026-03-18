@@ -18,6 +18,7 @@ const Navbar = () => {
     { to: "/marketplace", label: t("marketplace") },
     { to: "/advisory", label: t("cropAdvisory") },
     { to: "/msp-calculator", label: t("mspCalculator") },
+    { to: "/subsidy-calculator", label: t("subsidyCalculator") },
     { to: "/schemes", label: t("govSchemes") },
   ];
 
