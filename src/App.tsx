@@ -17,7 +17,6 @@ import BuyerDashboard from "./pages/BuyerDashboard";
 import CropAdvisory from "./pages/CropAdvisory";
 import MspCalculator from "./pages/MspCalculator";
 import GovSchemes from "./pages/GovSchemes";
-import SubsidyCalculator from "./pages/SubsidyCalculator";
 import AdminPortal from "./pages/AdminPortal";
 import NotFound from "./pages/NotFound";
 
@@ -42,7 +41,6 @@ const App = () => (
                 <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
                 <Route path="/advisory" element={<CropAdvisory />} />
                 <Route path="/msp-calculator" element={<MspCalculator />} />
-                <Route path="/subsidy-calculator" element={<SubsidyCalculator />} />
                 <Route path="/schemes" element={<GovSchemes />} />
                 <Route path="/admin" element={<AdminPortal />} />
                 <Route path="*" element={<NotFound />} />

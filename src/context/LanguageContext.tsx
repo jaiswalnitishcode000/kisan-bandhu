@@ -70,6 +70,7 @@ const translations = {
     benefitsLabel: "Benefits:",
     applyNow: "Apply Now →",
     // msp calculator page
+
     mspCalculatorTitle: "🧮 Smart Farming Calculator",
     mspSectionTitle: "MSP Calculator",
 
