@@ -72,6 +72,7 @@ const translations = {
     // msp calculator page
     mspCalculatorTitle: "🧮 Smart Farming Calculator",
     mspSectionTitle: "MSP Calculator",
+
     mspCalculatorDescription: "Calculate Minimum Support Price value for your harvest",
     selectCropLabel: "Select Crop",
     chooseCropPlaceholder: "Choose a crop",
@@ -261,6 +262,7 @@ usedCustomPriceLabel: "Custom Selling Price Used",
     marketplace: "मार्केटप्लेस",
     cropAdvisory: "फसल सलाह",
     mspCalculator: "कैलकुलेटर",
+    subsidyCalculator: "सब्सिडी कैल्क्युलेटर",
     govSchemes: "सरकारी योजनाएँ",
     myDashboard: "मेरा डैशबोर्ड",
     adminPanel: "प्रशासन पैनल",
