@@ -14,6 +14,21 @@ const MspCalculator = () => {
   const [tractorPrice, setTractorPrice] = useState("");
 const [category, setCategory] = useState("");
 const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice: number } | null>(null);
+
+// Profit calculator states
+const [profitCrop, setProfitCrop] = useState("");
+const [profitQuantity, setProfitQuantity] = useState("");
+const [sellingPrice, setSellingPrice] = useState("");
+const [productionCost, setProductionCost] = useState("");
+
+const [profitResult, setProfitResult] = useState<{
+  revenue: number;
+  cost: number;
+  profit: number;
+  priceUsed: number;
+  usedMsp: boolean;
+} | null>(null);
+
   const { listings } = useMarket();
 
   const cropNames = Object.keys(mspData);
@@ -57,6 +72,35 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
   const finalPrice = price - subsidy;
 
   setSubsidyResult({ subsidy, finalPrice });
+};
+// profit calculator
+const calculateProfit = () => {
+  if (
+    !profitCrop ||
+    !profitQuantity ||
+    !productionCost ||
+    parseFloat(profitQuantity) < 0 ||
+    parseFloat(productionCost) < 0 ||
+    (sellingPrice && parseFloat(sellingPrice) < 0)
+  ) return;
+
+  const qty = parseFloat(profitQuantity);
+  const cost = parseFloat(productionCost);
+  const msp = mspData[profitCrop] || 0;
+
+  const hasCustomPrice = sellingPrice.trim() !== "";
+  const priceUsed = hasCustomPrice ? parseFloat(sellingPrice) : msp;
+
+  const revenue = qty * priceUsed;
+  const profit = revenue - cost;
+
+  setProfitResult({
+    revenue,
+    cost,
+    profit,
+    priceUsed,
+    usedMsp: !hasCustomPrice,
+  });
 };
 
   return (
@@ -200,9 +244,165 @@ const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice
     </div>
   )}
 </div>
+
+{/* PROFIT CALCULATOR */}
+<div className="bg-card rounded-2xl border border-border shadow-card p-6 mt-8">
+
+<h2 className="text-xl font-bold flex items-center gap-2">
+<ArrowRight className="w-5 h-5" />
+{t("profitCalculatorTitle")}
+</h2>
+
+<div className="border-t border-border my-4"></div>
+
+<div className="space-y-4">
+
+<div>
+<label className="block text-sm font-medium mb-1">
+{t("selectCropLabel")}
+</label>
+
+<select
+value={profitCrop}
+onChange={(e) => setProfitCrop(e.target.value)}
+className="w-full px-4 py-2 border rounded-xl"
+>
+
+<option value="">{t("chooseCropPlaceholder")}</option>
+
+{cropNames.map((c) => (
+<option key={c} value={c}>
+{t(keyForCrop(c) as any)} — ₹{mspData[c]}
+</option>
+))}
+
+</select>
+</div>
+
+<div>
+<label className="block text-sm font-medium mb-1">
+{t("quantityLabel")}
+</label>
+
+<input
+type="number"
+min="0"
+value={profitQuantity}
+onChange={(e) => setProfitQuantity(e.target.value)}
+className="w-full px-4 py-2 border rounded-xl"
+placeholder={t("quantityPlaceholder")}
+/>
+</div>
+
+<div>
+<label className="block text-sm font-medium mb-1">
+{t("sellingPriceLabel")}
+</label>
+
+<input
+type="number"
+min="0"
+value={sellingPrice}
+onChange={(e) => setSellingPrice(e.target.value)}
+className="w-full px-4 py-2 border rounded-xl"
+placeholder={t("sellingPricePlaceholder")}
+/>
+</div>
+
+<div>
+<label className="block text-sm font-medium mb-1">
+{t("productionCostLabel")}
+</label>
+
+<input
+type="number"
+min="0"
+value={productionCost}
+onChange={(e) => setProductionCost(e.target.value)}
+className="w-full px-4 py-2 border rounded-xl"
+placeholder={t("productionCostPlaceholder")}
+/>
+</div>
+
+<button
+onClick={calculateProfit}
+disabled={!profitCrop || !profitQuantity || !productionCost}
+className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold disabled:opacity-50"
+>
+
+{t("calculateProfitButton")}
+
+</button>
+
+</div>
+
+{profitResult && (
+
+<div className="mt-4 p-4 bg-primary/10 rounded-xl space-y-4">
+
+<div className="text-center">
+
+<p className="text-sm text-muted-foreground">
+{t("priceUsedLabel")}
+</p>
+
+<p className="text-lg font-semibold">
+₹{profitResult.priceUsed.toLocaleString()} / quintal
+</p>
+
+<p className="text-xs text-muted-foreground mt-1">
+{profitResult.usedMsp ? t("usedMspLabel") : t("usedCustomPriceLabel")}
+</p>
+
+</div>
+
+<div className="grid grid-cols-3 gap-4">
+
+<div className="bg-background rounded-xl p-4 text-center border">
+
+<p className="text-sm text-muted-foreground">
+{t("totalRevenueLabel")}
+</p>
+
+<p className="text-xl font-bold">
+₹{profitResult.revenue.toLocaleString()}
+</p>
+
+</div>
+
+<div className="bg-background rounded-xl p-4 text-center border">
+
+<p className="text-sm text-muted-foreground">
+{t("totalCostLabel")}
+</p>
+
+<p className="text-xl font-bold">
+₹{profitResult.cost.toLocaleString()}
+</p>
+
+</div>
+
+<div className="bg-background rounded-xl p-4 text-center border">
+
+<p className="text-sm text-muted-foreground">
+{t("netProfitLabel")}
+</p>
+
+<p className={`text-xl font-bold ${profitResult.profit >= 0 ? "text-green-600" : "text-red-600"}`}>
+  ₹{Math.abs(profitResult.profit).toLocaleString()}
+</p>
+<p className={`text-xs mt-1 font-medium ${profitResult.profit >= 0 ? "text-green-600" : "text-red-600"}`}>
+  {profitResult.profit >= 0 ? t("profitStatus") : t("lossStatus")}
+</p>
+</div>
+</div>
+</div>
+)}
+</div>
         </div>
       </div>
-    </div>
+      </div>
+    
   );
 };
 
