@@ -129,5 +129,32 @@ export const govSchemes: (GovScheme & { id: string })[] = [
     benefits: "Subsidized micro-irrigation, drip irrigation systems, water harvesting support.",
     icon: "💧",
     link: "https://pmksy.gov.in/"
-  }
+  },
+  {
+  id: "KUSUM",
+  name: "PM KUSUM Yojana",
+  description: "Supports farmers to install solar pumps and generate additional income.",
+  eligibility: "Farmers with land and existing irrigation pumps.",
+  benefits: "Up to 60% subsidy, reduced electricity cost, income from solar power.",
+  icon: "☀️",
+  link: "https://pmkusum.mnre.gov.in"
+},
+{
+  id: "AIF",
+  name: "Agriculture Infrastructure Fund",
+  description: "Provides financing for warehouses, cold storage, and agricultural infrastructure.",
+  eligibility: "Farmers, FPOs, agri startups, cooperatives.",
+  benefits: "Low interest loans, credit guarantee, infrastructure development support.",
+  icon: "🏗️",
+  link: "https://agriinfra.dac.gov.in"
+},
+{
+  id: "BEE",
+  name: "National Beekeeping & Honey Mission",
+  description: "Promotes beekeeping and honey production for additional farmer income.",
+  eligibility: "Farmers interested in apiculture and allied activities.",
+  benefits: "Training, financial support, increased income opportunities.",
+  icon: "🐝",
+  link: "https://nbb.gov.in"
+}
 ];
