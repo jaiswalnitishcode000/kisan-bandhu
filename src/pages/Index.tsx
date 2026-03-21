@@ -259,10 +259,6 @@ const Index = () => {
     {/* Top heading */}
     <ScrollReveal>
       <div className="text-center mb-16">
-        <span className="text-sm font-bold uppercase tracking-widest px-4 py-1.5 rounded-full" 
-          style={{backgroundColor: "#f0fdf4", color: "#166534"}}>
-          Who We Are
-        </span>
         <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
           About <span style={{color: "#166534"}}>Kisan Bandhu</span>
         </h2>
@@ -289,31 +285,6 @@ const Index = () => {
               style={{background: "linear-gradient(to top, rgba(22,101,52,0.7) 0%, transparent 60%)"}} />
           </div>
 
-          {/* Floating stat card 1 */}
-          <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3"
-            style={{border: "2px solid #f0fdf4"}}>
-            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
-              style={{backgroundColor: "#f0fdf4"}}>
-              🧑‍🌾
-            </div>
-            <div>
-              <div className="text-xl font-extrabold" style={{color: "#166534"}}>500+</div>
-              <div className="text-xs text-gray-500">Farmers Registered</div>
-            </div>
-          </div>
-
-          {/* Floating stat card 2 */}
-          <div className="absolute -top-6 -left-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3"
-            style={{border: "2px solid #f0fdf4"}}>
-            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
-              style={{backgroundColor: "#fff7ed"}}>
-              🏭
-            </div>
-            <div>
-              <div className="text-xl font-extrabold" style={{color: "#f59e0b"}}>200+</div>
-              <div className="text-xs text-gray-500">Buyers Connected</div>
-            </div>
-          </div>
         </div>
       </ScrollReveal>
 
