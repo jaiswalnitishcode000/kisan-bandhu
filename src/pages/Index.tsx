@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import ScrollReveal from "@/components/ScrollReveal";
-import heroBg from "@/assets/hero-bg.jpg";
 import { ShoppingCart, Sprout, Landmark, Users, ArrowRight, TrendingUp } from "lucide-react";
 
 const Index = () => {
@@ -15,9 +14,9 @@ const Index = () => {
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=1920&q=80)` }}
         />
-        <div className="absolute inset-0 bg-hero-gradient" />
+        <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-primary-foreground mb-4 animate-fade-in leading-tight">
             {t("heroTitle")}
