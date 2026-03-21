@@ -4,6 +4,67 @@ import { useLanguage } from "@/context/LanguageContext";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ShoppingCart, Sprout, Landmark, Users, ArrowRight, TrendingUp } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+const DEMO_USERS = [
+  { type: "farmer", name: "Ramesh Kumar", city: "Amritsar", lat: 31.634, lng: 74.872, crop: "Wheat" },
+  { type: "farmer", name: "Suresh Patel", city: "Ahmedabad", lat: 23.022, lng: 72.571, crop: "Cotton" },
+  { type: "farmer", name: "Mohan Lal", city: "Jaipur", lat: 26.912, lng: 75.787, crop: "Bajra" },
+  { type: "farmer", name: "Kiran Devi", city: "Patna", lat: 25.594, lng: 85.137, crop: "Rice" },
+  { type: "farmer", name: "Arvind Singh", city: "Lucknow", lat: 26.846, lng: 80.946, crop: "Sugarcane" },
+  { type: "farmer", name: "Priya Sharma", city: "Bhopal", lat: 23.259, lng: 77.412, crop: "Soybean" },
+  { type: "farmer", name: "Dinesh Yadav", city: "Nagpur", lat: 21.145, lng: 79.088, crop: "Orange" },
+  { type: "farmer", name: "Lakshmi Bai", city: "Hyderabad", lat: 17.385, lng: 78.486, crop: "Maize" },
+  { type: "farmer", name: "Ravi Verma", city: "Chennai", lat: 13.082, lng: 80.270, crop: "Paddy" },
+  { type: "farmer", name: "Gopal Das", city: "Kolkata", lat: 22.572, lng: 88.363, crop: "Jute" },
+  { type: "buyer", name: "Agromart Pvt Ltd", city: "Mumbai", lat: 19.076, lng: 72.877, crop: "All Crops" },
+  { type: "buyer", name: "FreshDeal Co.", city: "Delhi", lat: 28.613, lng: 77.209, crop: "Vegetables" },
+  { type: "buyer", name: "GrainTrade India", city: "Chandigarh", lat: 30.733, lng: 76.779, crop: "Wheat" },
+  { type: "buyer", name: "SouthAgro Ltd", city: "Bangalore", lat: 12.971, lng: 77.594, crop: "Millets" },
+  { type: "buyer", name: "EastHarvest Inc", city: "Bhubaneswar", lat: 20.296, lng: 85.824, crop: "Rice" },
+  { type: "farmer", name: "Shashank Mishra", city: "Prayagraj", lat: 25.4358, lng: 81.8463, crop: "Wheat" },
+{ type: "buyer", name: "Avika Garg", city: "Rohtak", lat: 28.8955, lng: 76.6066, crop: "Wheat" },
+];
+
+const IndiaMap = () => {
+  return (
+    <MapContainer
+      center={[22.5, 82.0]}
+      zoom={5}
+      style={{ height: "100%", width: "100%" }}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; OpenStreetMap'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {DEMO_USERS.map((user, i) => (
+        <CircleMarker
+          key={i}
+          center={[user.lat, user.lng]}
+          radius={user.type === "farmer" ? 8 : 10}
+          pathOptions={{
+            color: user.type === "farmer" ? "#166534" : "#f59e0b",
+            fillColor: user.type === "farmer" ? "#166534" : "#f59e0b",
+            fillOpacity: 0.85,
+          }}
+        >
+          <Popup>
+            <div style={{fontSize: "13px"}}>
+              <p style={{fontWeight: "bold"}}>{user.type === "farmer" ? "🧑‍🌾" : "🏭"} {user.name}</p>
+              <p>📍 {user.city}</p>
+              <p>🌾 {user.crop}</p>
+              <p style={{color: user.type === "farmer" ? "#166534" : "#f59e0b", fontWeight: "600", textTransform: "capitalize"}}>
+                {user.type}
+              </p>
+            </div>
+          </Popup>
+        </CircleMarker>
+      ))}
+    </MapContainer>
+  );
+};
 
 const STEPS = [
   { emoji: "🧑‍🌾", label: "Farmer",        row: 0, col: 0, highlight: true  },
@@ -282,32 +343,51 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-16 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">{t("howItWorks")}</h2>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              { icon: <Users className="w-10 h-10" />, step: "1", title: "Register & Choose Role", desc: "Sign up as a Farmer or Buyer. Farmers list crops, buyers browse and bid." },
-              { icon: <TrendingUp className="w-10 h-10" />, step: "2", title: "List or Bid on Crops", desc: "Farmers set base prices. Buyers place competitive bids. Transparent & fair." },
-              { icon: <ArrowRight className="w-10 h-10" />, step: "3", title: "Connect & Trade", desc: "Accept the best bid. Connect directly. No middlemen, better profits." },
-            ].map((item, i) => (
-              <ScrollReveal key={i}>
-                <div className="bg-card rounded-2xl p-8 text-center shadow-card border border-border hover:shadow-kisan transition-shadow">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
-                    {item.icon}
-                  </div>
-                  <div className="text-sm font-bold text-primary mb-2">Step {item.step}</div>
-                  <h3 className="text-xl font-semibold mb-2 text-foreground">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+      {/* India Map Section */}
+<section className="py-16 bg-muted/50">
+  <div className="container mx-auto px-4">
+    <ScrollReveal>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          Our <span style={{color: "#166534"}}>Network</span> Across India
+        </h2>
+        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+          Farmers and buyers connected across the country — from Kashmir to Kanyakumari.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    {/* Legend */}
+    <div className="flex justify-center gap-8 mb-6">
+      <div className="flex items-center gap-2">
+        <div className="w-4 h-4 rounded-full" style={{backgroundColor: "#166534"}}></div>
+        <span className="text-sm font-medium text-foreground">🧑‍🌾 Farmer</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-4 h-4 rounded-full" style={{backgroundColor: "#f59e0b"}}></div>
+        <span className="text-sm font-medium text-foreground">🏭 Buyer</span>
+      </div>
+    </div>
+
+    <div className="rounded-2xl overflow-hidden shadow-lg border border-border" style={{height: "500px"}}>
+      <IndiaMap />
+    </div>
+
+    {/* Stats below map */}
+    <div className="grid grid-cols-3 gap-4 mt-6 max-w-lg mx-auto text-center">
+      {[
+        { value: "18", label: "States Covered" },
+        { value: "24", label: "Farmers" },
+        { value: "16", label: "Buyers" },
+      ].map((s, i) => (
+        <div key={i} className="bg-card rounded-xl p-4 border border-border">
+          <div className="text-2xl font-extrabold" style={{color: "#166534"}}>{s.value}</div>
+          <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
      {/* Key Features Section */}
 <section className="py-16 bg-background">
