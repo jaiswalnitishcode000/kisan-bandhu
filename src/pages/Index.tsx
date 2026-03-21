@@ -51,6 +51,73 @@ const Index = () => {
           </ScrollReveal>
         </div>
       </section>
+      {/* Services Section */}
+<section className="py-16 bg-background">
+  <div className="container mx-auto px-4">
+    <ScrollReveal>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          Our <span style={{color: "#166534"}}>Services</span>
+        </h2>
+        <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
+          Kisan Bandhu provides all of the following services to empower farmers across India.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <div className="relative flex items-center justify-center min-h-[500px]">
+      
+      {/* Center Logo */}
+      <div className="absolute z-10 w-32 h-32 rounded-full border-2 flex items-center justify-center bg-white shadow-lg" style={{borderColor: "#166534"}}>
+        <div className="text-center">
+          <img src="/favicon.ico" alt="logo" className="w-10 h-10 mx-auto" />
+          <p className="text-xs font-bold mt-1" style={{color: "#166534"}}>KISAN<br/>BANDHU</p>
+        </div>
+      </div>
+
+      {/* Top Left */}
+      <div className="absolute flex items-center gap-4" style={{top: "5%", left: "10%"}}>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
+          <ShoppingCart className="w-7 h-7" style={{color: "#166534"}} />
+        </div>
+        <p className="text-sm font-semibold uppercase tracking-wide text-foreground">Crop<br/>Marketplace</p>
+      </div>
+
+      {/* Top Right */}
+      <div className="absolute flex items-center gap-4" style={{top: "5%", right: "10%"}}>
+        <p className="text-sm font-semibold uppercase tracking-wide text-foreground text-right">Gov<br/>Schemes</p>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
+          <Landmark className="w-7 h-7" style={{color: "#166534"}} />
+        </div>
+      </div>
+
+      {/* Bottom Left */}
+      <div className="absolute flex items-center gap-4" style={{bottom: "5%", left: "10%"}}>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
+          <Sprout className="w-7 h-7" style={{color: "#166534"}} />
+        </div>
+        <p className="text-sm font-semibold uppercase tracking-wide text-foreground">Crop<br/>Advisory</p>
+      </div>
+
+      {/* Bottom Right */}
+      <div className="absolute flex items-center gap-4" style={{bottom: "5%", right: "10%"}}>
+        <p className="text-sm font-semibold uppercase tracking-wide text-foreground text-right">Direct Farmer<br/>Buyer Connect</p>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
+          <Users className="w-7 h-7" style={{color: "#166534"}} />
+        </div>
+      </div>
+
+      {/* Bottom Center */}
+      <div className="absolute flex flex-col items-center gap-2" style={{bottom: "0%"}}>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
+          <TrendingUp className="w-7 h-7" style={{color: "#166534"}} />
+        </div>
+        <p className="text-sm font-semibold uppercase tracking-wide text-foreground">MSP Calculator</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* How It Works */}
       <section className="py-16 bg-muted/50">
