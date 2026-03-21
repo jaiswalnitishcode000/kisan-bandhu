@@ -51,7 +51,7 @@ const Index = () => {
           </ScrollReveal>
         </div>
       </section>
-      {/* Services Section */}
+    {/* Services Section */}
 <section className="py-16 bg-background">
   <div className="container mx-auto px-4">
     <ScrollReveal>
@@ -65,54 +65,74 @@ const Index = () => {
       </div>
     </ScrollReveal>
 
-    <div className="relative flex items-center justify-center min-h-[500px]">
+    <div className="relative flex items-center justify-center" style={{height: "480px", maxWidth: "700px", margin: "0 auto"}}>
       
+      {/* SVG Dotted Lines */}
+      <svg className="absolute inset-0 w-full h-full" style={{zIndex: 0}}>
+        {/* Top Left */}
+        <line x1="50%" y1="50%" x2="22%" y2="22%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
+        {/* Top Right */}
+        <line x1="50%" y1="50%" x2="78%" y2="22%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
+        {/* Bottom Left */}
+        <line x1="50%" y1="50%" x2="22%" y2="78%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
+        {/* Bottom Right */}
+        <line x1="50%" y1="50%" x2="78%" y2="78%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
+        {/* Bottom Center */}
+        <line x1="50%" y1="50%" x2="50%" y2="88%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
+      </svg>
+
       {/* Center Logo */}
-      <div className="absolute z-10 w-32 h-32 rounded-full border-2 flex items-center justify-center bg-white shadow-lg" style={{borderColor: "#166534"}}>
+      <div className="absolute z-10 w-28 h-28 rounded-full border-2 flex items-center justify-center bg-white shadow-lg" 
+        style={{borderColor: "#166534", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
         <div className="text-center">
           <img src="/favicon.ico" alt="logo" className="w-10 h-10 mx-auto" />
           <p className="text-xs font-bold mt-1" style={{color: "#166534"}}>KISAN<br/>BANDHU</p>
         </div>
       </div>
 
-      {/* Top Left */}
-      <div className="absolute flex items-center gap-4" style={{top: "5%", left: "10%"}}>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
-          <ShoppingCart className="w-7 h-7" style={{color: "#166534"}} />
+      {/* Top Left - Crop Marketplace */}
+      <div className="absolute z-10 flex flex-col items-center gap-2" style={{top: "8%", left: "12%"}}>
+        <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" 
+          style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
+          <ShoppingCart className="w-6 h-6" style={{color: "#166534"}} />
         </div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-foreground">Crop<br/>Marketplace</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Crop<br/>Marketplace</p>
       </div>
 
-      {/* Top Right */}
-      <div className="absolute flex items-center gap-4" style={{top: "5%", right: "10%"}}>
-        <p className="text-sm font-semibold uppercase tracking-wide text-foreground text-right">Gov<br/>Schemes</p>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
-          <Landmark className="w-7 h-7" style={{color: "#166534"}} />
+      {/* Top Right - Gov Schemes */}
+      <div className="absolute z-10 flex flex-col items-center gap-2" style={{top: "8%", right: "12%"}}>
+        <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" 
+          style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
+          <Landmark className="w-6 h-6" style={{color: "#166534"}} />
         </div>
+        <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Gov<br/>Schemes</p>
       </div>
 
-      {/* Bottom Left */}
-      <div className="absolute flex items-center gap-4" style={{bottom: "5%", left: "10%"}}>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
-          <Sprout className="w-7 h-7" style={{color: "#166534"}} />
+      {/* Bottom Left - Crop Advisory */}
+      <div className="absolute z-10 flex flex-col items-center gap-2" style={{bottom: "8%", left: "12%"}}>
+        <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" 
+          style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
+          <Sprout className="w-6 h-6" style={{color: "#166534"}} />
         </div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-foreground">Crop<br/>Advisory</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Crop<br/>Advisory</p>
       </div>
 
-      {/* Bottom Right */}
-      <div className="absolute flex items-center gap-4" style={{bottom: "5%", right: "10%"}}>
-        <p className="text-sm font-semibold uppercase tracking-wide text-foreground text-right">Direct Farmer<br/>Buyer Connect</p>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
-          <Users className="w-7 h-7" style={{color: "#166534"}} />
+      {/* Bottom Right - Direct Connect */}
+      <div className="absolute z-10 flex flex-col items-center gap-2" style={{bottom: "8%", right: "12%"}}>
+        <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" 
+          style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
+          <Users className="w-6 h-6" style={{color: "#166534"}} />
         </div>
+        <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Direct Farmer<br/>Buyer Connect</p>
       </div>
 
-      {/* Bottom Center */}
-      <div className="absolute flex flex-col items-center gap-2" style={{bottom: "0%"}}>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1px solid #166534"}}>
-          <TrendingUp className="w-7 h-7" style={{color: "#166534"}} />
+      {/* Bottom Center - MSP Calculator */}
+      <div className="absolute z-10 flex flex-col items-center gap-2" style={{bottom: "0%", left: "50%", transform: "translateX(-50%)"}}>
+        <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" 
+          style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
+          <TrendingUp className="w-6 h-6" style={{color: "#166534"}} />
         </div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-foreground">MSP Calculator</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">MSP Calculator</p>
       </div>
 
     </div>
