@@ -154,18 +154,6 @@ const TradingFlow = () => {
         </div>
       </div>
 
-      {/* Replay Button */}
-      <div className="text-center mt-8">
-        <button onClick={replay} disabled={isPlaying}
-          className="px-6 py-2.5 rounded-xl text-sm font-semibold transition-all"
-          style={{
-            backgroundColor: isPlaying ? "#9ca3af" : "#166534",
-            color: "white",
-            cursor: isPlaying ? "not-allowed" : "pointer",
-          }}>
-          {isPlaying ? "⏳ Playing..." : "▶ Replay Animation"}
-        </button>
-      </div>
     </div>
   );
 };
