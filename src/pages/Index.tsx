@@ -252,17 +252,139 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t("aboutTitle")}</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">{t("aboutDescription")}</p>
+     {/* About Section */}
+<section className="py-20 bg-background overflow-hidden">
+  <div className="container mx-auto px-4">
+    
+    {/* Top heading */}
+    <ScrollReveal>
+      <div className="text-center mb-16">
+        <span className="text-sm font-bold uppercase tracking-widest px-4 py-1.5 rounded-full" 
+          style={{backgroundColor: "#f0fdf4", color: "#166534"}}>
+          Who We Are
+        </span>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
+          About <span style={{color: "#166534"}}>Kisan Bandhu</span>
+        </h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+          India's farmer-first digital marketplace — eliminating middlemen, ensuring fair prices, and empowering every kisan.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    {/* 2 column layout */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+      
+      {/* Left - Image/Visual */}
+      <ScrollReveal>
+        <div className="relative">
+          {/* Main card */}
+          <div className="rounded-3xl overflow-hidden shadow-2xl" style={{height: "380px"}}>
+            <img 
+              src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80"
+              alt="Farmer in wheat field"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 rounded-3xl" 
+              style={{background: "linear-gradient(to top, rgba(22,101,52,0.7) 0%, transparent 60%)"}} />
+          </div>
+
+          {/* Floating stat card 1 */}
+          <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3"
+            style={{border: "2px solid #f0fdf4"}}>
+            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
+              style={{backgroundColor: "#f0fdf4"}}>
+              🧑‍🌾
             </div>
-          </ScrollReveal>
+            <div>
+              <div className="text-xl font-extrabold" style={{color: "#166534"}}>500+</div>
+              <div className="text-xs text-gray-500">Farmers Registered</div>
+            </div>
+          </div>
+
+          {/* Floating stat card 2 */}
+          <div className="absolute -top-6 -left-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3"
+            style={{border: "2px solid #f0fdf4"}}>
+            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
+              style={{backgroundColor: "#fff7ed"}}>
+              🏭
+            </div>
+            <div>
+              <div className="text-xl font-extrabold" style={{color: "#f59e0b"}}>200+</div>
+              <div className="text-xs text-gray-500">Buyers Connected</div>
+            </div>
+          </div>
         </div>
-      </section>
+      </ScrollReveal>
+
+      {/* Right - Content */}
+      <ScrollReveal>
+        <div className="space-y-6">
+          
+          {/* Mission */}
+          <div className="flex gap-4 items-start p-5 rounded-2xl transition-all hover:shadow-md"
+            style={{backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0"}}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+              style={{backgroundColor: "#166534"}}>
+              🎯
+            </div>
+            <div>
+              <h3 className="font-bold text-lg text-foreground mb-1">Our Mission</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                To eliminate middlemen and give farmers direct access to buyers — ensuring maximum profit stays with the farmer.
+              </p>
+            </div>
+          </div>
+
+          {/* Vision */}
+          <div className="flex gap-4 items-start p-5 rounded-2xl transition-all hover:shadow-md"
+            style={{backgroundColor: "#fff7ed", border: "1px solid #fed7aa"}}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+              style={{backgroundColor: "#f59e0b"}}>
+              🌟
+            </div>
+            <div>
+              <h3 className="font-bold text-lg text-foreground mb-1">Our Vision</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                A digital India where every farmer gets a fair price, transparent trade, and access to government schemes — all in one place.
+              </p>
+            </div>
+          </div>
+
+          {/* Why Us */}
+          <div className="flex gap-4 items-start p-5 rounded-2xl transition-all hover:shadow-md"
+            style={{backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0"}}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+              style={{backgroundColor: "#166534"}}>
+              💡
+            </div>
+            <div>
+              <h3 className="font-bold text-lg text-foreground mb-1">Why Kisan Bandhu?</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Transparent bidding, crop advisory, MSP calculator, and government schemes — everything a farmer needs, in one platform.
+              </p>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="flex gap-3 pt-2">
+            <Link to="/marketplace" 
+              className="px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 hover:opacity-90 transition-opacity"
+              style={{backgroundColor: "#166534", color: "white"}}>
+              <ShoppingCart className="w-4 h-4" /> Explore Marketplace
+            </Link>
+            <Link to="/auth"
+              className="px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 hover:opacity-90 transition-opacity"
+              style={{backgroundColor: "#f59e0b", color: "white"}}>
+              Join Now <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+        </div>
+      </ScrollReveal>
+    </div>
+  </div>
+</section>
 
       {/* Services Section */}
       <section className="py-16 bg-background">
