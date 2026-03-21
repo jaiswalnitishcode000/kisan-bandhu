@@ -308,27 +308,75 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-16 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { value: "100%", label: "Transparent Bidding System" },
-              { value: "Direct", label: "Farmer to Buyer Connect" },
-              { value: "Building", label: "Digital Agriculture" },
-              { value: "24/7", label: "Support & Assistance" },
-            ].map((stat, i) => (
-              <ScrollReveal key={i}>
-                <div>
-                  <div className="text-3xl md:text-4xl font-extrabold">{stat.value}</div>
-                  <div className="text-sm mt-1 opacity-80">{stat.label}</div>
-                </div>
-              </ScrollReveal>
-            ))}
+{/* Key Features Section */}
+<section className="py-16 bg-background">
+  <div className="container mx-auto px-4">
+    <ScrollReveal>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          Key <span style={{color: "#166534"}}>Features</span>
+        </h2>
+        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+          Discover how Kisan Bandhu can benefit farmers, buyers and all agricultural supply chain actors.
+        </p>
+      </div>
+    </ScrollReveal>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      {[
+        {
+          emoji: "🔍",
+          title: "Transparency",
+          desc: "Direct transactions between farmers and buyers. No hidden charges, no middlemen.",
+          highlight: false,
+        },
+        {
+          emoji: "⚖️",
+          title: "Fair Trade",
+          desc: "Redistribution of value in the agricultural supply chain. Fair prices for all.",
+          highlight: false,
+        },
+        {
+          emoji: "📱",
+          title: "User Friendly",
+          desc: "Easy to use platform for farmers and buyers. Simple, fast and reliable.",
+          highlight: false,
+        },
+        {
+          emoji: "🔗",
+          title: "Crop Traceability",
+          desc: "Track your crop through the entire supply chain. Coming soon!",
+          highlight: true,
+        },
+      ].map((feature, i) => (
+        <ScrollReveal key={i}>
+          <div
+            className="rounded-2xl p-8 text-center border transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            style={{
+              backgroundColor: feature.highlight ? "#f0fdf4" : "#ffffff",
+              borderColor: feature.highlight ? "#166534" : "#e5e7eb",
+            }}
+          >
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-md"
+              style={{ backgroundColor: "#166534" }}
+            >
+              {feature.emoji}
+            </div>
+            <h3
+              className="text-sm font-bold uppercase tracking-widest mb-3"
+              style={{ color: feature.highlight ? "#166534" : "#1f2937" }}
+            >
+              {feature.title}
+            </h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {feature.desc}
+            </p>
           </div>
-        </div>
-      </section>
-
+        </ScrollReveal>
+      ))}
+    </div>
+  </div>
+</section>
       {/* CTA */}
       {!user && (
         <section className="py-16 bg-background">
