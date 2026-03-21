@@ -28,9 +28,13 @@ const TradingFlow = () => {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+ useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting && !isPlaying && !completed) startAnimation(); },
+      ([entry]) => { 
+        if (entry.isIntersecting && !isPlaying) {
+          startAnimation(); 
+        }
+      },
       { threshold: 0.3 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
