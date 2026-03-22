@@ -121,7 +121,7 @@ const Footer = () => {
 
         {/* Divider */}
         <div style={{borderTop: "1px solid rgba(255,255,255,0.15)"}} className="pt-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col items-center gap-3">
             <p className="text-green-200 text-sm">
               © 2026 <span className="text-white font-semibold">Kisan Bandhu</span>. All rights reserved.
             </p>
@@ -130,9 +130,6 @@ const Footer = () => {
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-white transition-colors">Support</a>
             </div>
-            <p className="text-green-200 text-xs">
-              Made with ❤️ for Indian Farmers 🇮🇳
-            </p>
           </div>
         </div>
 
