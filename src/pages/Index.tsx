@@ -472,39 +472,6 @@ const Index = () => {
       ))}
     </div>
 
-    {/* Bottom CTA */}
-    <ScrollReveal>
-      <div
-        className="mt-16 rounded-3xl p-10 text-center max-w-3xl mx-auto"
-        style={{
-          background: "linear-gradient(135deg, #166534 0%, #15803d 50%, #16a34a 100%)",
-        }}
-      >
-        <div className="text-4xl mb-4">🌾</div>
-        <h3 className="text-2xl font-extrabold text-white mb-3">
-          Ready to Transform Your Farming?
-        </h3>
-        <p className="text-green-100 mb-6 text-sm leading-relaxed max-w-lg mx-auto">
-          Join thousands of farmers and buyers already using Kisan Bandhu for transparent, profitable agricultural trade.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          <Link
-            to="/auth"
-            className="px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-105"
-            style={{backgroundColor: "#f59e0b", color: "white"}}
-          >
-            Join as Farmer 🧑‍🌾
-          </Link>
-          <Link
-            to="/auth"
-            className="px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-105"
-            style={{backgroundColor: "white", color: "#166534"}}
-          >
-            Join as Buyer 🏭
-          </Link>
-        </div>
-      </div>
-    </ScrollReveal>
 
   </div>
 </section>
