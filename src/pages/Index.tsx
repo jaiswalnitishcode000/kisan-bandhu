@@ -411,7 +411,7 @@ const Index = () => {
           color: "#be123c",
           bg: "#fff1f2",
           border: "#fecdd3",
-          link: "/",
+          link: "/market-insights",
         },
       ].map((service, i) => (
         <ScrollReveal key={i}>
