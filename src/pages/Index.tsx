@@ -358,66 +358,156 @@ const Index = () => {
 </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Our <span style={{color: "#166534"}}>Services</span>
-              </h2>
-              <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-                Kisan Bandhu provides all of the following services to empower farmers across India.
-              </p>
+<section className="py-20 bg-background overflow-hidden">
+  <div className="container mx-auto px-4">
+    <ScrollReveal>
+      <div className="text-center mb-16">
+        <span className="text-sm font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
+          style={{backgroundColor: "#f0fdf4", color: "#166534"}}>
+          What We Offer
+        </span>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
+          Our <span style={{color: "#166534"}}>Services</span>
+        </h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          Everything a farmer and buyer needs — in one powerful platform.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {[
+        {
+          emoji: "🛒",
+          title: "Crop Marketplace",
+          desc: "List your crops and get the best bids from verified buyers across India. No middlemen, maximum profit.",
+          color: "#166534",
+          bg: "#f0fdf4",
+          border: "#bbf7d0",
+          link: "/marketplace",
+        },
+        {
+          emoji: "🌱",
+          title: "Crop Advisory",
+          desc: "Get expert advice on crop selection, pest control, weather alerts and best farming practices.",
+          color: "#0369a1",
+          bg: "#f0f9ff",
+          border: "#bae6fd",
+          link: "/advisory",
+        },
+        {
+          emoji: "🏛️",
+          title: "Gov Schemes",
+          desc: "Discover and apply for government schemes, subsidies and loans designed for Indian farmers.",
+          color: "#7c3aed",
+          bg: "#faf5ff",
+          border: "#ddd6fe",
+          link: "/schemes",
+        },
+        {
+          emoji: "🧮",
+          title: "MSP Calculator",
+          desc: "Calculate Minimum Support Price for your crops instantly. Know your rights, get fair value.",
+          color: "#b45309",
+          bg: "#fffbeb",
+          border: "#fde68a",
+          link: "/msp-calculator",
+        },
+        {
+          emoji: "🤝",
+          title: "Direct Farmer-Buyer Connect",
+          desc: "Connect directly with verified buyers. Transparent bidding, secure deals, better relationships.",
+          color: "#166534",
+          bg: "#f0fdf4",
+          border: "#bbf7d0",
+          link: "/marketplace",
+        },
+        {
+          emoji: "📊",
+          title: "Market Insights",
+          desc: "Real-time crop prices, market trends and demand forecasts to help you make smarter decisions.",
+          color: "#be123c",
+          bg: "#fff1f2",
+          border: "#fecdd3",
+          link: "/",
+        },
+      ].map((service, i) => (
+        <ScrollReveal key={i}>
+          <div
+            className="group rounded-2xl p-6 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer h-full"
+            style={{
+              backgroundColor: service.bg,
+              borderColor: service.border,
+            }}
+          >
+            {/* Icon */}
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-5 shadow-sm transition-transform duration-300 group-hover:scale-110"
+              style={{backgroundColor: service.color}}
+            >
+              {service.emoji}
             </div>
-          </ScrollReveal>
-          <div className="relative flex items-center justify-center" style={{height: "480px", maxWidth: "700px", margin: "0 auto"}}>
-            <svg className="absolute inset-0 w-full h-full" style={{zIndex: 0}}>
-              <line x1="50%" y1="50%" x2="22%" y2="22%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
-              <line x1="50%" y1="50%" x2="78%" y2="22%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
-              <line x1="50%" y1="50%" x2="22%" y2="78%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
-              <line x1="50%" y1="50%" x2="78%" y2="78%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
-              <line x1="50%" y1="50%" x2="50%" y2="88%" stroke="#166534" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.4"/>
-            </svg>
-            <div className="absolute z-10 w-28 h-28 rounded-full border-2 flex items-center justify-center bg-white shadow-lg"
-              style={{borderColor: "#166534", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
-              <div className="text-center">
-                <img src="/favicon.ico" alt="logo" className="w-10 h-10 mx-auto" />
-                <p className="text-xs font-bold mt-1" style={{color: "#166534"}}>KISAN<br/>BANDHU</p>
-              </div>
-            </div>
-            <div className="absolute z-10 flex flex-col items-center gap-2" style={{top: "8%", left: "12%"}}>
-              <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
-                <ShoppingCart className="w-6 h-6" style={{color: "#166534"}} />
-              </div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Crop<br/>Marketplace</p>
-            </div>
-            <div className="absolute z-10 flex flex-col items-center gap-2" style={{top: "8%", right: "12%"}}>
-              <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
-                <Landmark className="w-6 h-6" style={{color: "#166534"}} />
-              </div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Gov<br/>Schemes</p>
-            </div>
-            <div className="absolute z-10 flex flex-col items-center gap-2" style={{bottom: "8%", left: "12%"}}>
-              <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
-                <Sprout className="w-6 h-6" style={{color: "#166534"}} />
-              </div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Crop<br/>Advisory</p>
-            </div>
-            <div className="absolute z-10 flex flex-col items-center gap-2" style={{bottom: "8%", right: "12%"}}>
-              <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
-                <Users className="w-6 h-6" style={{color: "#166534"}} />
-              </div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">Direct Farmer<br/>Buyer Connect</p>
-            </div>
-            <div className="absolute z-10 flex flex-col items-center gap-2" style={{bottom: "0%", left: "50%", transform: "translateX(-50%)"}}>
-              <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-md" style={{backgroundColor: "#f0fdf4", border: "1.5px solid #166534"}}>
-                <TrendingUp className="w-6 h-6" style={{color: "#166534"}} />
-              </div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-center text-foreground">MSP Calculator</p>
-            </div>
+
+            {/* Content */}
+            <h3
+              className="text-lg font-bold mb-2"
+              style={{color: service.color}}
+            >
+              {service.title}
+            </h3>
+            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+              {service.desc}
+            </p>
+
+            {/* Arrow link */}
+            <Link
+              to={service.link}
+              className="inline-flex items-center gap-1 text-sm font-semibold transition-all group-hover:gap-2"
+              style={{color: service.color}}
+            >
+              Learn More <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
+        </ScrollReveal>
+      ))}
+    </div>
+
+    {/* Bottom CTA */}
+    <ScrollReveal>
+      <div
+        className="mt-16 rounded-3xl p-10 text-center max-w-3xl mx-auto"
+        style={{
+          background: "linear-gradient(135deg, #166534 0%, #15803d 50%, #16a34a 100%)",
+        }}
+      >
+        <div className="text-4xl mb-4">🌾</div>
+        <h3 className="text-2xl font-extrabold text-white mb-3">
+          Ready to Transform Your Farming?
+        </h3>
+        <p className="text-green-100 mb-6 text-sm leading-relaxed max-w-lg mx-auto">
+          Join thousands of farmers and buyers already using Kisan Bandhu for transparent, profitable agricultural trade.
+        </p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Link
+            to="/auth"
+            className="px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-105"
+            style={{backgroundColor: "#f59e0b", color: "white"}}
+          >
+            Join as Farmer 🧑‍🌾
+          </Link>
+          <Link
+            to="/auth"
+            className="px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-105"
+            style={{backgroundColor: "white", color: "#166534"}}
+          >
+            Join as Buyer 🏭
+          </Link>
         </div>
-      </section>
+      </div>
+    </ScrollReveal>
+
+  </div>
+</section>
 
       {/* Trading Flow Section */}
       <section className="py-16 bg-muted/30">
