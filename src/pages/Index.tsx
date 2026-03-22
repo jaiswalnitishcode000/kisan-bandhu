@@ -337,20 +337,6 @@ const Index = () => {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="flex gap-3 pt-2">
-            <Link to="/marketplace" 
-              className="px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 hover:opacity-90 transition-opacity"
-              style={{backgroundColor: "#166534", color: "white"}}>
-              <ShoppingCart className="w-4 h-4" /> Explore Marketplace
-            </Link>
-            <Link to="/auth"
-              className="px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 hover:opacity-90 transition-opacity"
-              style={{backgroundColor: "#f59e0b", color: "white"}}>
-              Join Now <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
         </div>
       </ScrollReveal>
     </div>
@@ -362,10 +348,6 @@ const Index = () => {
   <div className="container mx-auto px-4">
     <ScrollReveal>
       <div className="text-center mb-16">
-        <span className="text-sm font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
-          style={{backgroundColor: "#f0fdf4", color: "#166534"}}>
-          What We Offer
-        </span>
         <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
           Our <span style={{color: "#166534"}}>Services</span>
         </h2>
@@ -414,14 +396,14 @@ const Index = () => {
           link: "/msp-calculator",
         },
         {
-          emoji: "🤝",
-          title: "Direct Farmer-Buyer Connect",
-          desc: "Connect directly with verified buyers. Transparent bidding, secure deals, better relationships.",
-          color: "#166534",
-          bg: "#f0fdf4",
-          border: "#bbf7d0",
-          link: "/marketplace",
-        },
+  emoji: "💰",
+  title: "Subsidy Calculator",
+  desc: "Calculate government subsidies available for your crops, equipment and farming inputs instantly.",
+  color: "#166534",
+  bg: "#f0fdf4",
+  border: "#bbf7d0",
+  link: "/msp-calculator",
+},
         {
           emoji: "📊",
           title: "Market Insights",
