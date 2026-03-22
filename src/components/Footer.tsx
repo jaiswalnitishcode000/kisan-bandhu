@@ -1,73 +1,143 @@
-import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Footer = () => {
   const { t } = useLanguage();
   return (
-  <footer className="bg-accent text-accent-foreground mt-16">
-    <div className="container mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* Brand */}
-        <div>
-          <div className="flex items-center gap-2 font-bold text-xl mb-3">
-            <Leaf className="w-6 h-6" /> {t("brandName")}
-          </div>
-          <p className="text-sm opacity-80">
-            {t("brandDescription")}
-          </p>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h4 className="font-semibold mb-3">{t("quickLinks")}</h4>
-          <div className="space-y-2 text-sm opacity-80">
-            <Link to="/marketplace" className="block hover:opacity-100 transition-opacity">{t("marketplace")}</Link>
-            <Link to="/advisory" className="block hover:opacity-100 transition-opacity">{t("cropAdvisory")}</Link>
-            <Link to="/msp-calculator" className="block hover:opacity-100 transition-opacity">{t("mspCalculator")}</Link>
-            <Link to="/schemes" className="block hover:opacity-100 transition-opacity">{t("govSchemes")}</Link>
-          </div>
-        </div>
-
-        {/* Contact */}
-        <div>
-          <h4 className="font-semibold mb-3">{t("contactUs")}</h4>
-          <div className="space-y-2 text-sm opacity-80">
-            <p className="flex items-center gap-2"><Phone className="w-4 h-4" /> +91 96253-01837</p>
-            <p className="flex items-center gap-2"><Mail className="w-4 h-4" /> kisanbandhu.contact@gmail.com</p>
-            <p className="flex items-center gap-2"><MapPin className="w-4 h-4" /> DTC 28/1, Knowledge Park-III, Greater Noida - 201306 (U.P.)</p>
-            <p className="text-xs opacity-70">Mon - Sat | 9:00 AM - 6:00 PM</p>
-          </div>
-        </div>
-
-        {/* Social */}
-        <div>
-          <h4 className="font-semibold mb-3">{t("followUs")}</h4>
-          <div className="flex gap-3">
-            <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-  <Facebook size={18} />
-</a>
-
-<a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-  <Twitter size={18} />
-</a>
-
-<a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-  <Instagram size={18} />
-</a>
-
-<a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-  <Youtube size={18} />
-</a>
-          </div>
-        </div>
+    <footer style={{background: "linear-gradient(135deg, #14532d 0%, #166534 40%, #15803d 70%, #16a34a 100%)"}}>
+      
+      {/* Top wave */}
+      <div style={{lineHeight: 0}}>
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" style={{display: "block"}}>
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,0 L0,0 Z" fill="#f0fdf4"/>
+        </svg>
       </div>
 
-      <div className="border-t border-primary-foreground/10 mt-8 pt-6 text-center text-sm opacity-60">
-        © 2026 Kisan Bandhu. All rights reserved. 
+      <div className="container mx-auto px-4 pt-8 pb-6">
+
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/favicon.ico" alt="logo" className="w-10 h-10" />
+              <span className="text-white font-extrabold text-2xl">Kisan Bandhu</span>
+            </div>
+            <p className="text-green-100 text-sm leading-relaxed mb-5">
+              Empowering farmers by connecting them directly to buyers. Fair prices, transparent bidding, better lives. 🌾
+            </p>
+            {/* Social icons */}
+            <div className="flex gap-3">
+              {[
+                { icon: <Facebook size={16}/>, href: "#" },
+                { icon: <Twitter size={16}/>, href: "#" },
+                { icon: <Instagram size={16}/>, href: "#" },
+                { icon: <Youtube size={16}/>, href: "#" },
+              ].map((s, i) => (
+                <a key={i} href={s.href}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white"}}>
+                  {s.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
+              <span className="w-1 h-5 rounded-full inline-block" style={{backgroundColor: "#4ade80"}}></span>
+              Quick Links
+            </h4>
+            <div className="space-y-3">
+              {[
+                { to: "/marketplace", label: "🛒 Marketplace" },
+                { to: "/advisory", label: "🌱 Crop Advisory" },
+                { to: "/msp-calculator", label: "🧮 MSP Calculator" },
+                { to: "/schemes", label: "🏛️ Gov Schemes" },
+              ].map((link, i) => (
+                <Link key={i} to={link.to}
+                  className="flex items-center gap-2 text-sm text-green-100 hover:text-white transition-colors group">
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
+              <span className="w-1 h-5 rounded-full inline-block" style={{backgroundColor: "#4ade80"}}></span>
+              Contact Us
+            </h4>
+            <div className="space-y-4">
+              {[
+                { icon: <Phone className="w-4 h-4 flex-shrink-0"/>, text: "+91 96253-01837" },
+                { icon: <Mail className="w-4 h-4 flex-shrink-0"/>, text: "kisanbandhu.contact@gmail.com" },
+                { icon: <MapPin className="w-4 h-4 flex-shrink-0"/>, text: "DTC 28/1, Knowledge Park-III, Greater Noida - 201306 (U.P.)" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3 text-sm text-green-100">
+                  <div className="mt-0.5 p-1.5 rounded-lg" style={{backgroundColor: "rgba(255,255,255,0.15)"}}>
+                    {item.icon}
+                  </div>
+                  <span className="leading-relaxed">{item.text}</span>
+                </div>
+              ))}
+              <p className="text-xs text-green-200 pl-9">Mon - Sat | 9:00 AM - 6:00 PM</p>
+            </div>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
+              <span className="w-1 h-5 rounded-full inline-block" style={{backgroundColor: "#4ade80"}}></span>
+              Stay Updated
+            </h4>
+            <p className="text-green-100 text-sm mb-4">
+              Get latest crop prices, schemes & news directly in your inbox! 📬
+            </p>
+            <div className="flex flex-col gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  color: "white",
+                  border: "1px solid rgba(255,255,255,0.25)",
+                }}
+              />
+              <button
+                className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
+                style={{backgroundColor: "#f59e0b", color: "white"}}>
+                Subscribe 🌾
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{borderTop: "1px solid rgba(255,255,255,0.15)"}} className="pt-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+            <p className="text-green-200 text-sm">
+              © 2026 <span className="text-white font-semibold">Kisan Bandhu</span>. All rights reserved.
+            </p>
+            <div className="flex gap-4 text-xs text-green-200">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Support</a>
+            </div>
+            <p className="text-green-200 text-xs">
+              Made with ❤️ for Indian Farmers 🇮🇳
+            </p>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </footer>
+    </footer>
   );
 };
 
