@@ -28,7 +28,7 @@ const Navbar = () => {
   const roleOptions: UserRole[] = ["farmer", "buyer"];
 
   return (
-   <nav className="sticky top-0 z-50 border-b border-border shadow-sm" style={{backgroundColor: "#166534"}}>
+   <nav className="sticky top-0 z-50 border-b border-border shadow-sm" style={{backgroundColor: "#2b2a2b"}}>
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 font-bold text-xl" style={{color: "white"}}>
