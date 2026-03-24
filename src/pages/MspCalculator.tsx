@@ -71,36 +71,35 @@ const MspCalculator = () => {
     const revenue = qty * priceUsed;
     setProfitResult({ revenue, cost, profit: revenue - cost, priceUsed, usedMsp: !hasCustomPrice });
   };
-
-  const cards = [
-    {
-      key: "msp",
-      emoji: "🌾",
-      title: "MSP Calculator",
-      desc: "Calculate Minimum Support Price for your crops and compare with market bids",
-      color: "#166534",
-      bg: "linear-gradient(135deg, #166534, #15803d)",
-      border: "#bbf7d0",
-    },
-    {
-      key: "subsidy",
-      emoji: "🚜",
-      title: "Tractor Subsidy",
-      desc: "Find out how much government subsidy you can get on tractor purchase",
-      color: "#b45309",
-      bg: "linear-gradient(135deg, #b45309, #d97706)",
-      border: "#fde68a",
-    },
-    {
-      key: "profit",
-      emoji: "💰",
-      title: "Profit Calculator",
-      desc: "Calculate your farming profit based on crop yield, selling price and costs",
-      color: "#0369a1",
-      bg: "linear-gradient(135deg, #0369a1, #0284c7)",
-      border: "#bae6fd",
-    },
-  ];
+const cards = [
+  {
+    key: "msp",
+    emoji: "🌾",
+    title: t("mspCardTitle"),
+    desc: t("mspCardDesc"),
+    color: "#166534",
+    bg: "linear-gradient(135deg, #166534, #15803d)",
+    border: "#bbf7d0",
+  },
+  {
+    key: "subsidy",
+    emoji: "🚜",
+    title: t("subsidyCardTitle"),
+    desc: t("subsidyCardDesc"),
+    color: "#b45309",
+    bg: "linear-gradient(135deg, #b45309, #d97706)",
+    border: "#fde68a",
+  },
+  {
+    key: "profit",
+    emoji: "💰",
+    title: t("profitCardTitle"),
+    desc: t("profitCardDesc"),
+    color: "#0369a1",
+    bg: "linear-gradient(135deg, #0369a1, #0284c7)",
+    border: "#bae6fd",
+  },
+];
 
  return (
     <div className="min-h-screen">
@@ -118,12 +117,12 @@ const MspCalculator = () => {
           
           {/* Title */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 uppercase tracking-wide">
-              Select a Calculator
-            </h1>
-            <p className="text-green-100 text-lg">
-              MSP, Subsidy & Profit — smart farming decisions
-            </p>
+           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 uppercase tracking-wide">
+  {t("selectCalculatorTitle")}
+</h1>
+<p className="text-green-100 text-lg">
+  {t("selectCalculatorSubtitle")}
+</p>
           </div>
 
           {/* Selector Cards */}
@@ -142,7 +141,7 @@ const MspCalculator = () => {
                   <p className="text-white/80 text-sm leading-relaxed mb-6">{card.desc}</p>
                   <div className="flex items-center gap-2 font-semibold text-sm px-4 py-2 rounded-xl w-fit"
                     style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white"}}>
-                    Open Calculator <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform"/>
+                    {t("openCalculator")} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform"/>
                   </div>
                 </button>
               ))}
@@ -154,7 +153,7 @@ const MspCalculator = () => {
             <button onClick={() => { setActiveCalc(null); setResult(null); setSubsidyResult(null); setProfitResult(null); }}
               className="mb-8 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
               style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white", border: "1px solid rgba(255,255,255,0.4)"}}>
-              <ChevronLeft className="w-4 h-4"/> Back to Calculators
+              <ChevronLeft className="w-4 h-4"/> {t("backToCalculators")}
             </button>
           )}
 

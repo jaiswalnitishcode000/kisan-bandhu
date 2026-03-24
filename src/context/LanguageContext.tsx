@@ -287,6 +287,21 @@ scheme_AIF_doc3: "Bank Account",
 scheme_BEE_doc1: "Aadhaar Card",
 scheme_BEE_doc2: "Land Record",
 scheme_BEE_doc3: "Bank Account",
+selectCalculatorTitle: "SELECT A CALCULATOR",
+selectCalculatorSubtitle: "MSP, Subsidy & Profit — smart farming decisions",
+
+mspCardTitle: "MSP CALCULATOR",
+mspCardDesc: "Calculate Minimum Support Price for your crops and compare with market bids",
+
+tractorCardTitle: "TRACTOR SUBSIDY",
+tractorCardDesc: "Find out how much government subsidy you can get on tractor purchase",
+
+profitCardTitle: "PROFIT CALCULATOR",
+profitCardDesc: "Calculate your farming profit based on crop yield, selling price and costs",
+
+openCalculator: "Open Calculator →",
+subsidyCardTitle: "Tractor Subsidy",
+subsidyCardDesc: "Find out how much government subsidy you can get on tractor purchase",
   },
   hi: {
     home: "होम",
@@ -571,7 +586,23 @@ scheme_AIF_doc3: "बैंक खाता",
 
 scheme_BEE_doc1: "आधार कार्ड",
 scheme_BEE_doc2: "भूमि अभिलेख",
-scheme_BEE_doc3: "बैंक खाता", },
+scheme_BEE_doc3: "बैंक खाता",
+
+selectCalculatorTitle: "कैलकुलेटर चुनें",
+selectCalculatorSubtitle: "एमएसपी, सब्सिडी और लाभ — स्मार्ट खेती के निर्णय",
+
+mspCardTitle: "एमएसपी कैलकुलेटर",
+mspCardDesc: "अपनी फसलों के लिए न्यूनतम समर्थन मूल्य की गणना करें और बाजार बोली से तुलना करें",
+
+tractorCardTitle: "ट्रैक्टर सब्सिडी",
+tractorCardDesc: "जानें कि ट्रैक्टर खरीद पर आपको कितनी सरकारी सब्सिडी मिल सकती है",
+
+profitCardTitle: "लाभ कैलकुलेटर",
+profitCardDesc: "फसल उपज, बिक्री मूल्य और लागत के आधार पर अपना कृषि लाभ निकालें",
+
+openCalculator: "कैलकुलेटर खोलें →",
+subsidyCardTitle: "ट्रैक्टर सब्सिडी",
+subsidyCardDesc: "जानें कि ट्रैक्टर खरीद पर आपको कितनी सरकारी सब्सिडी मिल सकती है", },
 } as const;
 
 type TranslationKeys = keyof typeof translations.en;
