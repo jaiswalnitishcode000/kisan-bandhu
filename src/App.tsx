@@ -19,6 +19,7 @@ import MspCalculator from "./pages/MspCalculator";
 import GovSchemes from "./pages/GovSchemes";
 import AdminPortal from "./pages/AdminPortal";
 import NotFound from "./pages/NotFound";
+import MarketInsights from "./pages/MarketInsights";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
                 <Route path="/msp-calculator" element={<MspCalculator />} />
                 <Route path="/schemes" element={<GovSchemes />} />
                 <Route path="/admin" element={<AdminPortal />} />
+                <Route path="/market-insights" element={<MarketInsights />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

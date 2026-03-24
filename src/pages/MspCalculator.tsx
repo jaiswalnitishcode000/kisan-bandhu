@@ -3,406 +3,391 @@ import { mspData } from "@/data/advisoryData";
 import { useMarket } from "@/context/MarketContext";
 import { useLanguage } from "@/context/LanguageContext";
 import ScrollReveal from "@/components/ScrollReveal";
-import { Calculator, TrendingUp, ArrowRight } from "lucide-react";
+import { Calculator, TrendingUp, ArrowRight, ChevronLeft } from "lucide-react";
 
 const MspCalculator = () => {
   const { t } = useLanguage();
+  const [activeCalc, setActiveCalc] = useState<null | "msp" | "subsidy" | "profit">(null);
+
+  // MSP states
   const [crop, setCrop] = useState("");
   const [quantity, setQuantity] = useState("");
   const [result, setResult] = useState<{ mspValue: number; highestBid: number } | null>(null);
-  //Tractor substidy states
+
+  // Tractor subsidy states
   const [tractorPrice, setTractorPrice] = useState("");
-const [category, setCategory] = useState("");
-const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice: number } | null>(null);
+  const [category, setCategory] = useState("");
+  const [subsidyResult, setSubsidyResult] = useState<{ subsidy: number; finalPrice: number } | null>(null);
 
-// Profit calculator states
-const [profitCrop, setProfitCrop] = useState("");
-const [profitQuantity, setProfitQuantity] = useState("");
-const [sellingPrice, setSellingPrice] = useState("");
-const [productionCost, setProductionCost] = useState("");
-
-const [profitResult, setProfitResult] = useState<{
-  revenue: number;
-  cost: number;
-  profit: number;
-  priceUsed: number;
-  usedMsp: boolean;
-} | null>(null);
+  // Profit calculator states
+  const [profitCrop, setProfitCrop] = useState("");
+  const [profitQuantity, setProfitQuantity] = useState("");
+  const [sellingPrice, setSellingPrice] = useState("");
+  const [productionCost, setProductionCost] = useState("");
+  const [profitResult, setProfitResult] = useState<{
+    revenue: number; cost: number; profit: number; priceUsed: number; usedMsp: boolean;
+  } | null>(null);
 
   const { listings } = useMarket();
-
   const cropNames = Object.keys(mspData);
 
   const keyForCrop = (name: string) => {
-    let key = name
-      .replace(/\s+/g, "_")
-      .replace(/[()]/g, "")
-      .replace(/[^a-zA-Z0-9_]/g, "");
+    let key = name.replace(/\s+/g, "_").replace(/[()]/g, "").replace(/[^a-zA-Z0-9_]/g, "");
     if (key.includes("Chickpea")) key = "Chickpea_Chana";
     return `crop_${key}`;
   };
 
   const calculate = () => {
-  if (!crop || !quantity || parseFloat(quantity) < 0) return;
+    if (!crop || !quantity || parseFloat(quantity) < 0) return;
     const qty = parseFloat(quantity);
     const msp = mspData[crop] || 0;
     const mspValue = msp * qty;
-
-    // Find highest bid for this crop in marketplace
     const relevantListings = listings.filter((l) => l.cropName.toLowerCase().includes(crop.toLowerCase()));
     const highestBid = relevantListings.reduce((max, l) => {
       const bidMax = l.bids.length > 0 ? Math.max(...l.bids.map((b) => b.amount)) : 0;
       return bidMax > max ? bidMax : max;
     }, 0);
-
     setResult({ mspValue, highestBid: highestBid * qty });
   };
-  //sub
+
   const calculateSubsidy = () => {
-  if (!tractorPrice || !category || parseFloat(tractorPrice)<0) return;
+    if (!tractorPrice || !category || parseFloat(tractorPrice) < 0) return;
+    const price = parseFloat(tractorPrice);
+    let subsidyRate = 0;
+    if (category === "general") subsidyRate = 0.25;
+    if (category === "scst") subsidyRate = 0.35;
+    if (category === "women") subsidyRate = 0.40;
+    const subsidy = price * subsidyRate;
+    setSubsidyResult({ subsidy, finalPrice: price - subsidy });
+  };
 
-  const price = parseFloat(tractorPrice);
-  let subsidyRate = 0;
+  const calculateProfit = () => {
+    if (!profitCrop || !profitQuantity || !productionCost) return;
+    const qty = parseFloat(profitQuantity);
+    const cost = parseFloat(productionCost);
+    const msp = mspData[profitCrop] || 0;
+    const hasCustomPrice = sellingPrice.trim() !== "";
+    const priceUsed = hasCustomPrice ? parseFloat(sellingPrice) : msp;
+    const revenue = qty * priceUsed;
+    setProfitResult({ revenue, cost, profit: revenue - cost, priceUsed, usedMsp: !hasCustomPrice });
+  };
 
-  if (category === "general") subsidyRate = 0.25;
-  if (category === "scst") subsidyRate = 0.35;
-  if (category === "women") subsidyRate = 0.40;
+  const cards = [
+    {
+      key: "msp",
+      emoji: "🌾",
+      title: "MSP Calculator",
+      desc: "Calculate Minimum Support Price for your crops and compare with market bids",
+      color: "#166534",
+      bg: "linear-gradient(135deg, #166534, #15803d)",
+      border: "#bbf7d0",
+    },
+    {
+      key: "subsidy",
+      emoji: "🚜",
+      title: "Tractor Subsidy",
+      desc: "Find out how much government subsidy you can get on tractor purchase",
+      color: "#b45309",
+      bg: "linear-gradient(135deg, #b45309, #d97706)",
+      border: "#fde68a",
+    },
+    {
+      key: "profit",
+      emoji: "💰",
+      title: "Profit Calculator",
+      desc: "Calculate your farming profit based on crop yield, selling price and costs",
+      color: "#0369a1",
+      bg: "linear-gradient(135deg, #0369a1, #0284c7)",
+      border: "#bae6fd",
+    },
+  ];
 
-  const subsidy = price * subsidyRate;
-  const finalPrice = price - subsidy;
+ return (
+    <div className="min-h-screen">
 
-  setSubsidyResult({ subsidy, finalPrice });
-};
-// profit calculator
-const calculateProfit = () => {
-  if (
-    !profitCrop ||
-    !profitQuantity ||
-    !productionCost ||
-    parseFloat(profitQuantity) < 0 ||
-    parseFloat(productionCost) < 0 ||
-    (sellingPrice && parseFloat(sellingPrice) < 0)
-  ) return;
+      {/* Full bg image section with cards on top */}
+      <div className="relative min-h-screen flex flex-col overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0 bg-cover bg-center"
+          style={{backgroundImage: `url(https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80)`}}/>
+        {/* Light green overlay like AgriMarketplace */}
+        <div className="absolute inset-0" 
+          style={{background: "rgba(21,128,61,0.55)"}}/>
 
-  const qty = parseFloat(profitQuantity);
-  const cost = parseFloat(productionCost);
-  const msp = mspData[profitCrop] || 0;
-
-  const hasCustomPrice = sellingPrice.trim() !== "";
-  const priceUsed = hasCustomPrice ? parseFloat(sellingPrice) : msp;
-
-  const revenue = qty * priceUsed;
-  const profit = revenue - cost;
-
-  setProfitResult({
-    revenue,
-    cost,
-    profit,
-    priceUsed,
-    usedMsp: !hasCustomPrice,
-  });
-};
-
-  return (
-    <div className="min-h-screen py-8">
-      <div className="container mx-auto px-4">
-        <ScrollReveal>
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{t("mspCalculatorTitle")}</h1>
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-16">
           
+          {/* Title */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 uppercase tracking-wide">
+              Select a Calculator
+            </h1>
+            <p className="text-green-100 text-lg">
+              MSP, Subsidy & Profit — smart farming decisions
+            </p>
           </div>
-        </ScrollReveal>
 
-        <div className="max-w-xl mx-auto">
-
-  <h2 className="text-xl font-bold flex items-center gap-2 mb-4">
-    <Calculator className="w-5 h-5" />
-    {t("mspSectionTitle")}
-  </h2>
-
-  <div className="border-t border-border my-4"></div>
-
-  <div className="bg-card rounded-2xl border border-border shadow-card p-6 mb-6">
-    <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">{t("selectCropLabel")}</label>
-                <select value={crop} onChange={(e) => setCrop(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none">
-                  <option value="">{t("chooseCropPlaceholder")}</option>
-                  {cropNames.map((c) => (
-                      <option key={c} value={c}>{t(keyForCrop(c) as any)} — ₹{mspData[c]}/quintal</option>
-                    ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">{t("quantityLabel")}</label>
-                <input type="number" min="0" value={quantity} onChange={(e) => setQuantity(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none" placeholder={t("quantityPlaceholder")} />
-              </div>
-              <button onClick={calculate} disabled={!crop || !quantity}
-                className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50">
-                <Calculator className="w-4 h-4" /> {t("calculateMspButton")}
-              </button>
+          {/* Selector Cards */}
+          {!activeCalc && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full mx-auto">
+              {cards.map((card) => (
+                <button key={card.key} onClick={() => setActiveCalc(card.key as any)}
+                  className="group rounded-2xl p-8 text-left transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.15)",
+                    border: "2px solid rgba(255,255,255,0.4)",
+                    backdropFilter: "blur(10px)",
+                  }}>
+                  <div className="text-5xl mb-4">{card.emoji}</div>
+                  <h3 className="text-xl font-extrabold text-white mb-2 uppercase tracking-wide">{card.title}</h3>
+                  <p className="text-white/80 text-sm leading-relaxed mb-6">{card.desc}</p>
+                  <div className="flex items-center gap-2 font-semibold text-sm px-4 py-2 rounded-xl w-fit"
+                    style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white"}}>
+                    Open Calculator <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform"/>
+                  </div>
+                </button>
+              ))}
             </div>
-          </div>
-
-          {/* Result */}
-          {result && (
-            <ScrollReveal>
-              
-
-              <div className="bg-card rounded-2xl border border-border shadow-card p-6 space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-primary/5 rounded-xl p-4 text-center border border-primary/20">
-                    <p className="text-sm text-muted-foreground mb-1">{t("mspValueLabel")}</p>
-                    <p className="text-2xl font-bold text-primary">₹{result.mspValue.toLocaleString()}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{t(`crop_${crop.replace(/[^a-zA-Z0-9]/g, "").replace(/Chickpeach?/,"Chickpea_Chana").replace(/ /g,"")}` as any)} × {quantity} quintals</p>
-                  </div>
-                  <div className="bg-accent/5 rounded-xl p-4 text-center border border-accent/20">
-                    <p className="text-sm text-muted-foreground mb-1">{t("marketBidValueLabel")}</p>
-                    <p className="text-2xl font-bold text-accent">
-                      {result.highestBid > 0 ? `₹${result.highestBid.toLocaleString()}` : t("noBidsYet")}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">{t("basedOnMarket")}</p>
-                  </div>
-                </div>
-                {result.highestBid > 0 && (
-                  <div className={`text-center p-3 rounded-xl text-sm font-medium ${
-                    result.highestBid >= result.mspValue ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
-                  }`}>
-                    {result.highestBid >= result.mspValue
-                      ? t("marketAbove").replace("{diff}", (result.highestBid - result.mspValue).toLocaleString())
-                      : t("marketBelow").replace("{diff}", (result.mspValue - result.highestBid).toLocaleString())
-                    }
-                  </div>
-                )}
-              </div>
-            </ScrollReveal>
           )}
+
+          {/* Back Button */}
+          {activeCalc && (
+            <button onClick={() => { setActiveCalc(null); setResult(null); setSubsidyResult(null); setProfitResult(null); }}
+              className="mb-8 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
+              style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white", border: "1px solid rgba(255,255,255,0.4)"}}>
+              <ChevronLeft className="w-4 h-4"/> Back to Calculators
+            </button>
+          )}
+
+          {/* Calculator Forms */}
+          <div className="w-full max-w-xl">
 
         
 
-          <div className="bg-card rounded-2xl border border-border shadow-card p-6 mt-8">
-  <h2 className="text-xl font-bold flex items-center gap-2">
-    <TrendingUp className="w-5 h-5" />
-    {t("tractorSubsidyTitle")}
-  </h2>
+        {/* MSP CALCULATOR */}
+        {activeCalc === "msp" && (
+          <ScrollReveal>
+            <div className="max-w-xl mx-auto">
+              <div className="rounded-3xl overflow-hidden shadow-2xl">
+                {/* Header */}
+                <div className="p-6 text-white" style={{background: "linear-gradient(135deg, #166534, #15803d)"}}>
+                  <div className="text-4xl mb-2">🌾</div>
+                  <h2 className="text-2xl font-extrabold">MSP Calculator</h2>
+                  <p className="text-green-100 text-sm mt-1">Minimum Support Price calculation</p>
+                </div>
+                {/* Form */}
+                <div className="bg-card p-6 space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Select Crop</label>
+                    <select value={crop} onChange={(e) => setCrop(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:outline-none"
+                      style={{"--tw-ring-color": "#166534"} as any}>
+                      <option value="">Choose a crop</option>
+                      {cropNames.map((c) => (
+                        <option key={c} value={c}>{t(keyForCrop(c) as any)} — ₹{mspData[c]}/quintal</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Quantity (quintals)</label>
+                    <input type="number" min="0" value={quantity} onChange={(e) => setQuantity(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:outline-none"
+                      placeholder="e.g. 50"/>
+                  </div>
+                  <button onClick={calculate} disabled={!crop || !quantity}
+                    className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{backgroundColor: "#166534"}}>
+                    <Calculator className="w-5 h-5"/> Calculate MSP Value
+                  </button>
+                </div>
+              </div>
 
-  <div className="border-t border-border my-4"></div>
+              {/* Result */}
+              {result && (
+                <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
+                  <div className="p-4 text-white text-center font-bold" style={{backgroundColor: "#166534"}}>
+                    📊 Your MSP Result
+                  </div>
+                  <div className="bg-card p-6 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0"}}>
+                        <p className="text-xs text-muted-foreground mb-1">MSP Value</p>
+                        <p className="text-2xl font-extrabold" style={{color: "#166534"}}>₹{result.mspValue.toLocaleString()}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{crop} × {quantity} qtl</p>
+                      </div>
+                      <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#fffbeb", border: "1px solid #fde68a"}}>
+                        <p className="text-xs text-muted-foreground mb-1">Market Bid Value</p>
+                        <p className="text-2xl font-extrabold" style={{color: "#b45309"}}>
+                          {result.highestBid > 0 ? `₹${result.highestBid.toLocaleString()}` : "No bids yet"}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">Based on marketplace</p>
+                      </div>
+                    </div>
+                    {result.highestBid > 0 && (
+                      <div className={`text-center p-3 rounded-xl text-sm font-semibold`}
+                        style={{
+                          backgroundColor: result.highestBid >= result.mspValue ? "#f0fdf4" : "#fff1f2",
+                          color: result.highestBid >= result.mspValue ? "#166534" : "#dc2626",
+                        }}>
+                        {result.highestBid >= result.mspValue
+                          ? `✅ Market is ₹${(result.highestBid - result.mspValue).toLocaleString()} above MSP!`
+                          : `⚠️ Market is ₹${(result.mspValue - result.highestBid).toLocaleString()} below MSP`}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </ScrollReveal>
+        )}
 
-  <div className="space-y-4">
+        {/* TRACTOR SUBSIDY CALCULATOR */}
+        {activeCalc === "subsidy" && (
+          <ScrollReveal>
+            <div className="max-w-xl mx-auto">
+              <div className="rounded-3xl overflow-hidden shadow-2xl">
+                <div className="p-6 text-white" style={{background: "linear-gradient(135deg, #b45309, #d97706)"}}>
+                  <div className="text-4xl mb-2">🚜</div>
+                  <h2 className="text-2xl font-extrabold">Tractor Subsidy Calculator</h2>
+                  <p className="text-yellow-100 text-sm mt-1">Government subsidy on tractor purchase</p>
+                </div>
+                <div className="bg-card p-6 space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Tractor Price (₹)</label>
+                    <input type="number" min="0" value={tractorPrice}
+                      onChange={(e) => setTractorPrice(Math.max(0, Number(e.target.value)).toString())}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+                      placeholder="Enter tractor price"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Farmer Category</label>
+                    <select value={category} onChange={(e) => setCategory(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none">
+                      <option value="">Select Category</option>
+                      <option value="general">General Farmer (25% subsidy)</option>
+                      <option value="scst">SC/ST Farmer (35% subsidy)</option>
+                      <option value="women">Women Farmer (40% subsidy)</option>
+                    </select>
+                  </div>
+                  <button onClick={calculateSubsidy} disabled={!tractorPrice || !category}
+                    className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{backgroundColor: "#b45309"}}>
+                    <TrendingUp className="w-5 h-5"/> Calculate Subsidy
+                  </button>
+                </div>
+              </div>
 
-    <div>
-      <label className="block text-sm font-medium mb-1">
-  {t("tractorPriceLabel")}
-</label>
-      <input
-        type="number"
-        min="0"
-        value={tractorPrice}
-        onChange={(e) => setTractorPrice(Math.max(0, Number(e.target.value)).toString())}
-        className="w-full px-4 py-2 border rounded-xl"
-        placeholder={t("enterTractorPrice")}
-      />
-    </div>
+              {subsidyResult && (
+                <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
+                  <div className="p-4 text-white text-center font-bold" style={{backgroundColor: "#b45309"}}>
+                    🎉 Your Subsidy Result
+                  </div>
+                  <div className="bg-card p-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#fffbeb", border: "1px solid #fde68a"}}>
+                        <p className="text-xs text-muted-foreground mb-1">Government Subsidy</p>
+                        <p className="text-2xl font-extrabold" style={{color: "#b45309"}}>₹{subsidyResult.subsidy.toLocaleString()}</p>
+                      </div>
+                      <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0"}}>
+                        <p className="text-xs text-muted-foreground mb-1">Final Price</p>
+                        <p className="text-2xl font-extrabold" style={{color: "#166534"}}>₹{subsidyResult.finalPrice.toLocaleString()}</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 p-3 rounded-xl text-center text-sm font-semibold"
+                      style={{backgroundColor: "#f0fdf4", color: "#166534"}}>
+                      ✅ You save ₹{subsidyResult.subsidy.toLocaleString()} with government subsidy!
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </ScrollReveal>
+        )}
 
-    <div>
-      <label className="block text-sm font-medium mb-1">
-  {t("farmerCategoryLabel")}
-</label>
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="w-full px-4 py-2 border rounded-xl"
-      >
-        <option value="">{t("selectCategory")}</option>
-<option value="general">{t("categoryGeneralFarmer")}</option>
-<option value="scst">{t("categorySCSTFarmer")}</option>
-<option value="women">{t("categoryWomenFarmer")}</option>
-      </select>
-    </div>
+        {/* PROFIT CALCULATOR */}
+        {activeCalc === "profit" && (
+          <ScrollReveal>
+            <div className="max-w-xl mx-auto">
+              <div className="rounded-3xl overflow-hidden shadow-2xl">
+                <div className="p-6 text-white" style={{background: "linear-gradient(135deg, #0369a1, #0284c7)"}}>
+                  <div className="text-4xl mb-2">💰</div>
+                  <h2 className="text-2xl font-extrabold">Profit Calculator</h2>
+                  <p className="text-blue-100 text-sm mt-1">Calculate your net farming profit</p>
+                </div>
+                <div className="bg-card p-6 space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Select Crop</label>
+                    <select value={profitCrop} onChange={(e) => setProfitCrop(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none">
+                      <option value="">Choose a crop</option>
+                      {cropNames.map((c) => (
+                        <option key={c} value={c}>{t(keyForCrop(c) as any)} — ₹{mspData[c]}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Quantity (quintals)</label>
+                    <input type="number" min="0" value={profitQuantity} onChange={(e) => setProfitQuantity(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+                      placeholder="e.g. 50"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">
+                      Selling Price (₹/quintal) <span className="text-xs font-normal text-muted-foreground">— optional, MSP used if empty</span>
+                    </label>
+                    <input type="number" min="0" value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+                      placeholder="Enter selling price"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">Total Production Cost (₹)</label>
+                    <input type="number" min="0" value={productionCost} onChange={(e) => setProductionCost(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+                      placeholder="Enter total production cost"/>
+                  </div>
+                  <button onClick={calculateProfit} disabled={!profitCrop || !profitQuantity || !productionCost}
+                    className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{backgroundColor: "#0369a1"}}>
+                    <Calculator className="w-5 h-5"/> Calculate Profit
+                  </button>
+                </div>
+              </div>
 
-    <button
-      onClick={calculateSubsidy}
-      disabled={!tractorPrice || !category}
-  className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold disabled:opacity-50"
-    >
-      {t("calculateSubsidy")}
-    </button>
+              {profitResult && (
+                <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
+                  <div className="p-4 text-white text-center font-bold" style={{backgroundColor: "#0369a1"}}>
+                    📊 Your Profit Result
+                  </div>
+                  <div className="bg-card p-6 space-y-4">
+                    <div className="text-center p-3 rounded-xl text-sm"
+                      style={{backgroundColor: "#f0f9ff", border: "1px solid #bae6fd"}}>
+                      <p className="text-muted-foreground text-xs">Price Used</p>
+                      <p className="font-bold text-lg" style={{color: "#0369a1"}}>₹{profitResult.priceUsed.toLocaleString()}/quintal</p>
+                      <p className="text-xs text-muted-foreground">{profitResult.usedMsp ? "📌 MSP price used" : "✏️ Custom price used"}</p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
+                      {[
+                        { label: "Revenue", value: profitResult.revenue, color: "#0369a1", bg: "#f0f9ff", border: "#bae6fd" },
+                        { label: "Cost", value: profitResult.cost, color: "#dc2626", bg: "#fff1f2", border: "#fecdd3" },
+                        { label: profitResult.profit >= 0 ? "Profit 🎉" : "Loss ⚠️", value: Math.abs(profitResult.profit), color: profitResult.profit >= 0 ? "#166534" : "#dc2626", bg: profitResult.profit >= 0 ? "#f0fdf4" : "#fff1f2", border: profitResult.profit >= 0 ? "#bbf7d0" : "#fecdd3" },
+                      ].map((item, i) => (
+                        <div key={i} className="rounded-2xl p-4 text-center"
+                          style={{backgroundColor: item.bg, border: `1px solid ${item.border}`}}>
+                          <p className="text-xs text-muted-foreground mb-1">{item.label}</p>
+                          <p className="text-lg font-extrabold" style={{color: item.color}}>₹{item.value.toLocaleString()}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </ScrollReveal>
+        )}
 
-  </div>
-
-  {subsidyResult && (
-    <div className="mt-4 p-4 bg-primary/10 rounded-xl text-center">
-      <p className="text-sm text-muted-foreground">{t("governmentSubsidy")}</p>
-      <p className="text-xl font-bold">₹{subsidyResult.subsidy.toLocaleString()}</p>
-
-      <p className="text-sm mt-2 text-muted-foreground">{t("finalPriceAfterSubsidy")}</p>
-      <p className="text-xl font-bold text-green-600">
-        ₹{subsidyResult.finalPrice.toLocaleString()}
-      </p>
-    </div>
-  )}
-</div>
-
-{/* PROFIT CALCULATOR */}
-<div className="bg-card rounded-2xl border border-border shadow-card p-6 mt-8">
-
-<h2 className="text-xl font-bold flex items-center gap-2">
-<ArrowRight className="w-5 h-5" />
-{t("profitCalculatorTitle")}
-</h2>
-
-<div className="border-t border-border my-4"></div>
-
-<div className="space-y-4">
-
-<div>
-<label className="block text-sm font-medium mb-1">
-{t("selectCropLabel")}
-</label>
-
-<select
-value={profitCrop}
-onChange={(e) => setProfitCrop(e.target.value)}
-className="w-full px-4 py-2 border rounded-xl"
->
-
-<option value="">{t("chooseCropPlaceholder")}</option>
-
-{cropNames.map((c) => (
-<option key={c} value={c}>
-{t(keyForCrop(c) as any)} — ₹{mspData[c]}
-</option>
-))}
-
-</select>
-</div>
-
-<div>
-<label className="block text-sm font-medium mb-1">
-{t("quantityLabel")}
-</label>
-
-<input
-type="number"
-min="0"
-value={profitQuantity}
-onChange={(e) => setProfitQuantity(e.target.value)}
-className="w-full px-4 py-2 border rounded-xl"
-placeholder={t("quantityPlaceholder")}
-/>
-</div>
-
-<div>
-<label className="block text-sm font-medium mb-1">
-{t("sellingPriceLabel")}
-</label>
-
-<input
-type="number"
-min="0"
-value={sellingPrice}
-onChange={(e) => setSellingPrice(e.target.value)}
-className="w-full px-4 py-2 border rounded-xl"
-placeholder={t("sellingPricePlaceholder")}
-/>
-</div>
-
-<div>
-<label className="block text-sm font-medium mb-1">
-{t("productionCostLabel")}
-</label>
-
-<input
-type="number"
-min="0"
-value={productionCost}
-onChange={(e) => setProductionCost(e.target.value)}
-className="w-full px-4 py-2 border rounded-xl"
-placeholder={t("productionCostPlaceholder")}
-/>
-</div>
-
-<button
-onClick={calculateProfit}
-disabled={!profitCrop || !profitQuantity || !productionCost}
-className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold disabled:opacity-50"
->
-
-{t("calculateProfitButton")}
-
-</button>
-
-</div>
-
-{profitResult && (
-
-<div className="mt-4 p-4 bg-primary/10 rounded-xl space-y-4">
-
-<div className="text-center">
-
-<p className="text-sm text-muted-foreground">
-{t("priceUsedLabel")}
-</p>
-
-<p className="text-lg font-semibold">
-₹{profitResult.priceUsed.toLocaleString()} / quintal
-</p>
-
-<p className="text-xs text-muted-foreground mt-1">
-{profitResult.usedMsp ? t("usedMspLabel") : t("usedCustomPriceLabel")}
-</p>
-
-</div>
-
-<div className="grid grid-cols-3 gap-4">
-
-<div className="bg-background rounded-xl p-4 text-center border">
-
-<p className="text-sm text-muted-foreground">
-{t("totalRevenueLabel")}
-</p>
-
-<p className="text-xl font-bold">
-₹{profitResult.revenue.toLocaleString()}
-</p>
-
-</div>
-
-<div className="bg-background rounded-xl p-4 text-center border">
-
-<p className="text-sm text-muted-foreground">
-{t("totalCostLabel")}
-</p>
-
-<p className="text-xl font-bold">
-₹{profitResult.cost.toLocaleString()}
-</p>
-
-</div>
-
-<div className="bg-background rounded-xl p-4 text-center border">
-
-<p className="text-sm text-muted-foreground">
-{t("netProfitLabel")}
-</p>
-
-<p className={`text-xl font-bold ${profitResult.profit >= 0 ? "text-green-600" : "text-red-600"}`}>
-  ₹{Math.abs(profitResult.profit).toLocaleString()}
-</p>
-<p className={`text-xs mt-1 font-medium ${profitResult.profit >= 0 ? "text-green-600" : "text-red-600"}`}>
-  {profitResult.profit >= 0 ? t("profitStatus") : t("lossStatus")}
-</p>
-</div>
-</div>
-</div>
-)}
-</div>
+      </div>
         </div>
       </div>
-      </div>
-    
+    </div>
   );
 };
 

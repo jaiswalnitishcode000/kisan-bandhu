@@ -64,11 +64,15 @@ const translations = {
     errorInvalidCredentials: "Invalid email or password.",
     errorAccountExists: "Account already exists with this email.",
     // gov schemes page
-    governmentSchemesTitle: "🏛️ Government Schemes",
-    governmentSchemesDescription: "Important farmer welfare schemes by the Government of India",
-    eligibilityLabel: "Eligibility:",
-    benefitsLabel: "Benefits:",
-    applyNow: "Apply Now →",
+   governmentSchemesTitle: "🏛️ Government Schemes",
+governmentSchemesDescription: "Important farmer welfare schemes by the Government of India",
+eligibilityLabel: "Eligibility:",
+benefitsLabel: "Benefits:",
+requiredDocuments: "Required Documents",
+docAadhaar: "Aadhaar Card",
+docLand: "Land Record",
+docBank: "Bank Account",
+applyNow: "Apply Now →",
     // msp calculator page
 
     mspCalculatorTitle: "🧮 Smart Farming Calculator",
@@ -143,7 +147,11 @@ const translations = {
     crop_Bajra: "Bajra",
     crop_Groundnut: "Groundnut",
     // scheme names & descriptions
+<<<<<<< HEAD
    scheme_PMKISAN_name: "PM-KISAN",
+=======
+scheme_PMKISAN_name: "PM-KISAN",
+>>>>>>> de330c4bf5a159e8d4b67a17b77158fec905aaba
 scheme_PMKISAN_desc: "Direct income support of ₹6,000 per year to farmer families in three equal installments.",
 scheme_PMKISAN_eligibility: "All land-holding farmer families with cultivable land.",
 scheme_PMKISAN_benefits: "₹6,000/year direct bank transfer, no middlemen involved.",
@@ -338,7 +346,11 @@ usedCustomPriceLabel: "Custom Selling Price Used",
     errorInvalidCredentials: "अमान्य ईमेल या पासवर्ड।",
     errorAccountExists: "इस ईमेल के साथ पहले से एक खाता मौजूद है।",
     // gov schemes page translations
+<<<<<<< HEAD
     governmentSchemesTitle: "🏛️ सरकारी योजनाएँ",
+=======
+governmentSchemesTitle: "🏛️ सरकारी योजनाएँ",
+>>>>>>> de330c4bf5a159e8d4b67a17b77158fec905aaba
 governmentSchemesDescription: "भारत सरकार द्वारा महत्वपूर्ण किसान कल्याण योजनाएँ",
 eligibilityLabel: "योग्यता:",
 benefitsLabel: "लाभ:",
@@ -446,8 +458,11 @@ usedCustomPriceLabel: "कस्टम बिक्री मूल्य उप
     crop_Bajra: "बाजरा",
     crop_Groundnut: "मूंगफली",
     // scheme names & descriptions
+<<<<<<< HEAD
    
 
+=======
+>>>>>>> de330c4bf5a159e8d4b67a17b77158fec905aaba
 scheme_PMKISAN_name: "पीएम-किसान",
 scheme_PMKISAN_desc: "किसान परिवारों को तीन समान किस्तों में प्रति वर्ष ₹6,000 की प्रत्यक्ष आय सहायता।",
 scheme_PMKISAN_eligibility: "खेती योग्य भूमि वाले सभी किसान परिवार।",
