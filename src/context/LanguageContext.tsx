@@ -252,6 +252,41 @@ const translations = {
     adminAccessRequired: "Admin access required.",
     bidsSuffix: "bid(s)",
     noListingsMessage: "You haven't listed any crops yet. Click \"Add Crop\" to get started!",
+    requiredDocumentsLabel: "Required Documents",
+    scheme_PMKISAN_doc1: "Aadhaar Card",
+scheme_PMKISAN_doc2: "Land Record",
+scheme_PMKISAN_doc3: "Bank Account",
+    scheme_PMFasal_doc1: "Aadhaar Card",
+scheme_PMFasal_doc2: "Land Record",
+scheme_PMFasal_doc3: "Bank Account",
+
+scheme_SoilHealth_doc1: "Aadhaar Card",
+scheme_SoilHealth_doc2: "Land Record",
+scheme_SoilHealth_doc3: "Bank Account",
+
+scheme_KCC_doc1: "Aadhaar Card",
+scheme_KCC_doc2: "Land Record",
+scheme_KCC_doc3: "Bank Account",
+
+scheme_eNAM_doc1: "Aadhaar Card",
+scheme_eNAM_doc2: "Land Record",
+scheme_eNAM_doc3: "Bank Account",
+
+scheme_PMKrishi_doc1: "Aadhaar Card",
+scheme_PMKrishi_doc2: "Land Record",
+scheme_PMKrishi_doc3: "Bank Account",
+
+scheme_KUSUM_doc1: "Aadhaar Card",
+scheme_KUSUM_doc2: "Land Record",
+scheme_KUSUM_doc3: "Bank Account",
+
+scheme_AIF_doc1: "Aadhaar Card",
+scheme_AIF_doc2: "Land Record",
+scheme_AIF_doc3: "Bank Account",
+
+scheme_BEE_doc1: "Aadhaar Card",
+scheme_BEE_doc2: "Land Record",
+scheme_BEE_doc3: "Bank Account",
   },
   hi: {
     home: "होम",
@@ -502,7 +537,41 @@ const translations = {
     adminAccessRequired: "प्रशासन पहुंच आवश्यक है।",
     bidsSuffix: "बोली",
     noListingsMessage: "आपने अभी तक कोई फसल सूचीबद्ध नहीं की है। शुरू करने के लिए \"फसल जोड़ें\" पर क्लिक करें!",
-  },
+    requiredDocumentsLabel: "आवश्यक दस्तावेज़",
+    scheme_PMKISAN_doc1: "आधार कार्ड",
+scheme_PMKISAN_doc2: "भूमि अभिलेख",
+scheme_PMKISAN_doc3: "बैंक खाता",
+    scheme_PMFasal_doc1: "आधार कार्ड",
+scheme_PMFasal_doc2: "भूमि अभिलेख",
+scheme_PMFasal_doc3: "बैंक खाता",
+
+scheme_SoilHealth_doc1: "आधार कार्ड",
+scheme_SoilHealth_doc2: "भूमि अभिलेख",
+scheme_SoilHealth_doc3: "बैंक खाता",
+
+scheme_KCC_doc1: "आधार कार्ड",
+scheme_KCC_doc2: "भूमि अभिलेख",
+scheme_KCC_doc3: "बैंक खाता",
+
+scheme_eNAM_doc1: "आधार कार्ड",
+scheme_eNAM_doc2: "भूमि अभिलेख",
+scheme_eNAM_doc3: "बैंक खाता",
+
+scheme_PMKrishi_doc1: "आधार कार्ड",
+scheme_PMKrishi_doc2: "भूमि अभिलेख",
+scheme_PMKrishi_doc3: "बैंक खाता",
+
+scheme_KUSUM_doc1: "आधार कार्ड",
+scheme_KUSUM_doc2: "भूमि अभिलेख",
+scheme_KUSUM_doc3: "बैंक खाता",
+
+scheme_AIF_doc1: "आधार कार्ड",
+scheme_AIF_doc2: "भूमि अभिलेख",
+scheme_AIF_doc3: "बैंक खाता",
+
+scheme_BEE_doc1: "आधार कार्ड",
+scheme_BEE_doc2: "भूमि अभिलेख",
+scheme_BEE_doc3: "बैंक खाता", },
 } as const;
 
 type TranslationKeys = keyof typeof translations.en;
@@ -510,7 +579,7 @@ type TranslationKeys = keyof typeof translations.en;
 interface LanguageContextType {
   lang: Lang;
   setLang: (l: Lang) => void;
-  t: (key: TranslationKeys) => string;
+  t: (key: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -518,10 +587,16 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>("en");
 
-  const t = (key: TranslationKeys) => {
-    const value = translations[lang][key];
-    return value || key;
-  };
+  interface LanguageContextType {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: (key: string) => string;
+}
+
+const t = (key: string) => {
+  const value = (translations[lang] as any)[key];
+  return value || key;
+};
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>
