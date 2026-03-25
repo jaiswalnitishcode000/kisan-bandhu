@@ -309,6 +309,17 @@ subscribe: "Subscribe",
 privacyPolicy: "Privacy Policy",
 termsOfService: "Terms of Service",
 supportText: "Support",
+    aboutTitle: "About Kisan Bandhu",
+aboutSubtitle: "India's farmer-first digital marketplace — eliminating middlemen, ensuring fair prices, and empowering every kisan.",
+
+missionTitle: "Our Mission",
+missionText: "To eliminate middlemen and give farmers direct access to buyers — ensuring maximum profit stays with the farmer.",
+
+visionTitle: "Our Vision",
+visionText: "A digital India where every farmer gets a fair price, transparent trade, and access to government schemes — all in one place.",
+
+whyTitle: "Why Kisan Bandhu?",
+whyText: "Transparent bidding, crop advisory, MSP calculator, and government schemes — everything a farmer needs, in one platform.",
   },
   hi: {
     home: "होम",
@@ -617,6 +628,17 @@ subscribe: "सब्सक्राइब करें",
 privacyPolicy: "गोपनीयता नीति",
 termsOfService: "सेवा की शर्तें",
 supportText: "सहायता", },
+  aboutTitle: "किसान बंधु के बारे में",
+aboutSubtitle: "भारत का किसान-प्रथम डिजिटल मार्केटप्लेस — बिचौलियों को हटाकर, उचित मूल्य सुनिश्चित करते हुए, हर किसान को सशक्त बनाना।",
+
+missionTitle: "हमारा मिशन",
+missionText: "बिचौलियों को हटाकर किसानों को सीधे खरीदारों से जोड़ना — ताकि अधिकतम लाभ किसान के पास ही रहे।",
+
+visionTitle: "हमारा विज़न",
+visionText: "एक डिजिटल भारत जहाँ हर किसान को उचित मूल्य, पारदर्शी व्यापार और सरकारी योजनाओं तक पहुँच मिले — सब कुछ एक ही प्लेटफ़ॉर्म पर।",
+
+whyTitle: "किसान बंधु क्यों?",
+whyText: "पारदर्शी बोली प्रणाली, फसल सलाह, MSP कैलकुलेटर और सरकारी योजनाएँ — एक ही प्लेटफ़ॉर्म पर किसानों की सभी जरूरतें।",
 } as const;
 
 type TranslationKeys = keyof typeof translations.en;
