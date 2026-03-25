@@ -9,7 +9,7 @@ const GovSchemes = () => {
  const [search, setSearch] = useState("");
 
   const filteredSchemes = govSchemes.filter((scheme) =>
-  t(`scheme_${scheme.id}_name` as any)
+  scheme.name
     .toLowerCase()
     .includes(search.toLowerCase())
 );
@@ -46,20 +46,23 @@ const GovSchemes = () => {
               </p>
               
               <div className="space-y-3 text-sm flex-1">
-                <div>
-                  <span className="font-medium text-foreground">{t("benefitsLabel")}</span>
-
-<p className="text-muted-foreground">
-  <span className="inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-md mr-2">
-    ★
-  </span>
-  {t(`scheme_${scheme.id}_benefits` as any)}
-</p>
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">{t("benefitsLabel")}</span>
-                  <p className="text-muted-foreground">{t(`scheme_${scheme.id}_benefits` as any)}</p>
-                </div>
+                {/* Eligibility */}
+<div>
+  <span className="font-medium text-foreground">Eligibility:</span>
+  <p className="text-muted-foreground text-sm">
+    {scheme.eligibility}
+  </p>
+</div>
+{/* Benefits */}
+<div>
+  <span className="font-medium text-foreground">Benefits:</span>
+  <p className="text-muted-foreground text-sm">
+    <span className="inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-md mr-2">
+      ★
+    </span>
+    {scheme.benefits}
+  </p>
+</div>
                 <div>
   <span className="font-medium text-foreground">Required Documents</span>
   <ul className="text-muted-foreground list-disc list-inside text-sm">
