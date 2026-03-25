@@ -260,11 +260,11 @@ const Index = () => {
     <ScrollReveal>
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
-          About <span style={{color: "#166534"}}>Kisan Bandhu</span>
-        </h2>
+  {t("aboutTitle")}
+</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-          India's farmer-first digital marketplace — eliminating middlemen, ensuring fair prices, and empowering every kisan.
-        </p>
+  {t("aboutSubtitle")}
+</p>
       </div>
     </ScrollReveal>
 
@@ -300,8 +300,10 @@ const Index = () => {
               🎯
             </div>
             <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">Our Mission</h3>
+              <h3 className="font-bold text-lg text-foreground mb-1">{t("missionTitle")}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
+  {t("missionText")}
+</p>
                 To eliminate middlemen and give farmers direct access to buyers — ensuring maximum profit stays with the farmer.
               </p>
             </div>
@@ -315,10 +317,10 @@ const Index = () => {
               🌟
             </div>
             <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">Our Vision</h3>
+              <h3 className="font-bold text-lg text-foreground mb-1">{t("visionTitle")}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                A digital India where every farmer gets a fair price, transparent trade, and access to government schemes — all in one place.
-              </p>
+  {t("visionText")}
+</p>
             </div>
           </div>
 
@@ -330,10 +332,10 @@ const Index = () => {
               💡
             </div>
             <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">Why Kisan Bandhu?</h3>
+              <h3 className="font-bold text-lg text-foreground mb-1">{t("whyTitle")}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Transparent bidding, crop advisory, MSP calculator, and government schemes — everything a farmer needs, in one platform.
-              </p>
+  {t("whyText")}
+</p>
             </div>
           </div>
 
