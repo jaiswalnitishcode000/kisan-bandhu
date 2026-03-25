@@ -302,6 +302,13 @@ profitCardDesc: "Calculate your farming profit based on crop yield, selling pric
 openCalculator: "Open Calculator →",
 subsidyCardTitle: "Tractor Subsidy",
 subsidyCardDesc: "Find out how much government subsidy you can get on tractor purchase",
+stayUpdated: "Stay Updated",
+newsletterText: "Get latest crop prices, schemes & news directly in your inbox!",
+enterEmailPlaceholder: "Enter your email",
+subscribe: "Subscribe",
+privacyPolicy: "Privacy Policy",
+termsOfService: "Terms of Service",
+supportText: "Support",
   },
   hi: {
     home: "होम",
@@ -602,7 +609,14 @@ profitCardDesc: "फसल उपज, बिक्री मूल्य और 
 
 openCalculator: "कैलकुलेटर खोलें →",
 subsidyCardTitle: "ट्रैक्टर सब्सिडी",
-subsidyCardDesc: "जानें कि ट्रैक्टर खरीद पर आपको कितनी सरकारी सब्सिडी मिल सकती है", },
+subsidyCardDesc: "जानें कि ट्रैक्टर खरीद पर आपको कितनी सरकारी सब्सिडी मिल सकती है",
+stayUpdated: "अपडेट रहें",
+newsletterText: "नवीनतम फसल कीमतें, योजनाएँ और समाचार सीधे अपने इनबॉक्स में पाएं!",
+enterEmailPlaceholder: "अपना ईमेल दर्ज करें",
+subscribe: "सब्सक्राइब करें",
+privacyPolicy: "गोपनीयता नीति",
+termsOfService: "सेवा की शर्तें",
+supportText: "सहायता", },
 } as const;
 
 type TranslationKeys = keyof typeof translations.en;
@@ -618,16 +632,10 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>("en");
 
-  interface LanguageContextType {
-  lang: Lang;
-  setLang: (l: Lang) => void;
-  t: (key: string) => string;
-}
-
-const t = (key: string) => {
-  const value = (translations[lang] as any)[key];
-  return value || key;
-};
+  const t = (key: string): string => {
+    const value = (translations[lang] as Record<string, string>)[key];
+    return value || key;
+  };
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>

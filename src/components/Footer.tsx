@@ -26,7 +26,7 @@ const Footer = () => {
               <span className="text-white font-extrabold text-2xl">Kisan Bandhu</span>
             </div>
             <p className="text-green-100 text-sm leading-relaxed mb-5">
-              Empowering farmers by connecting them directly to buyers. Fair prices, transparent bidding, better lives. 🌾
+              {t("brandDescription")}
             </p>
             {/* Social icons */}
             <div className="flex gap-3">
@@ -49,15 +49,15 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
               <span className="w-1 h-5 rounded-full inline-block" style={{backgroundColor: "#4ade80"}}></span>
-              Quick Links
+              {t("quickLinks")}
             </h4>
             <div className="space-y-3">
               {[
-                { to: "/marketplace", label: "🛒 Marketplace" },
-                { to: "/advisory", label: "🌱 Crop Advisory" },
-                { to: "/msp-calculator", label: "🧮 MSP Calculator" },
-                { to: "/schemes", label: "🏛️ Gov Schemes" },
-              ].map((link, i) => (
+  { to: "/marketplace", label: `🛒 ${t("marketplace")}` },
+  { to: "/advisory", label: `🌱 ${t("cropAdvisory")}` },
+  { to: "/msp-calculator", label: `🧮 ${t("mspCalculator")}` },
+  { to: "/schemes", label: `🏛️ ${t("govSchemes")}` },
+].map((link, i) => (
                 <Link key={i} to={link.to}
                   className="flex items-center gap-2 text-sm text-green-100 hover:text-white transition-colors group">
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -71,7 +71,7 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
               <span className="w-1 h-5 rounded-full inline-block" style={{backgroundColor: "#4ade80"}}></span>
-              Contact Us
+              {t("contactUs")}
             </h4>
             <div className="space-y-4">
               {[
@@ -94,15 +94,15 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
               <span className="w-1 h-5 rounded-full inline-block" style={{backgroundColor: "#4ade80"}}></span>
-              Stay Updated
+              {t("stayUpdated")}
             </h4>
             <p className="text-green-100 text-sm mb-4">
-              Get latest crop prices, schemes & news directly in your inbox! 📬
+              {t("newsletterText")}
             </p>
             <div className="flex flex-col gap-2">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t("enterEmailPlaceholder")}
                 className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
                 style={{
                   backgroundColor: "rgba(255,255,255,0.15)",
@@ -113,7 +113,7 @@ const Footer = () => {
               <button
                 className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
                 style={{backgroundColor: "#f59e0b", color: "white"}}>
-                Subscribe 🌾
+                {t("subscribe")}
               </button>
             </div>
           </div>
@@ -126,9 +126,9 @@ const Footer = () => {
               © 2026 <span className="text-white font-semibold">Kisan Bandhu</span>. All rights reserved.
             </p>
             <div className="flex gap-4 text-xs text-green-200">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Support</a>
+              <a href="#" className="hover:text-white transition-colors">{t("privacyPolicy")}</a>
+              <a href="#" className="hover:text-white transition-colors">{t("termsOfService")}</a>
+              <a href="#" className="hover:text-white transition-colors">{t("supportText")}</a>
             </div>
           </div>
         </div>

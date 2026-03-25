@@ -598,7 +598,7 @@ const Index = () => {
             <ScrollReveal>
               <h2 className="text-3xl font-bold mb-4 text-foreground">{t("readyToGetStarted")}</h2>
               <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-  Get the best price for your crops. Connect directly with buyers across India. No middlemen — more profit in your hands.
+  {t("ctaDescription")}
 </p>
               <Link to="/auth" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
                 {t("joinKisanBandhu")} <ArrowRight className="w-5 h-5" />
