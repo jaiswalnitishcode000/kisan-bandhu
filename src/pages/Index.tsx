@@ -11,7 +11,7 @@ const DEMO_USERS = [
   { type: "farmer", name: "Ramesh Kumar", city: "Amritsar", lat: 31.634, lng: 74.872, crop: "Wheat" },
   { type: "farmer", name: "Suresh Patel", city: "Ahmedabad", lat: 23.022, lng: 72.571, crop: "Cotton" },
   { type: "farmer", name: "Mohan Lal", city: "Jaipur", lat: 26.912, lng: 75.787, crop: "Bajra" },
-  { type: "farmer", name: "Kiran Devi", city: "Patna", lat: 25.594, lng: 85.137, crop: "Rice" },
+  { type: "farmer", name: "Nitish Jaiswal", city: "Patna", lat: 25.594, lng: 85.137, crop: "Rice" },
   { type: "farmer", name: "Arvind Singh", city: "Lucknow", lat: 26.846, lng: 80.946, crop: "Sugarcane" },
   { type: "farmer", name: "Priya Sharma", city: "Bhopal", lat: 23.259, lng: 77.412, crop: "Soybean" },
   { type: "farmer", name: "Dinesh Yadav", city: "Nagpur", lat: 21.145, lng: 79.088, crop: "Orange" },
@@ -339,7 +339,9 @@ const Index = () => {
             </div>
             <div>
               <h3 className="font-bold text-lg text-foreground mb-1">{t("missionTitle")}</h3>
-              whyText: "पारदर्शी बोली प्रणाली, फसल सलाह, MSP कैलकुलेटर और सरकारी योजनाएँ — एक ही प्लेटफ़ॉर्म पर किसानों की सभी जरूरतें।",
+              <p className="text-muted-foreground text-sm leading-relaxed">
+  {t("missionText")}
+</p>
             </div>
           </div>
 
