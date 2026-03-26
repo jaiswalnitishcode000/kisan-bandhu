@@ -154,7 +154,7 @@ const MspCalculator = () => {
             <button onClick={() => { setActiveCalc(null); setResult(null); setSubsidyResult(null); setProfitResult(null); }}
               className="mb-8 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
               style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white", border: "1px solid rgba(255,255,255,0.4)"}}>
-              <ChevronLeft className="w-4 h-4"/> Back to Calculators
+              <ChevronLeft className="w-4 h-4"/> Back  to  Calculators
             </button>
           )}
 

@@ -67,61 +67,59 @@ const IndiaMap = () => {
 };
 
 const STEPS = [
-  { emoji: "🧑‍🌾", label: "Farmer",        row: 0, col: 0, highlight: true  },
-  { emoji: "📝",    label: "Register",      row: 0, col: 1, highlight: false },
-  { emoji: "🌾",    label: "List Crop",     row: 0, col: 2, highlight: false },
-  { emoji: "📢",    label: "Buyers Bid",    row: 0, col: 3, highlight: false },
-  { emoji: "🤝",    label: "Negotiation",   row: 0, col: 4, highlight: false },
-  { emoji: "✅",    label: "Deal Confirm",  row: 0, col: 5, highlight: false },
-  { emoji: "🏷️",   label: "Packaging",     row: 1, col: 5, highlight: false },
-  { emoji: "📦",    label: "Dispatch",      row: 1, col: 4, highlight: false },
-  { emoji: "🔍",    label: "Quality Check", row: 1, col: 3, highlight: false },
-  { emoji: "🚚",    label: "Delivery",      row: 1, col: 2, highlight: false },
-  { emoji: "💳",    label: "Payment",       row: 1, col: 1, highlight: false },
-  { emoji: "💰",    label: "Final Payment", row: 2, col: 0, highlight: false },
-  { emoji: "🏭",    label: "Buyer",         row: 2, col: 1, highlight: true  },
+  { label: "Farmer",        row: 0, col: 0, color: "#166534", bg: "#f0fdf4", border: "#86efac", icon: "👨‍🌾" },
+  { label: "Register",      row: 0, col: 1, color: "#0369a1", bg: "#f0f9ff", border: "#7dd3fc", icon: "📋" },
+  { label: "List Crop",     row: 0, col: 2, color: "#7c3aed", bg: "#faf5ff", border: "#c4b5fd", icon: "🌿" },
+  { label: "Buyers Bid",    row: 0, col: 3, color: "#b45309", bg: "#fffbeb", border: "#fcd34d", icon: "💼" },
+  { label: "Negotiation",   row: 0, col: 4, color: "#be123c", bg: "#fff1f2", border: "#fda4af", icon: "🤝" },
+  { label: "Deal Confirm",  row: 0, col: 5, color: "#0f766e", bg: "#f0fdfa", border: "#5eead4", icon: "✔️" },
+  { label: "Packaging",     row: 1, col: 5, color: "#166534", bg: "#f0fdf4", border: "#86efac", icon: "📦" },
+  { label: "Dispatch",      row: 1, col: 4, color: "#0369a1", bg: "#f0f9ff", border: "#7dd3fc", icon: "🏭" },
+  { label: "Quality Check", row: 1, col: 3, color: "#7c3aed", bg: "#faf5ff", border: "#c4b5fd", icon: "🔬" },
+  { label: "Delivery",      row: 1, col: 2, color: "#b45309", bg: "#fffbeb", border: "#fcd34d", icon: "🚛" },
+  { label: "Payment",       row: 1, col: 1, color: "#be123c", bg: "#fff1f2", border: "#fda4af", icon: "💳" },
+  { label: "Final Payment", row: 2, col: 0, color: "#0f766e", bg: "#f0fdfa", border: "#5eead4", icon: "💰" },
+  { label: "Buyer",         row: 2, col: 1, color: "#166534", bg: "#f0fdf4", border: "#86efac", icon: "🏪" },
 ];
 
 const TradingFlow = () => {
   const [activeStep, setActiveStep] = useState(-1);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [completed, setCompleted] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-
- useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { 
-        if (entry.isIntersecting && !isPlaying) {
-          startAnimation(); 
-        }
-      },
-      { threshold: 0.3 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, [isPlaying, completed]);
+  const hasStarted = useRef(false);
 
   const startAnimation = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
     setActiveStep(-1);
-    setCompleted(false);
-    setIsPlaying(true);
     let step = 0;
     intervalRef.current = setInterval(() => {
       setActiveStep(step);
       step++;
       if (step >= STEPS.length) {
         clearInterval(intervalRef.current!);
-        setIsPlaying(false);
-        setCompleted(true);
+        timeoutRef.current = setTimeout(() => startAnimation(), 1500);
       }
     }, 600);
   };
 
-  const replay = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    startAnimation();
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted.current) {
+          hasStarted.current = true;
+          startAnimation();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => {
+      observer.disconnect();
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const row0 = STEPS.filter(s => s.row === 0).sort((a, b) => a.col - b.col);
   const row1 = STEPS.filter(s => s.row === 1).sort((a, b) => b.col - a.col);
@@ -132,21 +130,35 @@ const TradingFlow = () => {
     const idx = stepIndex(item);
     const isActive = activeStep === idx;
     const isDone = activeStep > idx;
+
     return (
       <div className="flex flex-col items-center gap-2">
         <div
-          className="w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-md transition-all duration-500"
+          className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl transition-all duration-500 relative"
           style={{
-            backgroundColor: isActive ? "#f59e0b" : isDone ? "#166534" : item.highlight ? "#166534" : "#1f2937",
-            border: isActive ? "3px solid #fde68a" : isDone ? "3px solid #bbf7d0" : item.highlight ? "3px solid #bbf7d0" : "none",
-            transform: isActive ? "scale(1.25)" : "scale(1)",
-            boxShadow: isActive ? "0 0 20px rgba(245,158,11,0.7)" : isDone ? "0 0 10px rgba(22,101,52,0.4)" : undefined,
+            backgroundColor: isActive || isDone ? item.bg : "#f8fafc",
+            border: `2px solid ${isActive ? item.color : isDone ? item.border : "#e2e8f0"}`,
+            transform: isActive ? "scale(1.25)" : isDone ? "scale(1.05)" : "scale(1)",
+            boxShadow: isActive
+              ? `0 0 20px ${item.border}, 0 4px 15px rgba(0,0,0,0.1)`
+              : isDone
+              ? "0 2px 8px rgba(0,0,0,0.08)"
+              : "none",
+            filter: !isDone && !isActive ? "grayscale(1) opacity(0.35)" : "none",
           }}
         >
-          {item.emoji}
+          {item.icon}
+          {isActive && (
+            <div className="absolute inset-0 rounded-2xl animate-ping"
+              style={{border: `2px solid ${item.color}`, opacity: 0.4}}/>
+          )}
         </div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-center w-16 transition-colors duration-300"
-          style={{ color: isActive ? "#f59e0b" : isDone || item.highlight ? "#166534" : undefined }}>
+        <p
+          className="text-xs font-bold uppercase tracking-wide text-center w-20 transition-all duration-300"
+          style={{
+            color: isActive ? item.color : isDone ? "#374151" : "#cbd5e1",
+          }}
+        >
           {item.label}
         </p>
       </div>
@@ -154,68 +166,94 @@ const TradingFlow = () => {
   };
 
   const Dash = ({ done }: { done: boolean }) => (
-    <svg width="36" height="10" className="mb-6 mx-1 flex-shrink-0">
-      <line x1="0" y1="5" x2="36" y2="5"
-        stroke={done ? "#166534" : "#9ca3af"}
-        strokeWidth="2" strokeDasharray="5,3"
-        style={{ transition: "stroke 0.4s" }} />
+    <svg width="36" height="12" className="mb-8 mx-1 flex-shrink-0">
+      <line
+        x1="0" y1="6" x2="36" y2="6"
+        stroke={done ? "#166534" : "#e2e8f0"}
+        strokeWidth="2.5"
+        strokeDasharray="5,3"
+        style={{transition: "stroke 0.4s"}}
+      />
     </svg>
   );
 
   return (
     <div ref={sectionRef}>
-      <div className="max-w-5xl mx-auto overflow-x-auto pb-4">
-
-        {/* Row 1 - Left to Right */}
-        <div className="flex items-start justify-between min-w-[700px]">
-          {row0.map((item, i) => (
-            <div key={item.label} className="flex items-center">
-              <StepCircle item={item} />
-              {i < row0.length - 1 && <Dash done={activeStep > stepIndex(item)} />}
-            </div>
-          ))}
-          <div style={{
-            width: "28px", height: "88px",
-            borderRight: "2px dashed #166534",
-            borderBottom: "2px dashed #166534",
-            borderRadius: "0 0 16px 0",
-            opacity: activeStep >= 5 ? 0.8 : 0.25,
-            marginTop: "26px", marginLeft: "-4px", marginBottom: "-56px",
-            transition: "opacity 0.4s", flexShrink: 0,
-          }} />
-        </div>
-
-        {/* Row 2 - Right to Left */}
-        <div className="flex items-start flex-row-reverse justify-between mt-10 min-w-[700px]">
-          {row1.map((item, i) => (
-            <div key={item.label} className="flex items-center flex-row-reverse">
-              <StepCircle item={item} />
-              {i < row1.length - 1 && <Dash done={activeStep > stepIndex(item)} />}
-            </div>
-          ))}
-          <div style={{
-            width: "28px", height: "88px",
-            borderLeft: "2px dashed #166534",
-            borderBottom: "2px dashed #166534",
-            borderRadius: "0 0 0 16px",
-            opacity: activeStep >= 10 ? 0.8 : 0.25,
-            marginTop: "26px", marginRight: "-4px", marginBottom: "-56px",
-            transition: "opacity 0.4s", flexShrink: 0,
-          }} />
-        </div>
-
-        {/* Row 3 - Final */}
-        <div className="flex items-start gap-2 mt-10 min-w-[700px]">
-          {row2.map((item, i) => (
-            <div key={item.label} className="flex items-center">
-              <StepCircle item={item} />
-              {i < row2.length - 1 && <Dash done={activeStep > stepIndex(item)} />}
-            </div>
-          ))}
-        </div>
+      {/* Row 1 */}
+      <div className="flex items-start justify-between flex-nowrap">
+        {row0.map((item, i) => (
+          <div key={item.label} className="flex items-center">
+            <StepCircle item={item} />
+            {i < row0.length - 1 && <Dash done={activeStep > stepIndex(item)} />}
+          </div>
+        ))}
+        {/* Right curve */}
+        <div style={{
+          width: "28px",
+          height: "86px",
+          borderRight: `2.5px dashed ${activeStep >= 5 ? "#166534" : "#e2e8f0"}`,
+          borderBottom: `2.5px dashed ${activeStep >= 5 ? "#166534" : "#e2e8f0"}`,
+          borderRadius: "0 0 16px 0",
+          marginTop: "28px",
+          marginLeft: "-4px",
+          marginBottom: "-54px",
+          transition: "border-color 0.4s",
+          flexShrink: 0,
+        }}/>
       </div>
 
-     
+      {/* Row 2 */}
+      <div className="flex items-start flex-row-reverse justify-between flex-nowrap mt-10">
+        {row1.map((item, i) => (
+          <div key={item.label} className="flex items-center flex-row-reverse">
+            <StepCircle item={item} />
+            {i < row1.length - 1 && <Dash done={activeStep > stepIndex(item)} />}
+          </div>
+        ))}
+        {/* Left curve */}
+        <div style={{
+          width: "28px",
+          height: "86px",
+          borderLeft: `2.5px dashed ${activeStep >= 11 ? "#166534" : "#e2e8f0"}`,
+          borderBottom: `2.5px dashed ${activeStep >= 11 ? "#166534" : "#e2e8f0"}`,
+          borderRadius: "0 0 0 16px",
+          marginTop: "28px",
+          marginRight: "-4px",
+          marginBottom: "-54px",
+          transition: "border-color 0.4s",
+          flexShrink: 0,
+        }}/>
+      </div>
+
+      {/* Row 3 */}
+      <div className="flex items-start gap-2 mt-10">
+        {row2.map((item, i) => (
+          <div key={item.label} className="flex items-center">
+            <StepCircle item={item} />
+            {i < row2.length - 1 && <Dash done={activeStep > stepIndex(item)} />}
+          </div>
+        ))}
+      </div>
+
+      {/* Progress bar */}
+      <div className="mt-8">
+        <div className="flex justify-between text-xs text-muted-foreground mb-2">
+          <span>👨‍🌾 Farmer</span>
+          <span style={{color: "#166534", fontWeight: "600"}}>
+            {activeStep >= 0 ? `Step ${activeStep + 1} of ${STEPS.length}` : "Starting..."}
+          </span>
+          <span>🏪 Buyer</span>
+        </div>
+        <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+          <div
+            className="h-full rounded-full transition-all duration-500"
+            style={{
+              width: `${activeStep >= 0 ? ((activeStep + 1) / STEPS.length) * 100 : 0}%`,
+              background: "linear-gradient(90deg, #166534, #16a34a, #f59e0b)",
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
