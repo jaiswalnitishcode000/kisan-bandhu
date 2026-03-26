@@ -8,10 +8,10 @@ const GovSchemes = () => {
   const { t } = useLanguage();
   const [search, setSearch] = useState("");
 
-  const filteredSchemes = govSchemes.filter((scheme) =>
-    scheme.name.toLowerCase().includes(search.toLowerCase()) ||
-    scheme.description.toLowerCase().includes(search.toLowerCase())
-  );
+const filteredSchemes = govSchemes.filter((scheme) =>
+  t(`scheme_${scheme.id}_name`).toLowerCase().includes(search.toLowerCase()) ||
+  t(`scheme_${scheme.id}_desc`).toLowerCase().includes(search.toLowerCase())
+);
 
   return (
     <div className="min-h-screen">
@@ -29,10 +29,10 @@ const GovSchemes = () => {
           {/* Title */}
           <div className="text-center mb-10">
             <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-3 uppercase tracking-wide">
-              Farmer Welfare Schemes
+              {t("governmentSchemesTitle")}
             </h1>
             <p className="text-white/80 text-lg max-w-2xl mx-auto">
-              Discover government schemes, subsidies and benefits designed especially for Indian farmers
+              {t("governmentSchemesDescription")}
             </p>
           </div>
 
@@ -48,7 +48,7 @@ const GovSchemes = () => {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60"/>
                 <input
                   type="text"
-                  placeholder="Search schemes..."
+                  placeholder={t("searchPlaceholder")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full pl-12 pr-4 py-3.5 rounded-xl text-sm focus:outline-none text-white placeholder-white/60"
@@ -76,13 +76,13 @@ const GovSchemes = () => {
                   <div className="flex items-center gap-3 mb-4">
                     <div className="text-4xl">{scheme.icon}</div>
                     <h3 className="text-lg font-extrabold text-white leading-tight">
-                      {scheme.name}
+                      {t(`scheme_${scheme.id}_name`)}
                     </h3>
                   </div>
 
                   {/* Description */}
                   <p className="text-white/75 text-sm mb-5 leading-relaxed">
-                    {scheme.description}
+                    {t(`scheme_${scheme.id}_desc`)}
                   </p>
 
                   <div className="space-y-3 flex-1">
@@ -92,8 +92,8 @@ const GovSchemes = () => {
                       style={{backgroundColor: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.2)"}}>
                       <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-green-300"/>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1 text-green-300">Eligibility</p>
-                        <p className="text-xs text-white/70 leading-relaxed">{scheme.eligibility}</p>
+                        <p className="text-xs font-bold uppercase tracking-wide mb-1 text-green-300">{t("eligibilityLabel")}</p>
+                        <p className="text-xs text-white/70 leading-relaxed">{t(`scheme_${scheme.id}_eligibility`)}</p>
                       </div>
                     </div>
 
@@ -102,8 +102,8 @@ const GovSchemes = () => {
                       style={{backgroundColor: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.2)"}}>
                       <Star className="w-4 h-4 mt-0.5 flex-shrink-0 text-yellow-300"/>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1 text-yellow-300">Benefits</p>
-                        <p className="text-xs text-white/70 leading-relaxed">{scheme.benefits}</p>
+                        <p className="text-xs font-bold uppercase tracking-wide mb-1 text-yellow-300">{t("benefitsLabel")}</p>
+                        <p className="text-xs text-white/70 leading-relaxed">{t(`scheme_${scheme.id}_benefits`)}</p>
                       </div>
                     </div>
 
@@ -112,15 +112,22 @@ const GovSchemes = () => {
                       style={{backgroundColor: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.2)"}}>
                       <FileText className="w-4 h-4 mt-0.5 flex-shrink-0 text-blue-300"/>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wide mb-1 text-blue-300">Required Documents</p>
+                        <p className="text-xs font-bold uppercase tracking-wide mb-1 text-blue-300">{t("requiredDocumentsLabel")}</p>
                         <div className="flex flex-wrap gap-1 mt-1">
-                          {["Aadhaar Card", "Land Record", "Bank Account"].map((doc, j) => (
-                            <span key={j} className="text-xs px-2 py-0.5 rounded-full"
-                              style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white"}}>
-                              {doc}
-                            </span>
-                          ))}
-                        </div>
+  {[
+    t(`scheme_${scheme.id}_doc1`),
+    t(`scheme_${scheme.id}_doc2`),
+    t(`scheme_${scheme.id}_doc3`)
+  ].map((doc, j) => (
+    <span
+      key={j}
+      className="text-xs px-2 py-0.5 rounded-full"
+      style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "white" }}
+    >
+      {doc}
+    </span>
+  ))}
+</div>
                       </div>
                     </div>
                   </div>
@@ -134,7 +141,7 @@ const GovSchemes = () => {
                       color: "white",
                       border: "1px solid rgba(255,255,255,0.4)",
                     }}>
-                    Apply Now →
+                    {t("applyNow")}
                   </button>
                 </div>
               </ScrollReveal>
@@ -144,10 +151,14 @@ const GovSchemes = () => {
           {/* No results */}
           {filteredSchemes.length === 0 && (
             <div className="text-center py-20">
-              <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-white mb-2">No schemes found</h3>
-              <p className="text-white/60">Try searching with different keywords</p>
-            </div>
+  <div className="text-5xl mb-4">🔍</div>
+  <h3 className="text-xl font-bold text-white mb-2">
+    {t("noCropsFound")}
+  </h3>
+  <p className="text-white/60">
+    {t("searchPlaceholder")}
+  </p>
+</div>
           )}
 
         </div>

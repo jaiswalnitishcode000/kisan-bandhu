@@ -298,11 +298,11 @@ const Index = () => {
     <ScrollReveal>
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
-          About <span style={{color: "#166534"}}>Kisan Bandhu</span>
-        </h2>
+  {t("aboutTitle")}
+</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-          India's farmer-first digital marketplace — eliminating middlemen, ensuring fair prices, and empowering every kisan.
-        </p>
+  {t("aboutSubtitle")}
+</p>
       </div>
     </ScrollReveal>
 
@@ -338,10 +338,8 @@ const Index = () => {
               🎯
             </div>
             <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">Our Mission</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                To eliminate middlemen and give farmers direct access to buyers — ensuring maximum profit stays with the farmer.
-              </p>
+              <h3 className="font-bold text-lg text-foreground mb-1">{t("missionTitle")}</h3>
+              whyText: "पारदर्शी बोली प्रणाली, फसल सलाह, MSP कैलकुलेटर और सरकारी योजनाएँ — एक ही प्लेटफ़ॉर्म पर किसानों की सभी जरूरतें।",
             </div>
           </div>
 
@@ -353,10 +351,10 @@ const Index = () => {
               🌟
             </div>
             <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">Our Vision</h3>
+              <h3 className="font-bold text-lg text-foreground mb-1">{t("visionTitle")}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                A digital India where every farmer gets a fair price, transparent trade, and access to government schemes — all in one place.
-              </p>
+  {t("visionText")}
+</p>
             </div>
           </div>
 
@@ -368,10 +366,10 @@ const Index = () => {
               💡
             </div>
             <div>
-              <h3 className="font-bold text-lg text-foreground mb-1">Why Kisan Bandhu?</h3>
+              <h3 className="font-bold text-lg text-foreground mb-1">{t("whyTitle")}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Transparent bidding, crop advisory, MSP calculator, and government schemes — everything a farmer needs, in one platform.
-              </p>
+  {t("whyText")}
+</p>
             </div>
           </div>
 
@@ -381,77 +379,78 @@ const Index = () => {
   </div>
 </section>
 
+
       {/* Services Section */}
 <section className="py-20 bg-background overflow-hidden">
   <div className="container mx-auto px-4">
     <ScrollReveal>
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mt-4 mb-4">
-          Our <span style={{color: "#166534"}}>Services</span>
-        </h2>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Everything a farmer and buyer needs — in one powerful platform.
-        </p>
+  {t("servicesTitle")}
+</h2>
+<p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+  {t("servicesSubtitle")}
+</p>
       </div>
     </ScrollReveal>
 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
       {[
-        {
-          emoji: "🛒",
-          title: "Crop Marketplace",
-          desc: "List your crops and get the best bids from verified buyers across India. No middlemen, maximum profit.",
-          color: "#166534",
-          bg: "#f0fdf4",
-          border: "#bbf7d0",
-          link: "/marketplace",
-        },
-        {
-          emoji: "🌱",
-          title: "Crop Advisory",
-          desc: "Get expert advice on crop selection, pest control, weather alerts and best farming practices.",
-          color: "#0369a1",
-          bg: "#f0f9ff",
-          border: "#bae6fd",
-          link: "/advisory",
-        },
-        {
-          emoji: "🏛️",
-          title: "Gov Schemes",
-          desc: "Discover and apply for government schemes, subsidies and loans designed for Indian farmers.",
-          color: "#7c3aed",
-          bg: "#faf5ff",
-          border: "#ddd6fe",
-          link: "/schemes",
-        },
-        {
-          emoji: "🧮",
-          title: "MSP Calculator",
-          desc: "Calculate Minimum Support Price for your crops instantly. Know your rights, get fair value.",
-          color: "#b45309",
-          bg: "#fffbeb",
-          border: "#fde68a",
-          link: "/msp-calculator",
-        },
-        {
-  emoji: "💰",
-  title: "Subsidy Calculator",
-  desc: "Calculate government subsidies available for your crops, equipment and farming inputs instantly.",
-  color: "#166534",
-  bg: "#f0fdf4",
-  border: "#bbf7d0",
-  link: "/msp-calculator",
-},
-        {
-          emoji: "📊",
-          title: "Market Insights",
-          desc: "Real-time crop prices, market trends and demand forecasts to help you make smarter decisions.",
-          color: "#be123c",
-          bg: "#fff1f2",
-          border: "#fecdd3",
-          link: "/market-insights",
-        },
-      ].map((service, i) => (
+  {
+    emoji: "🛒",
+    title: t("serviceMarketplaceTitle"),
+    desc: t("serviceMarketplaceDesc"),
+    color: "#166534",
+    bg: "#f0fdf4",
+    border: "#bbf7d0",
+    link: "/marketplace",
+  },
+  {
+    emoji: "🌱",
+    title: t("serviceAdvisoryTitle"),
+    desc: t("serviceAdvisoryDesc"),
+    color: "#0369a1",
+    bg: "#f0f9ff",
+    border: "#bae6fd",
+    link: "/advisory",
+  },
+  {
+    emoji: "🏛️",
+    title: t("serviceSchemesTitle"), 
+    desc: t("serviceSchemesDesc"),
+    color: "#7c3aed",
+    bg: "#faf5ff",
+    border: "#ddd6fe",
+    link: "/schemes",
+  },
+  {
+    emoji: "🧮",
+   title: t("serviceMspTitle"),
+   desc: t("serviceMspDesc"),
+    color: "#b45309",
+    bg: "#fffbeb",
+    border: "#fde68a",
+    link: "/msp-calculator",
+  },
+  {
+    emoji: "💰",
+    title: t("serviceSubsidyTitle"),
+    desc: t("serviceSubsidyDesc"),
+    color: "#166534",
+    bg: "#f0fdf4",
+    border: "#bbf7d0",
+    link: "/msp-calculator",
+  },
+  {
+    emoji: "📊",
+   title: t("serviceInsightsTitle"),
+   desc: t("serviceInsightsDesc"),
+    color: "#be123c",
+    bg: "#fff1f2",
+    border: "#fecdd3",
+    link: "/market-insights",
+  },
+].map((service, i) => (
         <ScrollReveal key={i}>
           <div
             className="group rounded-2xl p-6 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer h-full"
@@ -485,7 +484,7 @@ const Index = () => {
               className="inline-flex items-center gap-1 text-sm font-semibold transition-all group-hover:gap-2"
               style={{color: service.color}}
             >
-              Learn More <ArrowRight className="w-4 h-4" />
+              {t("learnMore")} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </ScrollReveal>
@@ -501,12 +500,13 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Our <span style={{color: "#166534"}}>Value</span> Proposition
-              </h2>
-              <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                Kisan Bandhu connects farmers directly with buyers — eliminating middlemen, ensuring fair prices and transparent trade.
-              </p>
+              <h2>
+  {t("valueTitle")}
+</h2>
+
+<p>
+  {t("valueSubtitle")}
+</p>
             </div>
           </ScrollReveal>
           <TradingFlow />
@@ -518,12 +518,13 @@ const Index = () => {
   <div className="container mx-auto px-4">
     <ScrollReveal>
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Our <span style={{color: "#166534"}}>Network</span> Across India
-        </h2>
-        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Farmers and buyers connected across the country — from Kashmir to Kanyakumari.
-        </p>
+        <h2>
+         {t("networkTitle")}
+</h2>
+
+<p>
+  {t("networkSubtitle")}
+</p>
       </div>
     </ScrollReveal>
 
@@ -531,11 +532,11 @@ const Index = () => {
     <div className="flex justify-center gap-8 mb-6">
       <div className="flex items-center gap-2">
         <div className="w-4 h-4 rounded-full" style={{backgroundColor: "#166534"}}></div>
-        <span className="text-sm font-medium text-foreground">🧑‍🌾 Farmer</span>
+        <span className="text-sm font-medium text-foreground">🧑‍🌾 {t("farmerLabel")}</span>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-4 h-4 rounded-full" style={{backgroundColor: "#f59e0b"}}></div>
-        <span className="text-sm font-medium text-foreground">🏭 Buyer</span>
+        <span className="text-sm font-medium text-foreground">🏭 {t("buyerLabel")}</span>
       </div>
     </div>
 
@@ -564,41 +565,41 @@ const Index = () => {
   <div className="container mx-auto px-4">
     <ScrollReveal>
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Key <span style={{color: "#166534"}}>Features</span>
-        </h2>
-        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Discover how Kisan Bandhu can benefit farmers, buyers and all agricultural supply chain actors.
-        </p>
+<h2 className="text-3xl md:text-4xl font-bold text-foreground">
+  {t("featuresTitle")}
+</h2>
+<p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+  {t("featuresSubtitle")}
+</p>
       </div>
     </ScrollReveal>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
       {[
-        {
-          emoji: "🔍",
-          title: "Transparency",
-          desc: "Direct transactions between farmers and buyers. No hidden charges, no middlemen.",
-          highlight: false,
-        },
-        {
-          emoji: "⚖️",
-          title: "Fair Trade",
-          desc: "Redistribution of value in the agricultural supply chain. Fair prices for all.",
-          highlight: false,
-        },
-        {
-          emoji: "📱",
-          title: "User Friendly",
-          desc: "Easy to use platform for farmers and buyers. Simple, fast and reliable.",
-          highlight: false,
-        },
-        {
-          emoji: "🔗",
-          title: "Crop Traceability",
-          desc: "Track your crop through the entire supply chain. Coming soon!",
-          highlight: true,
-        },
-      ].map((feature, i) => (
+  {
+    emoji: "🔍",
+    title: t("featureTransparencyTitle"),
+    desc: t("featureTransparencyDesc"),
+    highlight: false,
+  },
+  {
+    emoji: "⚖️",
+    title: t("featureFairTradeTitle"),
+    desc: t("featureFairTradeDesc"),
+    highlight: false,
+  },
+  {
+    emoji: "📱",
+    title: t("featureUserFriendlyTitle"),
+    desc: t("featureUserFriendlyDesc"),
+    highlight: false,
+  },
+  {
+    emoji: "🔗",
+    title: t("featureTraceabilityTitle"),
+    desc: t("featureTraceabilityDesc"),
+    highlight: true,
+  },
+].map((feature, i) => (
         <ScrollReveal key={i}>
           <div
             className="rounded-2xl p-8 text-center border transition-all duration-300 hover:scale-105 hover:shadow-lg"
@@ -636,7 +637,7 @@ const Index = () => {
             <ScrollReveal>
               <h2 className="text-3xl font-bold mb-4 text-foreground">{t("readyToGetStarted")}</h2>
               <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-  Get the best price for your crops. Connect directly with buyers across India. No middlemen — more profit in your hands.
+  {t("ctaDescription")}
 </p>
               <Link to="/auth" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-lg hover:opacity-90 transition-opacity">
                 {t("joinKisanBandhu")} <ArrowRight className="w-5 h-5" />

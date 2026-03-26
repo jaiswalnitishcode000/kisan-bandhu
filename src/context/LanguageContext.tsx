@@ -287,6 +287,175 @@ scheme_AIF_doc3: "Bank Account",
 scheme_BEE_doc1: "Aadhaar Card",
 scheme_BEE_doc2: "Land Record",
 scheme_BEE_doc3: "Bank Account",
+selectCalculatorTitle: "SELECT A CALCULATOR",
+selectCalculatorSubtitle: "MSP, Subsidy & Profit — smart farming decisions",
+
+mspCardTitle: "MSP CALCULATOR",
+mspCardDesc: "Calculate Minimum Support Price for your crops and compare with market bids",
+
+tractorCardTitle: "TRACTOR SUBSIDY",
+tractorCardDesc: "Find out how much government subsidy you can get on tractor purchase",
+
+profitCardTitle: "PROFIT CALCULATOR",
+profitCardDesc: "Calculate your farming profit based on crop yield, selling price and costs",
+
+openCalculator: "Open Calculator →",
+subsidyCardTitle: "Tractor Subsidy",
+subsidyCardDesc: "Find out how much government subsidy you can get on tractor purchase",
+stayUpdated: "Stay Updated",
+newsletterText: "Get latest crop prices, schemes & news directly in your inbox!",
+enterEmailPlaceholder: "Enter your email",
+subscribe: "Subscribe",
+privacyPolicy: "Privacy Policy",
+termsOfService: "Terms of Service",
+supportText: "Support",
+
+aboutSubtitle: "India's farmer-first digital marketplace — eliminating middlemen, ensuring fair prices, and empowering every kisan.",
+
+missionTitle: "Our Mission",
+missionText: "To eliminate middlemen and give farmers direct access to buyers — ensuring maximum profit stays with the farmer.",
+
+visionTitle: "Our Vision",
+visionText: "A digital India where every farmer gets a fair price, transparent trade, and access to government schemes — all in one place.",
+
+whyTitle: "Why Kisan Bandhu?",
+whyText: "Transparent bidding, crop advisory, MSP calculator, and government schemes — everything a farmer needs, in one platform.",
+featuresTitle: "Key Features",
+featuresSubtitle: "Discover how Kisan Bandhu can benefit farmers, buyers and all agricultural supply chain actors.",
+
+featureTransparencyTitle: "Transparency",
+featureTransparencyDesc: "Direct transactions between farmers and buyers. No hidden charges, no middlemen.",
+
+featureFairTradeTitle: "Fair Trade",
+featureFairTradeDesc: "Redistribution of value in the agricultural supply chain. Fair prices for all.",
+
+featureUserFriendlyTitle: "User Friendly",
+featureUserFriendlyDesc: "Easy to use platform for farmers and buyers. Simple, fast and reliable.",
+
+featureTraceabilityTitle: "Crop Traceability",
+featureTraceabilityDesc: "Track your crop through the entire supply chain. Coming soon!",
+servicesTitle: "Our Services",
+servicesSubtitle: "Everything a farmer and buyer needs — in one powerful platform.",
+
+serviceMarketplaceTitle: "Crop Marketplace",
+serviceMarketplaceDesc: "List your crops and get the best bids from verified buyers across India. No middlemen, maximum profit.",
+
+serviceAdvisoryTitle: "Crop Advisory",
+serviceAdvisoryDesc: "Get expert advice on crop selection, pest control, weather alerts and best farming practices.",
+
+serviceSchemesTitle: "Gov Schemes",
+serviceSchemesDesc: "Discover and apply for government schemes, subsidies and loans designed for Indian farmers.",
+
+serviceMspTitle: "MSP Calculator",
+serviceMspDesc: "Calculate Minimum Support Price for your crops instantly. Know your rights, get fair value.",
+
+serviceSubsidyTitle: "Subsidy Calculator",
+serviceSubsidyDesc: "Calculate government subsidies available for your crops, equipment and farming inputs instantly.",
+
+serviceInsightsTitle: "Market Insights",
+serviceInsightsDesc: "Real-time crop prices, market trends and demand forecasts to help you make smarter decisions.",
+
+learnMore: "Learn More",
+valueTitle: "Our Value Proposition",
+valueSubtitle: "Kisan Bandhu connects farmers directly with buyers — eliminating middlemen, ensuring fair prices and transparent trade.",
+
+networkTitle: "Our Network Across India",
+networkSubtitle: "Farmers and buyers connected across the country — from Kashmir to Kanyakumari.",
+
+farmerLabel: "Farmer",
+buyerLabel: "Buyer",
+marketInsightsTitle: "Market Insights",
+marketInsightsSubtitle: "Live mandi rates, price trends, state-wise data & weather impact — all in one place.",
+
+updatedText: "Updated: Today, 9:00 AM",
+panIndia: "Pan India Data",
+cropsTracked: "12 Crops Tracked",
+
+livePrices: "Live Prices",
+priceCharts: "Price Charts",
+stateWise: "State Wise",
+demandTrends: "Demand Trends",
+weatherImpact: "Weather Impact",
+
+liveMandiRates: "Live Mandi Rates",
+demoData: "Demo Data",
+
+highDemand: "High Demand",
+mediumDemand: "Medium Demand",
+veryHighDemand: "Very High Demand",
+stableDemand: "Stable Demand",
+Wheat: "Wheat",
+"Rice (Basmati)": "Rice (Basmati)",
+Cotton: "Cotton",
+Soybean: "Soybean",
+Maize: "Maize",
+Tomato: "Tomato",
+Onion: "Onion",
+Potato: "Potato",
+Sugarcane: "Sugarcane",
+Turmeric: "Turmeric",
+Chilli: "Chilli",
+Groundnut: "Groundnut",
+cropWheat: "Wheat",
+cropRiceBasmati: "Rice (Basmati)",
+cropCotton: "Cotton",
+cropSoybean: "Soybean",
+cropMaize: "Maize",
+cropTomato: "Tomato",
+cropOnion: "Onion",
+cropPotato: "Potato",
+cropSugarcane: "Sugarcane",
+cropTurmeric: "Turmeric",
+cropChilli: "Chilli",
+cropGroundnut: "Groundnut",
+priceTrendOctMar: "Price Trend (Oct–Mar)",
+sixMonthPriceTrends: "6-Month Price Trends",
+selectCropPriceHistory: "Select a crop to view its price history",
+stateWiseCropPrices: "State Wise Crop Prices",
+topCrop: "Top Crop",
+rising: "Rising",
+falling: "Falling",
+demandSupplyTrends: "Demand & Supply Trends",
+demandLabel: "Demand",
+supplyLabel: "Supply",
+weatherImpactCrops: "Weather Impact on Crops",
+favorable: "Favorable",
+riskAlert: "Risk Alert",
+monitor: "Monitor",
+weeklyFarmingAdvisory: "Weekly Farming Advisory",
+sowNow: "Sow Now",
+sowNowCrops: "Tomato, Onion, Green Vegetables",
+harvestReady: "Harvest Ready",
+harvestReadyCrops: "Wheat, Mustard, Gram",
+avoidThisWeek: "Avoid This Week",
+avoidThisWeekCrops: "Cotton in heavy rain regions",
+northIndia: "North India",
+southIndia: "South India",
+eastIndia: "East India",
+westIndia: "West India",
+centralIndia: "Central India",
+
+clear: "Clear",
+heavyRain: "Heavy Rain",
+partlyCloudy: "Partly Cloudy",
+sunny: "Sunny",
+intermittentRain: "Intermittent Rain",
+
+wheatHarvestGood: "Good for Wheat harvest",
+cottonRisk: "Risk for Cotton & Chilli",
+riceModerate: "Moderate for Rice",
+groundnutGood: "Good for Groundnut",
+soybeanWatch: "Watch Soybean moisture",
+statePunjab: "Punjab",
+stateUttarPradesh: "Uttar Pradesh",
+stateMaharashtra: "Maharashtra",
+stateMadhyaPradesh: "Madhya Pradesh",
+stateAndhraPradesh: "Andhra Pradesh",
+stateKarnataka: "Karnataka",
+stateGujarat: "Gujarat",
+stateWestBengal: "West Bengal",
+backToCalculators: "Back to Calculators",
+
   },
   hi: {
     home: "होम",
@@ -571,7 +740,177 @@ scheme_AIF_doc3: "बैंक खाता",
 
 scheme_BEE_doc1: "आधार कार्ड",
 scheme_BEE_doc2: "भूमि अभिलेख",
-scheme_BEE_doc3: "बैंक खाता", },
+scheme_BEE_doc3: "बैंक खाता",
+
+selectCalculatorTitle: "कैलकुलेटर चुनें",
+selectCalculatorSubtitle: "एमएसपी, सब्सिडी और लाभ — स्मार्ट खेती के निर्णय",
+
+mspCardTitle: "एमएसपी कैलकुलेटर",
+mspCardDesc: "अपनी फसलों के लिए न्यूनतम समर्थन मूल्य की गणना करें और बाजार बोली से तुलना करें",
+
+tractorCardTitle: "ट्रैक्टर सब्सिडी",
+tractorCardDesc: "जानें कि ट्रैक्टर खरीद पर आपको कितनी सरकारी सब्सिडी मिल सकती है",
+
+profitCardTitle: "लाभ कैलकुलेटर",
+profitCardDesc: "फसल उपज, बिक्री मूल्य और लागत के आधार पर अपना कृषि लाभ निकालें",
+
+openCalculator: "कैलकुलेटर खोलें →",
+subsidyCardTitle: "ट्रैक्टर सब्सिडी",
+subsidyCardDesc: "जानें कि ट्रैक्टर खरीद पर आपको कितनी सरकारी सब्सिडी मिल सकती है",
+stayUpdated: "अपडेट रहें",
+newsletterText: "नवीनतम फसल कीमतें, योजनाएँ और समाचार सीधे अपने इनबॉक्स में पाएं!",
+enterEmailPlaceholder: "अपना ईमेल दर्ज करें",
+subscribe: "सब्सक्राइब करें",
+privacyPolicy: "गोपनीयता नीति",
+termsOfService: "सेवा की शर्तें",
+supportText: "सहायता",
+
+aboutSubtitle: "भारत का किसान-प्रथम डिजिटल मार्केटप्लेस — बिचौलियों को हटाकर, उचित मूल्य सुनिश्चित करते हुए, हर किसान को सशक्त बनाना।",
+
+missionTitle: "हमारा मिशन",
+missionText: "बिचौलियों को हटाकर किसानों को सीधे खरीदारों से जोड़ना — ताकि अधिकतम लाभ किसान के पास ही रहे।",
+
+visionTitle: "हमारा विज़न",
+visionText: "एक डिजिटल भारत जहाँ हर किसान को उचित मूल्य, पारदर्शी व्यापार और सरकारी योजनाओं तक पहुँच मिले — सब कुछ एक ही प्लेटफ़ॉर्म पर।",
+
+whyTitle: "किसान बंधु क्यों?",
+whyText: "पारदर्शी बोली प्रणाली, फसल सलाह, MSP कैलकुलेटर और सरकारी योजनाएँ — एक ही प्लेटफ़ॉर्म पर किसानों की सभी जरूरतें।",
+featuresTitle: "मुख्य विशेषताएँ",
+featuresSubtitle: "जानिए कैसे किसान बंधु किसानों, खरीदारों और कृषि आपूर्ति श्रृंखला से जुड़े सभी लोगों के लिए लाभकारी है।",
+
+featureTransparencyTitle: "पारदर्शिता",
+featureTransparencyDesc: "किसानों और खरीदारों के बीच सीधे लेन-देन। कोई छिपा शुल्क नहीं, कोई बिचौलिया नहीं।",
+
+featureFairTradeTitle: "निष्पक्ष व्यापार",
+featureFairTradeDesc: "कृषि आपूर्ति श्रृंखला में मूल्य का उचित वितरण। सभी के लिए उचित कीमत।",
+
+featureUserFriendlyTitle: "उपयोग में आसान",
+featureUserFriendlyDesc: "किसानों और खरीदारों के लिए आसान प्लेटफ़ॉर्म। सरल, तेज और भरोसेमंद।",
+
+featureTraceabilityTitle: "फसल ट्रेसबिलिटी",
+featureTraceabilityDesc: "पूरी आपूर्ति श्रृंखला में अपनी फसल को ट्रैक करें। जल्द आ रहा है!",
+servicesTitle: "हमारी सेवाएँ",
+servicesSubtitle: "किसानों और खरीदारों की हर जरूरत — एक ही शक्तिशाली प्लेटफ़ॉर्म पर।",
+
+serviceMarketplaceTitle: "फसल मार्केटप्लेस",
+serviceMarketplaceDesc: "अपनी फसल सूचीबद्ध करें और पूरे भारत के सत्यापित खरीदारों से सर्वोत्तम बोलियाँ प्राप्त करें। कोई बिचौलिया नहीं, अधिकतम लाभ।",
+
+serviceAdvisoryTitle: "फसल सलाह",
+serviceAdvisoryDesc: "फसल चयन, कीट नियंत्रण, मौसम अलर्ट और सर्वोत्तम खेती पद्धतियों पर विशेषज्ञ सलाह प्राप्त करें।",
+
+serviceSchemesTitle: "सरकारी योजनाएँ",
+serviceSchemesDesc: "भारतीय किसानों के लिए बनाई गई सरकारी योजनाओं, सब्सिडी और ऋण की जानकारी प्राप्त करें और आवेदन करें।",
+
+serviceMspTitle: "एमएसपी कैलकुलेटर",
+serviceMspDesc: "अपनी फसलों के लिए न्यूनतम समर्थन मूल्य तुरंत निकालें। अपने अधिकार जानें, उचित मूल्य पाएं।",
+
+serviceSubsidyTitle: "सब्सिडी कैलकुलेटर",
+serviceSubsidyDesc: "अपनी फसलों, उपकरणों और कृषि इनपुट पर उपलब्ध सरकारी सब्सिडी तुरंत निकालें।",
+
+serviceInsightsTitle: "मार्केट इनसाइट्स",
+serviceInsightsDesc: "रीयल-टाइम फसल मूल्य, बाजार रुझान और मांग पूर्वानुमान जो आपको बेहतर निर्णय लेने में मदद करें।",
+
+learnMore: "और जानें",
+valueTitle: "हमारा मूल्य प्रस्ताव",
+valueSubtitle: "किसान बंधु किसानों को सीधे खरीदारों से जोड़ता है — बिचौलियों को हटाकर, उचित मूल्य और पारदर्शी व्यापार सुनिश्चित करता है।",
+
+networkTitle: "भारत भर में हमारा नेटवर्क",
+networkSubtitle: "किसान और खरीदार पूरे देश में जुड़े हुए हैं — कश्मीर से कन्याकुमारी तक।",
+
+farmerLabel: "किसान",
+buyerLabel: "खरीदार",
+marketInsightsTitle: "मार्केट इनसाइट्स",
+marketInsightsSubtitle: "लाइव मंडी दरें, मूल्य रुझान, राज्य-वार डेटा और मौसम प्रभाव — सब कुछ एक ही स्थान पर।",
+
+updatedText: "अपडेट: आज, 9:00 AM",
+panIndia: "संपूर्ण भारत डेटा",
+cropsTracked: "12 फसलें ट्रैक की गई",
+
+livePrices: "लाइव कीमतें",
+priceCharts: "मूल्य चार्ट",
+stateWise: "राज्य अनुसार",
+demandTrends: "मांग रुझान",
+weatherImpact: "मौसम प्रभाव",
+
+liveMandiRates: "लाइव मंडी दरें",
+demoData: "डेमो डेटा",
+
+highDemand: "उच्च मांग",
+mediumDemand: "मध्यम मांग",
+veryHighDemand: "बहुत अधिक मांग",
+stableDemand: "स्थिर मांग",
+Wheat: "गेहूं",
+"Rice (Basmati)": "चावल (बासमती)",
+Cotton: "कपास",
+Soybean: "सोयाबीन",
+Maize: "मक्का",
+Tomato: "टमाटर",
+Onion: "प्याज",
+Potato: "आलू",
+Sugarcane: "गन्ना",
+Turmeric: "हल्दी",
+Chilli: "मिर्च",
+Groundnut: "मूंगफली",
+cropWheat: "गेहूं",
+cropRiceBasmati: "चावल (बासमती)",
+cropCotton: "कपास",
+cropSoybean: "सोयाबीन",
+cropMaize: "मक्का",
+cropTomato: "टमाटर",
+cropOnion: "प्याज",
+cropPotato: "आलू",
+cropSugarcane: "गन्ना",
+cropTurmeric: "हल्दी",
+cropChilli: "मिर्च",
+cropGroundnut: "मूंगफली",
+priceTrendOctMar: "मूल्य रुझान (अक्टूबर–मार्च)",
+sixMonthPriceTrends: "6 महीने के मूल्य रुझान",
+selectCropPriceHistory: "मूल्य इतिहास देखने के लिए फसल चुनें",
+stateWiseCropPrices: "राज्यवार फसल मूल्य",
+topCrop: "मुख्य फसल",
+rising: "बढ़ रहा है",
+falling: "घट रहा है",
+demandSupplyTrends: "मांग और आपूर्ति रुझान",
+demandLabel: "मांग",
+supplyLabel: "आपूर्ति",
+weatherImpactCrops: "फसलों पर मौसम का प्रभाव",
+favorable: "अनुकूल",
+riskAlert: "जोखिम चेतावनी",
+monitor: "निगरानी करें",
+weeklyFarmingAdvisory: "साप्ताहिक कृषि सलाह",
+sowNow: "अभी बोएं",
+sowNowCrops: "टमाटर, प्याज, हरी सब्जियां",
+harvestReady: "कटाई के लिए तैयार",
+harvestReadyCrops: "गेहूं, सरसों, चना",
+avoidThisWeek: "इस सप्ताह बचें",
+avoidThisWeekCrops: "भारी बारिश वाले क्षेत्रों में कपास",
+northIndia: "उत्तर भारत",
+southIndia: "दक्षिण भारत",
+eastIndia: "पूर्व भारत",
+westIndia: "पश्चिम भारत",
+centralIndia: "मध्य भारत",
+
+clear: "साफ मौसम",
+heavyRain: "भारी बारिश",
+partlyCloudy: "आंशिक बादल",
+sunny: "धूप",
+intermittentRain: "रुक-रुक कर बारिश",
+
+wheatHarvestGood: "गेहूं की कटाई के लिए अच्छा",
+cottonRisk: "कपास और मिर्च के लिए जोखिम",
+riceModerate: "चावल के लिए मध्यम स्थिति",
+groundnutGood: "मूंगफली के लिए अच्छा",
+soybeanWatch: "सोयाबीन की नमी पर ध्यान दें",
+statePunjab: "पंजाब",
+stateUttarPradesh: "उत्तर प्रदेश",
+stateMaharashtra: "महाराष्ट्र",
+stateMadhyaPradesh: "मध्य प्रदेश",
+stateAndhraPradesh: "आंध्र प्रदेश",
+stateKarnataka: "कर्नाटक",
+stateGujarat: "गुजरात",
+stateWestBengal: "पश्चिम बंगाल",
+backToCalculators: "कैलकुलेटर पर वापस जाएं",
+  },
 } as const;
 
 type TranslationKeys = keyof typeof translations.en;
@@ -587,16 +926,10 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>("en");
 
-  interface LanguageContextType {
-  lang: Lang;
-  setLang: (l: Lang) => void;
-  t: (key: string) => string;
-}
-
-const t = (key: string) => {
-  const value = (translations[lang] as any)[key];
-  return value || key;
-};
+  const t = (key: string): string => {
+    const value = (translations[lang] as Record<string, string>)[key];
+    return value || key;
+  };
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>
