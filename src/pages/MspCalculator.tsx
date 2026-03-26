@@ -168,11 +168,11 @@ const cards = [
             <button onClick={() => { setActiveCalc(null); setResult(null); setSubsidyResult(null); setProfitResult(null); }}
               className="mb-8 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
               style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white", border: "1px solid rgba(255,255,255,0.4)"}}>
-<<<<<<< HEAD
+
               <ChevronLeft className="w-4 h-4"/> Back  to  Calculators
-=======
+
               <ChevronLeft className="w-4 h-4"/> {t("backToCalculators")}
->>>>>>> 070bbe8cd6db12130803e15415e1bbec8d320dd2
+
             </button>
           )}
 
