@@ -1,16 +1,18 @@
-import { useState } from "react";
-import { useMarket } from "@/context/MarketContext";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import CropCard from "@/components/CropCard";
 import ScrollReveal from "@/components/ScrollReveal";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search } from "lucide-react";
 import { toast } from "sonner";
 
+const API = "http://127.0.0.1:8000";
+
 const Marketplace = () => {
-  const { listings, placeBid } = useMarket();
   const { user } = useAuth();
   const { t } = useLanguage();
+
+  const [listings, setListings] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("latest");
   const [filterType, setFilterType] = useState("all");
@@ -24,22 +26,71 @@ const Marketplace = () => {
     { value: "pulse", label: t("market_crop_pulse") },
   ];
 
-  const handleBid = (listingId: string, amount: number) => {
-    if (!user) { toast.error(t("pleaseLoginBid")); return; }
-    if (user.role !== "buyer") { toast.error(t("onlyBuyer")); return; }
-    placeBid(listingId, {
-      buyerName: user.name,
-      buyerEmail: user.email,
-      amount,
-      timestamp: Date.now(),
-    });
-    toast.success(t("bidSuccess"));
+  // ✅ Backend se saari open listings fetch karo
+  const fetchListings = () => {
+    fetch(`${API}/farmers`)
+      .then(res => res.json())
+      .then(data => setListings(data))
+      .catch(() => toast.error("Could not load marketplace"));
   };
 
-  let filtered = listings.filter((l) => {
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
+  // ✅ Backend data ko CropCard format mein convert karo
+  const formatListing = (l: any) => ({
+    id: String(l.id),
+    farmerName: l.name,
+    farmerEmail: l.farmer_email || "",
+    cropName: l.crop,
+    cropType: l.crop_type || "grain",
+    quantity: l.quantity,
+    basePrice: l.price,
+    village: l.village,
+    status: l.status,
+    imageUrl: "",
+    createdAt: l.id, // id as createdAt for sorting
+    bids: (l.bids || []).map((b: any) => ({
+      buyerName: b.buyerName,
+      buyerEmail: b.buyer_email || "",
+      amount: b.amount,
+      timestamp: Date.now()
+    }))
+  });
+
+  // ✅ Bid place karo
+  const handleBid = async (listingId: string, amount: number) => {
+    if (!user) { toast.error(t("pleaseLoginBid")); return; }
+    if (user.role !== "buyer") { toast.error(t("onlyBuyer")); return; }
+
+    const res = await fetch(`${API}/bid`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        listing_id: Number(listingId),
+        buyer_email: user.email,
+        buyer_name: user.name,
+        amount: amount
+      })
+    });
+
+    if (res.ok) {
+      toast.success(t("bidSuccess"));
+      fetchListings(); // Refresh listings
+    } else {
+      const err = await res.json();
+      toast.error(err.detail || "Bid failed");
+    }
+  };
+
+  // ✅ Filter + Search + Sort
+  const formattedListings = listings.map(formatListing);
+
+  let filtered = formattedListings.filter((l) => {
     const matchSearch = l.cropName.toLowerCase().includes(search.toLowerCase());
     const matchType = filterType === "all" || l.cropType === filterType;
-    return matchSearch && matchType;
+    return matchSearch && matchType && l.status === "open";
   });
 
   if (sortBy === "price-low") filtered.sort((a, b) => a.basePrice - b.basePrice);
@@ -57,20 +108,23 @@ const Marketplace = () => {
           </div>
         </ScrollReveal>
 
-        {/* Filters */}
+        {/* ── Filters ── */}
         <div className="bg-card rounded-2xl border border-border p-4 mb-8 shadow-card">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
-                type="text" placeholder={t("searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                placeholder={t("searchPlaceholder")}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none"
               />
             </div>
             <div className="flex gap-3">
               <select value={filterType} onChange={(e) => setFilterType(e.target.value)}
                 className="px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none">
-                {cropTypes.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+                {cropTypes.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
               </select>
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
                 className="px-4 py-2.5 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none">
@@ -83,7 +137,7 @@ const Marketplace = () => {
           </div>
         </div>
 
-        {/* Grid */}
+        {/* ── Crop Grid ── */}
         {filtered.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground">
             <p className="text-4xl mb-4">🌾</p>
@@ -93,7 +147,11 @@ const Marketplace = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filtered.map((listing) => (
               <ScrollReveal key={listing.id}>
-                <CropCard listing={listing} onBid={handleBid} showBid={user?.role === "buyer"} />
+                <CropCard
+                  listing={listing}
+                  onBid={handleBid}
+                  showBid={user?.role === "buyer"}
+                />
               </ScrollReveal>
             ))}
           </div>

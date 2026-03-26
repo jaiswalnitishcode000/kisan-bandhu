@@ -32,10 +32,15 @@ const MspCalculator = () => {
   const cropNames = Object.keys(mspData);
 
   const keyForCrop = (name: string) => {
-    let key = name.replace(/\s+/g, "_").replace(/[()]/g, "").replace(/[^a-zA-Z0-9_]/g, "");
-    if (key.includes("Chickpea")) key = "Chickpea_Chana";
-    return `crop_${key}`;
-  };
+  let key = name
+    .replace(/\s+/g, "")
+    .replace(/[()]/g, "")
+    .replace(/[^a-zA-Z0-9]/g, "");
+
+  if (key.includes("Chickpea")) key = "Chickpea_Chana";
+
+  return `crop_${key}`;
+};
 
   const calculate = () => {
     if (!crop || !quantity || parseFloat(quantity) < 0) return;
@@ -62,15 +67,25 @@ const MspCalculator = () => {
   };
 
   const calculateProfit = () => {
-    if (!profitCrop || !profitQuantity || !productionCost) return;
-    const qty = parseFloat(profitQuantity);
-    const cost = parseFloat(productionCost);
-    const msp = mspData[profitCrop] || 0;
-    const hasCustomPrice = sellingPrice.trim() !== "";
-    const priceUsed = hasCustomPrice ? parseFloat(sellingPrice) : msp;
-    const revenue = qty * priceUsed;
-    setProfitResult({ revenue, cost, profit: revenue - cost, priceUsed, usedMsp: !hasCustomPrice });
-  };
+  if (!profitCrop || !profitQuantity || !productionCost) return;
+
+  const qty = parseFloat(profitQuantity);
+  const cost = parseFloat(productionCost);
+  const msp = mspData[profitCrop] || 0;
+  const hasCustomPrice = sellingPrice.trim() !== "";
+  const priceUsed = hasCustomPrice ? parseFloat(sellingPrice) : msp;
+
+  if (qty < 0 || cost < 0 || priceUsed < 0) return;
+
+  const revenue = qty * priceUsed;
+  setProfitResult({
+    revenue,
+    cost,
+    profit: revenue - cost,
+    priceUsed,
+    usedMsp: !hasCustomPrice
+  });
+};
 const cards = [
   {
     key: "msp",
@@ -153,11 +168,11 @@ const cards = [
             <button onClick={() => { setActiveCalc(null); setResult(null); setSubsidyResult(null); setProfitResult(null); }}
               className="mb-8 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
               style={{backgroundColor: "rgba(255,255,255,0.2)", color: "white", border: "1px solid rgba(255,255,255,0.4)"}}>
-<<<<<<< HEAD
-              <ChevronLeft className="w-4 h-4"/> Back  to  Calculators
-=======
+
+    
+
               <ChevronLeft className="w-4 h-4"/> {t("backToCalculators")}
->>>>>>> 070bbe8cd6db12130803e15415e1bbec8d320dd2
+
             </button>
           )}
 
@@ -174,32 +189,45 @@ const cards = [
                 {/* Header */}
                 <div className="p-6 text-white" style={{background: "linear-gradient(135deg, #166534, #15803d)"}}>
                   <div className="text-4xl mb-2">🌾</div>
-                  <h2 className="text-2xl font-extrabold">MSP Calculator</h2>
-                  <p className="text-green-100 text-sm mt-1">Minimum Support Price calculation</p>
+                 <h2 className="text-2xl font-extrabold">{t("mspSectionTitle")}</h2>
+                 <p className="text-green-100 text-sm mt-1">{t("mspCalculatorDescription")}</p>
                 </div>
                 {/* Form */}
                 <div className="bg-card p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Select Crop</label>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">
+                       {t("selectCropLabel")}
+                    </label>
                     <select value={crop} onChange={(e) => setCrop(e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:outline-none"
                       style={{"--tw-ring-color": "#166534"} as any}>
-                      <option value="">Choose a crop</option>
+                     <option value="">{t("chooseCropPlaceholder")}</option>
                       {cropNames.map((c) => (
                         <option key={c} value={c}>{t(keyForCrop(c) as any)} — ₹{mspData[c]}/quintal</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Quantity (quintals)</label>
-                    <input type="number" min="0" value={quantity} onChange={(e) => setQuantity(e.target.value)}
+                    <label className="block text-sm font-semibold mb-2 text-foreground">
+                      {t("quantityLabel")}
+                    </label>
+                    <input
+  type="number"
+  min="0"
+  value={quantity}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === "" || Number(value) >= 0) {
+      setQuantity(value);
+    }
+  }}
                       className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:ring-2 focus:outline-none"
-                      placeholder="e.g. 50"/>
+                      placeholder={t("quantityPlaceholder")}/>
                   </div>
                   <button onClick={calculate} disabled={!crop || !quantity}
                     className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
                     style={{backgroundColor: "#166534"}}>
-                    <Calculator className="w-5 h-5"/> Calculate MSP Value
+                    <Calculator className="w-5 h-5"/> {t("calculateMspButton")}
                   </button>
                 </div>
               </div>
@@ -208,21 +236,27 @@ const cards = [
               {result && (
                 <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
                   <div className="p-4 text-white text-center font-bold" style={{backgroundColor: "#166534"}}>
-                    📊 Your MSP Result
+                    📊 {t("mspResultTitle")}
                   </div>
                   <div className="bg-card p-6 space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0"}}>
-                        <p className="text-xs text-muted-foreground mb-1">MSP Value</p>
+                        <p className="text-xs text-muted-foreground mb-1">
+                          {t("mspValueLabel")}
+                        </p>
                         <p className="text-2xl font-extrabold" style={{color: "#166534"}}>₹{result.mspValue.toLocaleString()}</p>
                         <p className="text-xs text-muted-foreground mt-1">{crop} × {quantity} qtl</p>
                       </div>
                       <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#fffbeb", border: "1px solid #fde68a"}}>
-                        <p className="text-xs text-muted-foreground mb-1">Market Bid Value</p>
-                        <p className="text-2xl font-extrabold" style={{color: "#b45309"}}>
-                          {result.highestBid > 0 ? `₹${result.highestBid.toLocaleString()}` : "No bids yet"}
+                        <p className="text-xs text-muted-foreground mb-1">
+                          {t("marketBidLabel")}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">Based on marketplace</p>
+                        <p className="text-2xl font-extrabold" style={{color: "#b45309"}}>
+                          {result.highestBid > 0 ? `₹${result.highestBid.toLocaleString()}` : t("noBids")}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {t("basedOnMarketplace")}
+                        </p>
                       </div>
                     </div>
                     {result.highestBid > 0 && (
@@ -232,8 +266,9 @@ const cards = [
                           color: result.highestBid >= result.mspValue ? "#166534" : "#dc2626",
                         }}>
                         {result.highestBid >= result.mspValue
-                          ? `✅ Market is ₹${(result.highestBid - result.mspValue).toLocaleString()} above MSP!`
-                          : `⚠️ Market is ₹${(result.mspValue - result.highestBid).toLocaleString()} below MSP`}
+                          ? `✅ ${t("marketAbove")} ₹${(result.highestBid - result.mspValue).toLocaleString()}`
+                          : `⚠️ ${t("marketBelow")} ₹${(result.mspValue - result.highestBid).toLocaleString()}`
+                        }
                       </div>
                     )}
                   </div>
@@ -243,68 +278,117 @@ const cards = [
           </ScrollReveal>
         )}
 
-        {/* TRACTOR SUBSIDY CALCULATOR */}
-        {activeCalc === "subsidy" && (
-          <ScrollReveal>
-            <div className="max-w-xl mx-auto">
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <div className="p-6 text-white" style={{background: "linear-gradient(135deg, #b45309, #d97706)"}}>
-                  <div className="text-4xl mb-2">🚜</div>
-                  <h2 className="text-2xl font-extrabold">Tractor Subsidy Calculator</h2>
-                  <p className="text-yellow-100 text-sm mt-1">Government subsidy on tractor purchase</p>
-                </div>
-                <div className="bg-card p-6 space-y-4">
-                  <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Tractor Price (₹)</label>
-                    <input type="number" min="0" value={tractorPrice}
-                      onChange={(e) => setTractorPrice(Math.max(0, Number(e.target.value)).toString())}
-                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
-                      placeholder="Enter tractor price"/>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Farmer Category</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none">
-                      <option value="">Select Category</option>
-                      <option value="general">General Farmer (25% subsidy)</option>
-                      <option value="scst">SC/ST Farmer (35% subsidy)</option>
-                      <option value="women">Women Farmer (40% subsidy)</option>
-                    </select>
-                  </div>
-                  <button onClick={calculateSubsidy} disabled={!tractorPrice || !category}
-                    className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{backgroundColor: "#b45309"}}>
-                    <TrendingUp className="w-5 h-5"/> Calculate Subsidy
-                  </button>
-                </div>
-              </div>
 
-              {subsidyResult && (
-                <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
-                  <div className="p-4 text-white text-center font-bold" style={{backgroundColor: "#b45309"}}>
-                    🎉 Your Subsidy Result
-                  </div>
-                  <div className="bg-card p-6">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#fffbeb", border: "1px solid #fde68a"}}>
-                        <p className="text-xs text-muted-foreground mb-1">Government Subsidy</p>
-                        <p className="text-2xl font-extrabold" style={{color: "#b45309"}}>₹{subsidyResult.subsidy.toLocaleString()}</p>
-                      </div>
-                      <div className="rounded-2xl p-4 text-center" style={{backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0"}}>
-                        <p className="text-xs text-muted-foreground mb-1">Final Price</p>
-                        <p className="text-2xl font-extrabold" style={{color: "#166534"}}>₹{subsidyResult.finalPrice.toLocaleString()}</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 p-3 rounded-xl text-center text-sm font-semibold"
-                      style={{backgroundColor: "#f0fdf4", color: "#166534"}}>
-                      ✅ You save ₹{subsidyResult.subsidy.toLocaleString()} with government subsidy!
-                    </div>
-                  </div>
-                </div>
-              )}
+              {activeCalc === "subsidy" && (
+  <ScrollReveal>
+    <div className="max-w-xl mx-auto">
+      <div className="rounded-3xl overflow-hidden shadow-2xl">
+        {/* Header */}
+        <div
+          className="p-6 text-white"
+          style={{ background: "linear-gradient(135deg, #b45309, #d97706)" }}
+        >
+          <div className="text-4xl mb-2">🚜</div>
+          <h2 className="text-2xl font-extrabold">{t("tractorSubsidyTitle")}</h2>
+          <p className="text-yellow-100 text-sm mt-1">
+            {t("tractorSubsidySubtitle")}
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="bg-card p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-semibold mb-2 text-foreground">
+              {t("tractorPriceLabel")}
+            </label>
+            <input
+              type="number"
+              min="0"
+              value={tractorPrice}
+              onChange={(e) => {
+  const value = e.target.value;
+  if (value === "" || Number(value) >= 0) {
+    setTractorPrice(value);
+  }
+}}
+              className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+              placeholder={t("enterTractorPrice")}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold mb-2 text-foreground">
+              {t("farmerCategoryLabel")}
+            </label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+            >
+              <option value="">{t("selectCategory")}</option>
+              <option value="general">{t("categoryGeneralFarmer")}</option>
+              <option value="scst">{t("categorySCSTFarmer")}</option>
+              <option value="women">{t("categoryWomenFarmer")}</option>
+            </select>
+          </div>
+
+          <button
+            onClick={calculateSubsidy}
+            disabled={!tractorPrice || !category}
+            className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
+            style={{ backgroundColor: "#b45309" }}
+          >
+            <TrendingUp className="w-5 h-5" /> {t("calculateSubsidy")}
+          </button>
+        </div>
+      </div>
+
+      {subsidyResult && (
+        <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
+          <div
+            className="p-4 text-white text-center font-bold"
+            style={{ backgroundColor: "#b45309" }}
+          >
+            🎉 {t("subsidyResultTitle")}
+          </div>
+          <div className="bg-card p-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div
+                className="rounded-2xl p-4 text-center"
+                style={{ backgroundColor: "#fffbeb", border: "1px solid #fde68a" }}
+              >
+                <p className="text-xs text-muted-foreground mb-1">
+                  {t("governmentSubsidy")}
+                </p>
+                <p className="text-2xl font-extrabold" style={{ color: "#b45309" }}>
+                  ₹{subsidyResult.subsidy.toLocaleString()}
+                </p>
+              </div>
+              <div
+                className="rounded-2xl p-4 text-center"
+                style={{ backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0" }}
+              >
+                <p className="text-xs text-muted-foreground mb-1">
+                  {t("finalPriceAfterSubsidy")}
+                </p>
+                <p className="text-2xl font-extrabold" style={{ color: "#166534" }}>
+                  ₹{subsidyResult.finalPrice.toLocaleString()}
+                </p>
+              </div>
             </div>
-          </ScrollReveal>
-        )}
+
+            <div
+              className="mt-4 p-3 rounded-xl text-center text-sm font-semibold"
+              style={{ backgroundColor: "#f0fdf4", color: "#166534" }}
+            >
+              ✅ {t("subsidySavedMessage")} ₹{subsidyResult.subsidy.toLocaleString()}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </ScrollReveal>
+  )}
 
         {/* PROFIT CALCULATOR */}
         {activeCalc === "profit" && (
@@ -313,44 +397,77 @@ const cards = [
               <div className="rounded-3xl overflow-hidden shadow-2xl">
                 <div className="p-6 text-white" style={{background: "linear-gradient(135deg, #0369a1, #0284c7)"}}>
                   <div className="text-4xl mb-2">💰</div>
-                  <h2 className="text-2xl font-extrabold">Profit Calculator</h2>
-                  <p className="text-blue-100 text-sm mt-1">Calculate your net farming profit</p>
+                  <h2 className="text-2xl font-extrabold">{t("profitCalculatorTitle")}</h2>
+                  <p className="text-blue-100 text-sm mt-1">{t("profitCalculatorSubtitle")}</p>
                 </div>
                 <div className="bg-card p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Select Crop</label>
+                    <label className="block text-sm font-semibold mb-2 text-foreground">
+                      {t("selectCropLabel")}
+                    </label>
                     <select value={profitCrop} onChange={(e) => setProfitCrop(e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none">
-                      <option value="">Choose a crop</option>
+                      <option value="">{t("chooseCropPlaceholder")}</option>
                       {cropNames.map((c) => (
                         <option key={c} value={c}>{t(keyForCrop(c) as any)} — ₹{mspData[c]}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Quantity (quintals)</label>
-                    <input type="number" min="0" value={profitQuantity} onChange={(e) => setProfitQuantity(e.target.value)}
+                    <label className="block text-sm font-semibold mb-2 text-foreground">
+                      {t("quantityQuintalsLabel")}
+                    </label>
+                    <input
+  type="number"
+  min="0"
+  value={profitQuantity}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === "" || Number(value) >= 0) {
+      setProfitQuantity(value);
+    }
+  }}
                       className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
-                      placeholder="e.g. 50"/>
+                      placeholder={t("quantityPlaceholder")}/>
+                  </div>
+                  <div>
+                   <label className="block text-sm font-semibold mb-2 text-foreground">
+                     {t("sellingPriceLabel")}
+                   </label>
+                    <input
+  type="number"
+  min="0"
+  value={sellingPrice}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === "" || Number(value) >= 0) {
+      setSellingPrice(value);
+    }
+  }}
+                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
+                      placeholder={t("sellingPricePlaceholder")}/>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold mb-2 text-foreground">
-                      Selling Price (₹/quintal) <span className="text-xs font-normal text-muted-foreground">— optional, MSP used if empty</span>
+                      {t("productionCostLabel")}
                     </label>
-                    <input type="number" min="0" value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value)}
+                    <input
+  type="number"
+  min="0"
+  value={productionCost}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === "" || Number(value) >= 0) {
+      setProductionCost(value);
+    }
+  }}
                       className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
-                      placeholder="Enter selling price"/>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold mb-2 text-foreground">Total Production Cost (₹)</label>
-                    <input type="number" min="0" value={productionCost} onChange={(e) => setProductionCost(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none"
-                      placeholder="Enter total production cost"/>
+                      placeholder={t("productionCostPlaceholder")}/>
                   </div>
                   <button onClick={calculateProfit} disabled={!profitCrop || !profitQuantity || !productionCost}
                     className="w-full py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
                     style={{backgroundColor: "#0369a1"}}>
-                    <Calculator className="w-5 h-5"/> Calculate Profit
+                    <Calculator className="w-5 h-5" /> {t("calculateProfit")}
                   </button>
                 </div>
               </div>
@@ -358,20 +475,22 @@ const cards = [
               {profitResult && (
                 <div className="mt-6 rounded-3xl overflow-hidden shadow-xl">
                   <div className="p-4 text-white text-center font-bold" style={{backgroundColor: "#0369a1"}}>
-                    📊 Your Profit Result
+                    📊 {t("profitResultTitle")}
                   </div>
                   <div className="bg-card p-6 space-y-4">
                     <div className="text-center p-3 rounded-xl text-sm"
                       style={{backgroundColor: "#f0f9ff", border: "1px solid #bae6fd"}}>
-                      <p className="text-muted-foreground text-xs">Price Used</p>
+                      <p className="text-sm text-muted-foreground mb-1">{t("priceUsedLabel")}</p>
                       <p className="font-bold text-lg" style={{color: "#0369a1"}}>₹{profitResult.priceUsed.toLocaleString()}/quintal</p>
-                      <p className="text-xs text-muted-foreground">{profitResult.usedMsp ? "📌 MSP price used" : "✏️ Custom price used"}</p>
+                      {profitResult.usedMsp && (
+                        <p className="text-sm text-red-500 mt-2">📌 {t("mspPriceUsedLabel")}</p>
+                      )}
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       {[
-                        { label: "Revenue", value: profitResult.revenue, color: "#0369a1", bg: "#f0f9ff", border: "#bae6fd" },
-                        { label: "Cost", value: profitResult.cost, color: "#dc2626", bg: "#fff1f2", border: "#fecdd3" },
-                        { label: profitResult.profit >= 0 ? "Profit 🎉" : "Loss ⚠️", value: Math.abs(profitResult.profit), color: profitResult.profit >= 0 ? "#166534" : "#dc2626", bg: profitResult.profit >= 0 ? "#f0fdf4" : "#fff1f2", border: profitResult.profit >= 0 ? "#bbf7d0" : "#fecdd3" },
+                        { label: t("revenueLabel"), value: profitResult.revenue, color: "#0369a1", bg: "#f0f9ff", border: "#bae6fd" },
+                        { label: t("costLabel"), value: profitResult.cost, color: "#dc2626", bg: "#fff1f2", border: "#fecdd3" },
+                        { label: profitResult.profit >= 0 ? t("profitLabel") : t("lossLabel"), value: Math.abs(profitResult.profit), color: profitResult.profit >= 0 ? "#166534" : "#dc2626", bg: profitResult.profit >= 0 ? "#f0fdf4" : "#fff1f2", border: profitResult.profit >= 0 ? "#bbf7d0" : "#fecdd3" },
                       ].map((item, i) => (
                         <div key={i} className="rounded-2xl p-4 text-center"
                           style={{backgroundColor: item.bg, border: `1px solid ${item.border}`}}>

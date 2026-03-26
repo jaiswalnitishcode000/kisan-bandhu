@@ -10,13 +10,13 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => boolean;
-  signup: (name: string, email: string, password: string, role: UserRole) => boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  signup: (name: string, email: string, password: string, role: UserRole) => Promise<boolean>;
   logout: () => void;
-  switchRole: (role: UserRole) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
+const API = "http://127.0.0.1:8000";
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
@@ -35,59 +35,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     else localStorage.removeItem("kisan_user");
   }, [user]);
 
-  const signup = (name: string, email: string, password: string, role: UserRole) => {
-    // Prevent arbitrary admin accounts from being created through signup
-    if (role === "admin") {
-      // only the hard-coded credentials below should ever grant admin access
-      if (email !== "teamants@gmail.com") {
-        return false;
-      }
-    }
+  // ✅ Signup - Backend se
+  const signup = async (name: string, email: string, password: string, role: UserRole): Promise<boolean> => {
+    try {
+      const res = await fetch(`${API}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role })
+      });
 
-    // Store users list in localStorage
-    const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
-    if (users.find((u: any) => u.email === email)) return false;
-    users.push({ name, email, password, role });
-    localStorage.setItem("kisan_users", JSON.stringify(users));
-    setUser({ name, email, role });
-    return true;
+      if (!res.ok) return false; // Email already exists
+
+      const data = await res.json();
+      setUser(data.user);
+      return true;
+    } catch (err) {
+      console.error("Signup error:", err);
+      return false;
+    }
   };
 
-  const login = (email: string, password: string) => {
-    // hard-coded admin credentials
-    if (email === "teamants@gmail.com" && password === "teamants") {
-      setUser({ name: "Admin", email, role: "admin" });
-      return true;
-    }
+  // ✅ Login - Backend se
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      const res = await fetch(`${API}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
 
-    const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
-    const found = users.find((u: any) => u.email === email && u.password === password);
-    if (found) {
-      setUser({ name: found.name, email: found.email, role: found.role });
+      if (!res.ok) return false;
+
+      const data = await res.json();
+      setUser(data.user);
       return true;
+    } catch (err) {
+      console.error("Login error:", err);
+      return false;
     }
-    return false;
   };
 
   const logout = () => setUser(null);
 
-  const switchRole = (role: UserRole) => {
-    if (user) {
-      const updated = { ...user, role };
-      setUser(updated);
-
-      // also update the stored users list so the change persists
-      const users = JSON.parse(localStorage.getItem("kisan_users") || "[]");
-      const idx = users.findIndex((u: any) => u.email === user.email);
-      if (idx !== -1) {
-        users[idx].role = role;
-        localStorage.setItem("kisan_users", JSON.stringify(users));
-      }
-    }
-  };
-
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, switchRole }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
