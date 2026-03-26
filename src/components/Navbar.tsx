@@ -28,11 +28,11 @@ const Navbar = () => {
   const roleOptions: UserRole[] = ["farmer", "buyer"];
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+   <nav className="sticky top-0 z-50 border-b border-border shadow-sm" style={{backgroundColor: "#2b2a2b"}}>
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 font-bold text-xl text-primary">
-          <Leaf className="w-7 h-7" />
+        <Link to="/" className="flex items-center gap-2 font-bold text-xl" style={{color: "white"}}>
+          <img src="/favicon.ico" alt="wheat" className="w-8 h-8" />
           <span>Kisan Bandhu</span>
         </Link>
 
@@ -42,11 +42,12 @@ const Navbar = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive(link.to)
-                  ? "bg-primary text-primary-foreground"
-                  : "text-foreground hover:bg-muted"
-              }`}
+             className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+  isActive(link.to)
+    ? "bg-orange-500 text-white"
+    : "hover:bg-green-800"
+}`}
+style={!isActive(link.to) ? { color: "#ffffff" } : {}}
             >
               {link.label}
             </Link>
@@ -79,7 +80,7 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <Link to="/auth" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
+            <Link to="/auth" className="px-4 py-2 rounded-lg bg-orange-500 text-white text-sm font-medium hover:opacity-90 transition-opacity">
               {t("loginSignup")}
             </Link>
           )}
