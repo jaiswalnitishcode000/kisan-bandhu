@@ -27,7 +27,34 @@ const DEMO_USERS = [
 { type: "buyer", name: "Avika Garg", city: "Rohtak", lat: 28.8955, lng: 76.6066, crop: "Wheat" },
 ];
 
+// ✅ Replace karo sirf IndiaMap component aur useEffect in Index.tsx
+
+// 1. Top pe yeh import add karo (already hai toh skip):
+// import { useEffect, useState, useRef } from "react";
+
+// 2. DEMO_USERS ke baad yeh add karo:
+const API = "https://kisan-bandhu-production.up.railway.app";
+
+// 3. IndiaMap component ko yeh se replace karo:
 const IndiaMap = () => {
+  const [realFarmers, setRealFarmers] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch(`${API}/farmers/map`)
+      .then(res => res.json())
+      .then(data => setRealFarmers(data))
+      .catch(() => console.log("Map data fetch failed"));
+  }, []);
+
+  // DEMO_USERS + real farmers merge karo
+  const allUsers = [
+    ...DEMO_USERS,
+    ...realFarmers.filter(rf =>
+      // Duplicate avoid karo - same city nahi honi chahiye
+      !DEMO_USERS.some(d => d.name === rf.name)
+    )
+  ];
+
   return (
     <MapContainer
       center={[22.5, 82.0]}
@@ -39,7 +66,7 @@ const IndiaMap = () => {
         attribution='&copy; OpenStreetMap'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {DEMO_USERS.map((user, i) => (
+      {allUsers.map((user, i) => (
         <CircleMarker
           key={i}
           center={[user.lat, user.lng]}

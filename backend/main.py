@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import sqlite3
+import httpx
 
 app = FastAPI()
 
@@ -276,3 +277,71 @@ def get_all_users():
     cursor.execute("SELECT name, email, role FROM users")
     rows = cursor.fetchall()
     return [{"name": r[0], "email": r[1], "role": r[2]} for r in rows]
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 🗺️ MAP - Farmers location
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Village → lat/lng cache (avoid repeated API calls)
+geo_cache = {}
+
+async def geocode_village(village: str):
+    """Village name se lat/lng fetch karo (OpenStreetMap Nominatim)"""
+    if village in geo_cache:
+        return geo_cache[village]
+    try:
+        async with httpx.AsyncClient() as client:
+            res = await client.get(
+                "https://nominatim.openstreetmap.org/search",
+                params={"q": f"{village}, India", "format": "json", "limit": 1},
+                headers={"User-Agent": "KisanBandhu/1.0"},
+                timeout=5.0
+            )
+            data = res.json()
+            if data:
+                lat = float(data[0]["lat"])
+                lng = float(data[0]["lon"])
+                geo_cache[village] = (lat, lng)
+                return (lat, lng)
+    except:
+        pass
+    return None
+
+
+@app.get("/farmers/map")
+async def get_farmers_map():
+    """Map ke liye farmers + buyers with lat/lng"""
+    # Farmers
+    cursor.execute("SELECT DISTINCT name, village, crop, farmer_email FROM farmers WHERE status = 'open'")
+    farmer_rows = cursor.fetchall()
+
+    # Buyers (jo bids lagaye hain)
+    cursor.execute("""
+        SELECT DISTINCT u.name, u.email
+        FROM users u
+        WHERE u.role = 'buyer'
+    """)
+    buyer_rows = cursor.fetchall()
+
+    result = []
+
+    # Farmers geocode karo
+    for row in farmer_rows:
+        name, village, crop, email = row
+        coords = await geocode_village(village)
+        if coords:
+            result.append({
+                "type": "farmer",
+                "name": name,
+                "city": village,
+                "lat": coords[0],
+                "lng": coords[1],
+                "crop": crop
+            })
+
+    # Buyers ke liye users table se city nahi hai
+    # Unhe skip karo ya default location do
+    # (future mein city add kar sakte hain signup pe)
+
+    return result
