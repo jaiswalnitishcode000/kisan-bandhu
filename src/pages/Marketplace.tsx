@@ -6,8 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { Search, SlidersHorizontal, ShoppingBag, Leaf, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 
-const API = "http://127.0.0.1:8000";
-
+const API = "https://kisan-bandhu-production.up.railway.app";
 const Marketplace = () => {
   const { user } = useAuth();
   const { t } = useLanguage();

@@ -5,7 +5,7 @@ import { Plus, Check, Package, TrendingUp, Eye, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/context/LanguageContext";
 
-const API = "http://127.0.0.1:8000";
+const API = "https://kisan-bandhu-production.up.railway.app";
 
 const FarmerDashboard = () => {
   const { user } = useAuth();

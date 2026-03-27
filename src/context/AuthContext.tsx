@@ -16,7 +16,7 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
-const API = "http://127.0.0.1:8000";
+const API = "https://kisan-bandhu-production.up.railway.app";
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
