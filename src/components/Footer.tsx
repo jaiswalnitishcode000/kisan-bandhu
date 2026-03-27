@@ -5,8 +5,8 @@ import { useLanguage } from "@/context/LanguageContext";
 const Footer = () => {
   const { t } = useLanguage();
   return (
-    <footer style={{background: "linear-gradient(135deg, #14532d 0%, #166534 40%, #15803d 70%, #16a34a 100%)"}}>
-      
+    <footer style={{background: "linear-gradient(135deg, #0c0c0c 0%, #2b2b2b 40%, #585858 70%, #626362 100%)"}}>
+    
       {/* Top wave */}
       <div style={{lineHeight: 0}}>
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" style={{display: "block"}}>
