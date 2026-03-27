@@ -291,31 +291,66 @@ const Index = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center"
-         style={{backgroundImage: `url(https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80)`}} />
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-primary-foreground mb-4 animate-fade-in leading-tight">
-            {t("heroTitle")}
-          </h1>
-          <p className="text-lg md:text-2xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            {t("heroSubtitle")}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <Link to="/marketplace" className="px-6 py-3 rounded-xl bg-primary-foreground text-primary font-semibold text-base hover:scale-105 transition-transform flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5" /> {t("exploreMarketplace")}
-            </Link>
-            <Link to="/advisory" className="px-6 py-3 rounded-xl border-2 border-primary-foreground text-primary-foreground font-semibold text-base hover:bg-primary-foreground/10 transition-colors flex items-center gap-2">
-              <Sprout className="w-5 h-5" /> {t("cropAdvisory")}
-            </Link>
-            <Link to="/schemes" className="px-6 py-3 rounded-xl border-2 border-primary-foreground text-primary-foreground font-semibold text-base hover:bg-primary-foreground/10 transition-colors flex items-center gap-2">
-              <Landmark className="w-5 h-5" /> {t("govSchemes")}
-            </Link>
-          </div>
-        </div>
-      </section>
+     {/* Hero Section */}
+<section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+  <div className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: `url(https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80)` }} />
+  <div className="absolute inset-0" style={{background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%)"}} />
+
+  <div className="relative z-10 container mx-auto px-4 text-center">
+
+    {/* Title */}
+    <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white mb-4 animate-fade-in leading-tight"
+      style={{animationDelay: "0.1s", textShadow: "0 4px 20px rgba(0,0,0,0.3)"}}>
+      {t("heroTitle")}
+    </h1>
+
+    {/* Subtitle */}
+    <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto animate-fade-in"
+      style={{animationDelay: "0.2s"}}>
+      {t("heroSubtitle")}
+    </p>
+
+    {/* 4 Buttons */}
+    <div className="flex flex-wrap justify-center gap-4 animate-fade-in mb-12"
+      style={{animationDelay: "0.3s"}}>
+      <Link to="/marketplace"
+  className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
+  style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
+  <ShoppingCart className="w-5 h-5" /> Explore Marketplace
+</Link>
+      <Link to="/advisory"
+        className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
+        style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
+        <Sprout className="w-5 h-5" /> Crop Advisory
+      </Link>
+      <Link to="/schemes"
+        className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
+        style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
+        <Landmark className="w-5 h-5" /> Gov Schemes
+      </Link>
+      <Link to="/market-insights"
+        className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
+        style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
+        <TrendingUp className="w-5 h-5" /> Market Insights
+      </Link>
+    </div>
+
+    {/* Join Now CTA */}
+    <div className="animate-fade-in" style={{animationDelay: "0.4s"}}>
+      <Link to="/auth"
+  className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-extrabold text-lg transition-all hover:scale-105 hover:shadow-2xl"
+  style={{
+    background: "linear-gradient(135deg, #166534, #16a34a)",
+    color: "white",
+    boxShadow: "0 8px 30px rgba(22,101,52,0.5)",
+  }}>
+  Join Now <ArrowRight className="w-5 h-5" />
+</Link>
+    </div>
+
+  </div>
+</section>
 
      {/* About Section */}
 <section className="py-20 bg-background overflow-hidden">
