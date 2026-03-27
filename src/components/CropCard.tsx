@@ -19,9 +19,9 @@ const CropCard = ({ listing, onBid, showBid = true }: CropCardProps) => {
   };
 
   return (
-    <div className="bg-card rounded-xl border border-border shadow-card overflow-hidden hover:shadow-kisan transition-shadow duration-300 group">
+    <div className="rounded-xl overflow-hidden transition-shadow duration-300 group" style={{background: "transparent"}}>
       {/* Image placeholder with emoji and status badge */}
-      <div className="h-40 bg-secondary/40 flex items-center justify-center text-6xl relative">
+      <div className="h-40 flex items-center justify-center text-6xl relative" style={{backgroundColor: "rgba(255,255,255,0.08)"}}>
         {cropEmojis[listing.cropType] || "🌱"}
         <span className={`absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full ${
           listing.status === "open" ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
@@ -31,11 +31,11 @@ const CropCard = ({ listing, onBid, showBid = true }: CropCardProps) => {
       </div>
 
       {/* Details section below image */}
-      <div className="p-4 space-y-1.5 text-sm text-muted-foreground">
-        <h3 className="text-lg font-semibold text-foreground truncate">{listing.cropName}</h3>
+      <div className="p-4 space-y-1.5 text-sm" style={{color: "rgba(255,255,255,0.75)"}}>
+        <h3 className="text-lg font-semibold text-white truncate">{listing.cropName}</h3>
         <p className="flex items-center gap-2"><User className="w-3.5 h-3.5" /> {listing.farmerName}</p>
         <p className="flex items-center gap-2"><Package className="w-3.5 h-3.5" /> {listing.quantity} quintals</p>
-        <p className="flex items-center gap-2 font-medium text-foreground">
+        <p className="flex items-center gap-2 font-medium text-white">
           {t("card_base")} ₹{listing.basePrice.toLocaleString()}/quintal
         </p>
         {highestBid > 0 && (
@@ -45,14 +45,15 @@ const CropCard = ({ listing, onBid, showBid = true }: CropCardProps) => {
         )}
 
         {showBid && listing.status === "open" && onBid && (
-          <div className="pt-2 border-t border-border space-y-2">
+         <div className="pt-2 space-y-2" style={{borderTop: "1px solid rgba(255,255,255,0.2)"}}>
             <div className="flex gap-2">
               <input
                 type="number"
                 placeholder={t("card_yourBidPlaceholder")}
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
-                className="flex-1 px-3 py-2 rounded-lg border border-input bg-background text-sm focus:ring-2 focus:ring-ring focus:outline-none"
+                className="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none text-white placeholder-white/40"
+style={{backgroundColor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)"}}
               />
               <button
                 onClick={() => {
