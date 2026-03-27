@@ -266,9 +266,9 @@ const cards = [
                           color: result.highestBid >= result.mspValue ? "#166534" : "#dc2626",
                         }}>
                         {result.highestBid >= result.mspValue
-                          ? `✅ ${t("marketAbove")} ₹${(result.highestBid - result.mspValue).toLocaleString()}`
-                          : `⚠️ ${t("marketBelow")} ₹${(result.mspValue - result.highestBid).toLocaleString()}`
-                        }
+                          ? `✅ ${t("marketAbove").replace("{diff}", (result.highestBid - result.mspValue).toLocaleString())}`
+                          : `⚠️ ${t("marketBelow").replace("{diff}", (result.mspValue - result.highestBid).toLocaleString())}`
+}
                       </div>
                     )}
                   </div>
@@ -381,7 +381,7 @@ const cards = [
               className="mt-4 p-3 rounded-xl text-center text-sm font-semibold"
               style={{ backgroundColor: "#f0fdf4", color: "#166534" }}
             >
-              ✅ {t("subsidySavedMessage")} ₹{subsidyResult.subsidy.toLocaleString()}
+              ✅ {t("subsidySavedMessage").replace("{amount}", subsidyResult.subsidy.toLocaleString())}
             </div>
           </div>
         </div>

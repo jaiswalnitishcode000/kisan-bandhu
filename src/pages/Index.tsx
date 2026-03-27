@@ -317,22 +317,22 @@ const Index = () => {
       <Link to="/marketplace"
   className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
   style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
-  <ShoppingCart className="w-5 h-5" /> Explore Marketplace
+  <ShoppingCart className="w-5 h-5" /> {t("exploreMarketplace")}
 </Link>
       <Link to="/advisory"
         className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
         style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
-        <Sprout className="w-5 h-5" /> Crop Advisory
+        <Sprout className="w-5 h-5" /> {t("cropAdvisory")}
       </Link>
       <Link to="/schemes"
         className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
         style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
-        <Landmark className="w-5 h-5" /> Gov Schemes
+        <Landmark className="w-5 h-5" /> {t("govSchemes")}
       </Link>
       <Link to="/market-insights"
         className="px-6 py-3.5 rounded-2xl font-bold text-base flex items-center gap-2 transition-all hover:scale-105 hover:shadow-xl"
         style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white", border: "2px solid rgba(255,255,255,0.5)", backdropFilter: "blur(10px)"}}>
-        <TrendingUp className="w-5 h-5" /> Market Insights
+        <TrendingUp className="w-5 h-5" /> {t("marketInsights")}
       </Link>
     </div>
 
@@ -345,7 +345,7 @@ const Index = () => {
     color: "white",
     boxShadow: "0 8px 30px rgba(22,101,52,0.5)",
   }}>
-  Join Now <ArrowRight className="w-5 h-5" />
+  {t("joinNow")} <ArrowRight className="w-5 h-5" />
 </Link>
     </div>
 
@@ -611,9 +611,9 @@ const Index = () => {
     {/* Stats below map */}
     <div className="grid grid-cols-3 gap-4 mt-6 max-w-lg mx-auto text-center">
       {[
-        { value: "18", label: "States Covered" },
-        { value: "24", label: "Farmers" },
-        { value: "16", label: "Buyers" },
+        { value: "18", label: t("statesCovered") },
+        { value: "24", label: t("farmersCount") },
+        { value: "16", label: t("buyersCount") },
       ].map((s, i) => (
         <div key={i} className="bg-card rounded-xl p-4 border border-border">
           <div className="text-2xl font-extrabold" style={{color: "#166534"}}>{s.value}</div>
