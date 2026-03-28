@@ -222,10 +222,11 @@ const Marketplace = () => {
                       border: "1px solid rgba(255,255,255,0.20)",
                     }}>
                     <CropCard
-                      listing={listing}
-                      onBid={handleBid}
-                      showBid={user?.role === "buyer"}
-                    />
+  listing={listing}
+  onBid={handleBid}
+  showBid={user?.role === "buyer"}
+  transparent={true}
+/>
                   </div>
                 </ScrollReveal>
               ))}
