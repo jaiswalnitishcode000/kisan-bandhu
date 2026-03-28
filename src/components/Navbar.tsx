@@ -7,7 +7,7 @@ import { Menu, X, Leaf, LogOut, User, RefreshCw } from "lucide-react";
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
-  const { user, logout, switchRole } = useAuth();
+ const { user, logout } = useAuth();
   const { lang, setLang, t } = useLanguage();
   const location = useLocation();
 
@@ -28,7 +28,7 @@ const Navbar = () => {
   const roleOptions: UserRole[] = ["farmer", "buyer"];
 
   return (
-   <nav className="sticky top-0 z-50 border-b border-border shadow-sm" style={{backgroundColor: "#2b2a2b"}}>
+  <nav className="sticky top-0 z-50 shadow-sm" style={{backgroundColor: "#242624", borderBottom: "none", marginBottom: 0}}>
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 font-bold text-xl" style={{color: "white"}}>
@@ -72,12 +72,22 @@ style={!isActive(link.to) ? { color: "#ffffff" } : {}}
               <span className="px-3 py-1.5 rounded-md text-sm font-medium bg-primary/10 text-primary">
                 {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
               </span>
-              <span className="text-sm text-muted-foreground flex items-center gap-1">
-                <User className="w-4 h-4" /> {user.name}
-              </span>
-              <button onClick={logout} className="p-2 rounded-md hover:bg-muted transition-colors text-destructive">
-                <LogOut className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl"
+  style={{backgroundColor: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)"}}>
+  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
+    style={{backgroundColor: "white", color: "#166534"}}>
+    {user.name.charAt(0).toUpperCase()}
+  </div>
+  <div className="flex flex-col leading-tight">
+    <span className="text-xs font-bold text-white">{user.name}</span>
+    <span className="text-xs capitalize" style={{color: "rgba(255,255,255,0.7)"}}>{user.role}</span>
+  </div>
+  <button onClick={logout}
+    className="ml-1 p-1 rounded-lg transition-all hover:opacity-80"
+    style={{backgroundColor: "rgba(255,255,255,0.15)", color: "white"}}>
+    <LogOut className="w-3.5 h-3.5" />
+  </button>
+</div>
             </div>
           ) : (
             <Link to="/auth" className="px-4 py-2 rounded-lg bg-orange-500 text-white text-sm font-medium hover:opacity-90 transition-opacity">
