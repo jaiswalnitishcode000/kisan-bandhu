@@ -564,11 +564,11 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <h2>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4">
   {t("valueTitle")}
 </h2>
 
-<p>
+<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
   {t("valueSubtitle")}
 </p>
             </div>
@@ -582,11 +582,11 @@ const Index = () => {
   <div className="container mx-auto px-4">
     <ScrollReveal>
       <div className="text-center mb-12">
-        <h2>
-         {t("networkTitle")}
+        <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4">
+  {t("networkTitle")}
 </h2>
 
-<p>
+<p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
   {t("networkSubtitle")}
 </p>
       </div>

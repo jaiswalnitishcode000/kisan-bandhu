@@ -435,7 +435,7 @@ const CropAdvisory = () => {
                   <span className="text-4xl">{detail.icon}</span>
                   <div>
                     <h2 className="text-2xl font-bold text-white">{selectedCrop.name}</h2>
-                    <p className="text-green-400 text-sm">Complete Crop Advisory</p>
+                    <p className="text-green-400 text-sm">{t("completeCropAdvisory")}</p>
                   </div>
                 </div>
                 <button
@@ -449,10 +449,25 @@ const CropAdvisory = () => {
               {/* Stats Row */}
               <div className="grid grid-cols-3 gap-3 mb-6">
                 {[
-                  { icon: <Sprout className="w-4 h-4" />, label: "Yield", value: selectedCrop.expectedYield, color: "text-green-400" },
-                  { icon: <Coins className="w-4 h-4" />, label: "Profit", value: selectedCrop.estimatedProfit, color: "text-yellow-400" },
-                  { icon: <Droplets className="w-4 h-4" />, label: "Water", value: selectedCrop.waterRequirement, color: "text-blue-400" },
-                ].map((stat, i) => (
+  {
+    icon: <Sprout className="w-4 h-4" />,
+    label: t("yieldLabel"),
+    value: selectedCrop.expectedYield.replace("quintals/hectare", t("unit_quintalsPerHectare")),
+    color: "text-green-400"
+  },
+  {
+    icon: <Coins className="w-4 h-4" />,
+    label: t("profitLabel"),
+    value: selectedCrop.estimatedProfit,
+    color: "text-yellow-400"
+  },
+  {
+    icon: <Droplets className="w-4 h-4" />,
+    label: t("waterLabel"),
+    value: t(`water_${selectedCrop.waterRequirement}` as any),
+    color: "text-blue-400"
+  },
+].map((stat, i) => (
                   <div key={i} className="rounded-xl p-3 text-center" style={{ background: "rgba(255,255,255,0.08)" }}>
                     <div className={`flex justify-center mb-1 ${stat.color}`}>{stat.icon}</div>
                     <p className="text-xs text-gray-400">{stat.label}</p>
@@ -464,12 +479,12 @@ const CropAdvisory = () => {
               {/* Sowing & Harvest */}
               <div className="grid grid-cols-2 gap-3 mb-5">
                 <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.07)" }}>
-                  <p className="text-xs text-gray-400 mb-1">🗓️ Sowing Time</p>
-                  <p className="text-sm text-white font-medium">{detail.sowingTime}</p>
+                  <p className="text-xs text-gray-400 mb-1">🗓️ {t("sowingTime")}</p>
+                  <p className="text-sm text-white font-medium">{t(detail.sowingTime as any)}</p>
                 </div>
                 <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.07)" }}>
-                  <p className="text-xs text-gray-400 mb-1">🌾 Harvest Time</p>
-                  <p className="text-sm text-white font-medium">{detail.harvestTime}</p>
+                  <p className="text-xs text-gray-400 mb-1">🌾 {t("harvestTime")}</p> 
+                  <p className="text-sm text-white font-medium">{t(detail.harvestTime as any)}</p>
                 </div>
               </div>
 
@@ -477,9 +492,9 @@ const CropAdvisory = () => {
               <div className="rounded-xl p-4 mb-4" style={{ background: "rgba(255,255,255,0.07)" }}>
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="w-4 h-4 text-blue-400" />
-                  <p className="text-sm font-semibold text-white">Soil Preparation</p>
+                  <p className="text-sm font-semibold text-white">{t("soilPreparation")}</p>
                 </div>
-                <p className="text-sm text-gray-300">{detail.soilPrep}</p>
+                <p className="text-sm text-gray-300">{t(detail.soilPrep as any)}</p>
               </div>
 
               {/* Irrigation */}
