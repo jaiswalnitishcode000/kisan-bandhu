@@ -11,7 +11,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
-  signup: (name: string, email: string, password: string, role: UserRole) => Promise<boolean>;
+  signup: (name: string, email: string, password: string, role: UserRole, profile?: any) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -35,17 +35,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     else localStorage.removeItem("kisan_user");
   }, [user]);
 
-  // ✅ Signup - Backend se
-  const signup = async (name: string, email: string, password: string, role: UserRole): Promise<boolean> => {
+  // ✅ Signup - profile data bhi bhejo
+  const signup = async (
+    name: string, email: string, password: string,
+    role: UserRole, profile?: any
+  ): Promise<boolean> => {
     try {
       const res = await fetch(`${API}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, role })
+        body: JSON.stringify({ name, email, password, role, profile })
       });
-
-      if (!res.ok) return false; // Email already exists
-
+      if (!res.ok) return false;
       const data = await res.json();
       setUser(data.user);
       return true;
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // ✅ Login - Backend se
+  // ✅ Login
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const res = await fetch(`${API}/login`, {
@@ -63,9 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       });
-
       if (!res.ok) return false;
-
       const data = await res.json();
       setUser(data.user);
       return true;

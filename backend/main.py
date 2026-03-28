@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Optional
 import sqlite3
 import httpx
 
 app = FastAPI()
 
-# ✅ CORS - Frontend se connect hone ke liye
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,11 +15,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ✅ DATABASE CONNECTION
 conn = sqlite3.connect("kisan_bandhu.db", check_same_thread=False)
 cursor = conn.cursor()
 
-# ✅ USERS TABLE - Signup/Login ke liye
+# ✅ USERS TABLE
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,7 +29,39 @@ CREATE TABLE IF NOT EXISTS users (
 )
 """)
 
-# ✅ FARMERS (CROP LISTINGS) TABLE - email add kiya filter ke liye
+# ✅ FARMER PROFILES TABLE
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS farmer_profiles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    phone TEXT,
+    state TEXT,
+    district TEXT,
+    land_size TEXT,
+    has_land INTEGER DEFAULT 1,
+    aadhaar TEXT,
+    bank_account TEXT,
+    bank_ifsc TEXT,
+    FOREIGN KEY (email) REFERENCES users(email)
+)
+""")
+
+# ✅ BUYER PROFILES TABLE
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS buyer_profiles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    phone TEXT,
+    city TEXT,
+    state TEXT,
+    business_type TEXT DEFAULT 'individual',
+    company_name TEXT,
+    gst_number TEXT,
+    FOREIGN KEY (email) REFERENCES users(email)
+)
+""")
+
+# ✅ FARMERS (CROP LISTINGS) TABLE
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS farmers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +76,7 @@ CREATE TABLE IF NOT EXISTS farmers (
 )
 """)
 
-# ✅ BIDS TABLE - Buyer bids ke liye
+# ✅ BIDS TABLE
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS bids (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,13 +101,32 @@ def home():
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# 👤 AUTH - Signup & Login
+# 👤 AUTH
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class FarmerProfileData(BaseModel):
+    phone: Optional[str] = None
+    state: Optional[str] = None
+    district: Optional[str] = None
+    land_size: Optional[str] = None
+    has_land: Optional[bool] = True
+    aadhaar: Optional[str] = None
+    bank_account: Optional[str] = None
+    bank_ifsc: Optional[str] = None
+
+class BuyerProfileData(BaseModel):
+    phone: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
+    business_type: Optional[str] = "individual"
+    company_name: Optional[str] = None
+    gst_number: Optional[str] = None
+
 class SignupModel(BaseModel):
     name: str
     email: str
     password: str
     role: str = "farmer"
+    profile: Optional[dict] = None
 
 class LoginModel(BaseModel):
     email: str
@@ -85,10 +135,8 @@ class LoginModel(BaseModel):
 
 @app.post("/signup")
 def signup(data: SignupModel):
-    # Check karo email already exist karta hai ya nahi
     cursor.execute("SELECT id FROM users WHERE email = ?", (data.email,))
-    existing = cursor.fetchone()
-    if existing:
+    if cursor.fetchone():
         raise HTTPException(status_code=400, detail="Email already registered")
 
     cursor.execute(
@@ -97,28 +145,43 @@ def signup(data: SignupModel):
     )
     conn.commit()
 
+    # ✅ Profile save karo
+    if data.profile:
+        if data.role == "farmer":
+            p = data.profile
+            cursor.execute("""
+                INSERT OR REPLACE INTO farmer_profiles
+                (email, phone, state, district, land_size, has_land, aadhaar, bank_account, bank_ifsc)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                data.email,
+                p.get("phone"), p.get("state"), p.get("district"),
+                p.get("land_size"), 1 if p.get("has_land") else 0,
+                p.get("aadhaar"), p.get("bank_account"), p.get("bank_ifsc")
+            ))
+        elif data.role == "buyer":
+            p = data.profile
+            cursor.execute("""
+                INSERT OR REPLACE INTO buyer_profiles
+                (email, phone, city, state, business_type, company_name, gst_number)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                data.email,
+                p.get("phone"), p.get("city"), p.get("state"),
+                p.get("business_type"), p.get("company_name"), p.get("gst_number")
+            ))
+        conn.commit()
+
     return {
         "status": "success",
-        "user": {
-            "name": data.name,
-            "email": data.email,
-            "role": data.role
-        }
+        "user": {"name": data.name, "email": data.email, "role": data.role}
     }
 
 
 @app.post("/login")
 def login(data: LoginModel):
-    # Hard-coded admin check
     if data.email == "teamants@gmail.com" and data.password == "teamants":
-        return {
-            "status": "success",
-            "user": {
-                "name": "Admin",
-                "email": data.email,
-                "role": "admin"
-            }
-        }
+        return {"status": "success", "user": {"name": "Admin", "email": data.email, "role": "admin"}}
 
     cursor.execute(
         "SELECT name, email, role FROM users WHERE email = ? AND password = ?",
@@ -128,14 +191,38 @@ def login(data: LoginModel):
     if not row:
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    return {
-        "status": "success",
-        "user": {
-            "name": row[0],
-            "email": row[1],
-            "role": row[2]
-        }
-    }
+    return {"status": "success", "user": {"name": row[0], "email": row[1], "role": row[2]}}
+
+
+# ✅ Profile fetch API
+@app.get("/profile/{email}")
+def get_profile(email: str):
+    cursor.execute("SELECT role FROM users WHERE email = ?", (email,))
+    user = cursor.fetchone()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    role = user[0]
+    if role == "farmer":
+        cursor.execute("SELECT * FROM farmer_profiles WHERE email = ?", (email,))
+        row = cursor.fetchone()
+        if row:
+            return {
+                "role": "farmer",
+                "phone": row[2], "state": row[3], "district": row[4],
+                "land_size": row[5], "has_land": bool(row[6]),
+                "aadhaar": row[7], "bank_account": row[8], "bank_ifsc": row[9]
+            }
+    elif role == "buyer":
+        cursor.execute("SELECT * FROM buyer_profiles WHERE email = ?", (email,))
+        row = cursor.fetchone()
+        if row:
+            return {
+                "role": "buyer",
+                "phone": row[2], "city": row[3], "state": row[4],
+                "business_type": row[5], "company_name": row[6], "gst_number": row[7]
+            }
+    return {"role": role}
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -152,10 +239,7 @@ class FarmerModel(BaseModel):
 
 
 def get_bids_for_listing(listing_id):
-    cursor.execute(
-        "SELECT buyer_name, amount, status FROM bids WHERE listing_id = ?",
-        (listing_id,)
-    )
+    cursor.execute("SELECT buyer_name, amount, status FROM bids WHERE listing_id = ?", (listing_id,))
     rows = cursor.fetchall()
     return [{"buyerName": r[0], "amount": r[1], "status": r[2]} for r in rows]
 
@@ -173,21 +257,14 @@ def add_farmer(farmer: FarmerModel):
 
 @app.get("/farmers")
 def get_all_farmers():
-    """Marketplace ke liye - saari listings"""
     cursor.execute("SELECT * FROM farmers WHERE status = 'open'")
     rows = cursor.fetchall()
     result = []
     for row in rows:
         result.append({
-            "id": row[0],
-            "farmer_email": row[1],
-            "name": row[2],
-            "village": row[3],
-            "crop": row[4],
-            "crop_type": row[5],
-            "quantity": row[6],
-            "price": row[7],
-            "status": row[8],
+            "id": row[0], "farmer_email": row[1], "name": row[2],
+            "village": row[3], "crop": row[4], "crop_type": row[5],
+            "quantity": row[6], "price": row[7], "status": row[8],
             "bids": get_bids_for_listing(row[0])
         })
     return result
@@ -195,21 +272,14 @@ def get_all_farmers():
 
 @app.get("/my-listings/{email}")
 def get_my_listings(email: str):
-    """Farmer Dashboard - sirf apni listings"""
     cursor.execute("SELECT * FROM farmers WHERE farmer_email = ?", (email,))
     rows = cursor.fetchall()
     result = []
     for row in rows:
         result.append({
-            "id": row[0],
-            "farmer_email": row[1],
-            "name": row[2],
-            "village": row[3],
-            "crop": row[4],
-            "crop_type": row[5],
-            "quantity": row[6],
-            "price": row[7],
-            "status": row[8],
+            "id": row[0], "farmer_email": row[1], "name": row[2],
+            "village": row[3], "crop": row[4], "crop_type": row[5],
+            "quantity": row[6], "price": row[7], "status": row[8],
             "bids": get_bids_for_listing(row[0])
         })
     return result
@@ -241,7 +311,6 @@ class BidModel(BaseModel):
 
 @app.post("/bid")
 def place_bid(bid: BidModel):
-    # Check listing exist karta hai
     cursor.execute("SELECT id, status FROM farmers WHERE id = ?", (bid.listing_id,))
     listing = cursor.fetchone()
     if not listing:
@@ -259,7 +328,6 @@ def place_bid(bid: BidModel):
 
 @app.put("/bid/{listing_id}/accept")
 def accept_best_bid(listing_id: int):
-    """Farmer highest bid accept kare"""
     cursor.execute(
         "UPDATE bids SET status = 'accepted' WHERE listing_id = ? AND amount = (SELECT MAX(amount) FROM bids WHERE listing_id = ?)",
         (listing_id, listing_id)
@@ -280,14 +348,11 @@ def get_all_users():
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# 🗺️ MAP - Farmers location
+# 🗺️ MAP
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-# Village → lat/lng cache (avoid repeated API calls)
 geo_cache = {}
 
 async def geocode_village(village: str):
-    """Village name se lat/lng fetch karo (OpenStreetMap Nominatim)"""
     if village in geo_cache:
         return geo_cache[village]
     try:
@@ -311,37 +376,15 @@ async def geocode_village(village: str):
 
 @app.get("/farmers/map")
 async def get_farmers_map():
-    """Map ke liye farmers + buyers with lat/lng"""
-    # Farmers
     cursor.execute("SELECT DISTINCT name, village, crop, farmer_email FROM farmers WHERE status = 'open'")
     farmer_rows = cursor.fetchall()
-
-    # Buyers (jo bids lagaye hain)
-    cursor.execute("""
-        SELECT DISTINCT u.name, u.email
-        FROM users u
-        WHERE u.role = 'buyer'
-    """)
-    buyer_rows = cursor.fetchall()
-
     result = []
-
-    # Farmers geocode karo
     for row in farmer_rows:
         name, village, crop, email = row
         coords = await geocode_village(village)
         if coords:
             result.append({
-                "type": "farmer",
-                "name": name,
-                "city": village,
-                "lat": coords[0],
-                "lng": coords[1],
-                "crop": crop
+                "type": "farmer", "name": name,
+                "city": village, "lat": coords[0], "lng": coords[1], "crop": crop
             })
-
-    # Buyers ke liye users table se city nahi hai
-    # Unhe skip karo ya default location do
-    # (future mein city add kar sakte hain signup pe)
-
     return result
