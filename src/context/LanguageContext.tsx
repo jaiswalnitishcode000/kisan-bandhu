@@ -498,6 +498,17 @@ listCropsMessage: "List your crops from your dashboard!",
 "price-low": "Price: Low to High",
 "price-high": "Price: High to Low",
 quantity: "By Quantity",
+soilPreparation: "Soil Preparation",
+irrigation: "Irrigation",
+fertilizerRecommendation: "Fertilizer Recommendation",
+expertTips: "Expert Tips",
+
+yield: "Yield",
+profit: "Profit",
+water: "Water",
+
+sowingTime: "Sowing Time",
+harvestTime: "Harvest Time",
 
 
   },
@@ -997,6 +1008,25 @@ listCropsMessage: "अपनी फसलें डैशबोर्ड से 
 "price-low": "कम से ज्यादा कीमत",
 "price-high": "ज्यादा से कम कीमत",
 quantity: "मात्रा के अनुसार",
+soilPreparation: "मिट्टी की तैयारी",
+irrigation: "सिंचाई",
+fertilizerRecommendation: "उर्वरक सिफारिश",
+expertTips: "विशेषज्ञ सुझाव",
+
+yield: "उपज",
+profit: "लाभ",
+water: "पानी",
+
+sowingTime: "बुवाई का समय",
+harvestTime: "कटाई का समय",
+soilPrepRice: "पडलिंग आवश्यक है। पानी के समान वितरण के लिए खेत को समतल करें।",
+
+irrigationRice: "बाढ़ सिंचाई या ड्रिप। पूरे मौसम में 1200–2000 मिमी पानी की आवश्यकता होती है।",
+
+fertilizerRice: "120:60:60 किग्रा/हेक्टेयर (NPK)। यूरिया को 3 भागों में डालें।",
+
+tip1Rice: "बेहतर उपज के लिए 20–25 दिन के पौधों का रोपण करें।",
+tip2Rice: "टिलरिंग चरण के दौरान 5 सेमी पानी बनाए रखें।",
   },
 } as const;
 
