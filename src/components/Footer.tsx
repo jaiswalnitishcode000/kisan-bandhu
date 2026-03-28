@@ -5,6 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 const Footer = () => {
   const { t } = useLanguage();
   return (
+      
     <footer style={{background: "linear-gradient(135deg, #0c0c0c 0%, #2b2b2b 40%, #585858 70%, #626362 100%)"}}>
     
       {/* Top wave */}
