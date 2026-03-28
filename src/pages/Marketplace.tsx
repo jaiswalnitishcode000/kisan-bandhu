@@ -16,14 +16,14 @@ const Marketplace = () => {
   const [sortBy, setSortBy] = useState("latest");
   const [filterType, setFilterType] = useState("all");
 
-  const cropTypes = [
-    { value: "all", label: "🌿 All Crops" },
-    { value: "grain", label: "🌾 Grains" },
-    { value: "vegetable", label: "🥦 Vegetables" },
-    { value: "fruit", label: "🍎 Fruits" },
-    { value: "cash_crop", label: "💰 Cash Crops" },
-    { value: "pulse", label: "🫘 Pulses" },
-  ];
+ const cropTypes = [
+  { value: "all", label: `🌿 ${t("allCrops")}` },
+  { value: "grain", label: `🌾 ${t("grains")}` },
+  { value: "vegetable", label: `🥦 ${t("vegetables")}` },
+  { value: "fruit", label: `🍎 ${t("fruits")}` },
+  { value: "cash_crop", label: `💰 ${t("cashCrops")}` },
+  { value: "pulse", label: `🫘 ${t("pulses")}` },
+];
 
   const fetchListings = () => {
     fetch(`${API}/farmers`)
@@ -102,19 +102,19 @@ const Marketplace = () => {
           {/* Title */}
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-3 uppercase tracking-wide">
-              🛒 Marketplace
+              🛒 {t("marketplaceTitle")}
             </h1>
             <p className="text-white/70 text-lg max-w-xl mx-auto">
-              Browse and bid on fresh crops directly from farmers across India
+              {t("marketplaceSubtitle")}
             </p>
           </div>
 
           {/* Stats */}
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {[
-              { icon: <ShoppingBag className="w-5 h-5"/>, value: totalListings, label: "Total Listings" },
-              { icon: <Leaf className="w-5 h-5"/>, value: openListings, label: "Open for Bids" },
-              { icon: <TrendingUp className="w-5 h-5"/>, value: totalBids, label: "Total Bids" },
+              { icon: <ShoppingBag className="w-5 h-5"/>, value: totalListings, label: t("totalListings") },
+              { icon: <Leaf className="w-5 h-5"/>, value: openListings, label: t("totalListings") },
+              { icon: <TrendingUp className="w-5 h-5"/>, value: totalBids, label: t("totalBids") },
             ].map((stat, i) => (
               <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-2xl"
                 style={{
@@ -144,7 +144,7 @@ const Marketplace = () => {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50"/>
                 <input
                   type="text"
-                  placeholder="Search crops..."
+                  placeholder={t("searchCropsPlaceholder")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-none text-white placeholder-white/40"
@@ -161,10 +161,10 @@ const Marketplace = () => {
                   backgroundColor: "rgba(255,255,255,0.12)",
                   border: "1px solid rgba(255,255,255,0.25)",
                 }}>
-                <option value="latest" style={{color:"#1f2937"}}>Latest</option>
-                <option value="price-low" style={{color:"#1f2937"}}>Price: Low to High</option>
-                <option value="price-high" style={{color:"#1f2937"}}>Price: High to Low</option>
-                <option value="quantity" style={{color:"#1f2937"}}>By Quantity</option>
+                <option value="latest" style={{color:"#1f2937"}}>{t("latest")}</option>
+                <option value="price-low" style={{color:"#1f2937"}}>{t("priceLowHigh")}</option>
+                <option value="price-high" style={{color:"#1f2937"}}>{t("priceHighLow")}</option>
+                <option value="quantity" style={{color:"#1f2937"}}>{t("byQuantity")}</option>
               </select>
             </div>
 
@@ -187,11 +187,13 @@ const Marketplace = () => {
           {/* Result info */}
           <div className="flex items-center justify-between mb-5">
             <p className="text-white/60 text-sm">
-              Showing <span className="font-bold text-white">{filtered.length}</span> listings
+              {t("showingListings").replace("{count}", String(filtered.length))}
             </p>
             <div className="flex items-center gap-2 text-xs text-white/50">
               <SlidersHorizontal className="w-3 h-3"/>
-              Sorted by: <span className="text-white font-semibold ml-1 capitalize">{sortBy}</span>
+              {t("sortedBy")} <span className="text-white font-semibold ml-1">
+  {t(sortBy)}
+</span>
             </div>
           </div>
 
@@ -199,13 +201,13 @@ const Marketplace = () => {
           {filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-4">🌾</div>
-              <h3 className="text-xl font-bold text-white mb-2">No crops found</h3>
+              <h3 className="text-xl font-bold text-white mb-2">{t("noCropsFound")}</h3>
               <p className="text-white/50 text-sm">
-                {search ? `No results for "${search}"` : "No listings available right now"}
+                {search ? `No results for "${search}"` :t("noListingsAvailable")}
               </p>
               {user?.role === "farmer" && (
                 <p className="mt-4 text-sm font-semibold text-green-300">
-                  List your crops from your dashboard! 🌱
+                  {t("listCropsMessage")} 🌱
                 </p>
               )}
             </div>

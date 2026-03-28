@@ -3,6 +3,7 @@ import { govSchemes } from "@/data/advisoryData";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLanguage } from "@/context/LanguageContext";
 import { Search, FileText, CheckCircle, Star } from "lucide-react";
+import bg from "@/assets/bg.jpg";
 
 const GovSchemes = () => {
   const { t } = useLanguage();
@@ -21,7 +22,9 @@ const filteredSchemes = govSchemes.filter((scheme) =>
         
         {/* Background Image */}
         <div className="absolute inset-0 bg-cover bg-center"
-          style={{backgroundImage: `url(https://images.unsplash.com/photo-1491147334573-44cbb4602074?w=1920&q=80)`}}/>
+          style={{
+  backgroundImage: `url(${bg})`
+}}/>
         <div className="absolute inset-0" style={{background: "rgba(0,0,0,0.45)"}}/>
 
         <div className="relative z-10 flex flex-col items-center px-4 py-16">
@@ -137,7 +140,7 @@ const filteredSchemes = govSchemes.filter((scheme) =>
                     onClick={() => window.open(scheme.link, "_blank")}
                     className="mt-5 w-full py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90"
                     style={{
-                      backgroundColor: "rgba(255, 255, 255, 0.18)",
+                      backgroundColor: "rgba(41, 29, 149, 0.96)",
                       color: "white",
                       border: "1px solid rgba(255,255,255,0.4)",
                     }}>
