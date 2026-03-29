@@ -20,6 +20,7 @@ import GovSchemes from "./pages/GovSchemes";
 import AdminPortal from "./pages/AdminPortal";
 import NotFound from "./pages/NotFound";
 import MarketInsights from "./pages/MarketInsights";
+import ProfilePage from "./pages/ProfilePage"; // ✅ New
 
 const queryClient = new QueryClient();
 
@@ -32,25 +33,26 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
-            <Navbar />
-            <main>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/marketplace" element={<Marketplace />} />
-                <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
-                <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
-                <Route path="/advisory" element={<CropAdvisory />} />
-                <Route path="/msp-calculator" element={<MspCalculator />} />
-                <Route path="/schemes" element={<GovSchemes />} />
-                <Route path="/admin" element={<AdminPortal />} />
-                <Route path="/market-insights" element={<MarketInsights />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-            <BackToTop />
-          </BrowserRouter>
+              <Navbar />
+              <main>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
+                  <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
+                  <Route path="/advisory" element={<CropAdvisory />} />
+                  <Route path="/msp-calculator" element={<MspCalculator />} />
+                  <Route path="/schemes" element={<GovSchemes />} />
+                  <Route path="/admin" element={<AdminPortal />} />
+                  <Route path="/market-insights" element={<MarketInsights />} />
+                  <Route path="/profile" element={<ProfilePage />} /> {/* ✅ New */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+              <BackToTop />
+            </BrowserRouter>
           </LanguageProvider>
         </MarketProvider>
       </AuthProvider>

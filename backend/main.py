@@ -225,6 +225,52 @@ def get_profile(email: str):
     return {"role": role}
 
 
+# ✅ Profile update API
+class ProfileUpdateModel(BaseModel):
+    email: str
+    role: str
+    phone: Optional[str] = None
+    state: Optional[str] = None
+    district: Optional[str] = None
+    land_size: Optional[str] = None
+    has_land: Optional[bool] = True
+    city: Optional[str] = None
+    business_type: Optional[str] = None
+    company_name: Optional[str] = None
+    gst_number: Optional[str] = None
+
+@app.put("/profile/update")
+def update_profile(data: ProfileUpdateModel):
+    if data.role == "farmer":
+        cursor.execute("""
+            INSERT OR REPLACE INTO farmer_profiles
+            (email, phone, state, district, land_size, has_land)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (data.email, data.phone, data.state, data.district,
+              data.land_size, 1 if data.has_land else 0))
+    elif data.role == "buyer":
+        cursor.execute("""
+            INSERT OR REPLACE INTO buyer_profiles
+            (email, phone, city, state, business_type, company_name, gst_number)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (data.email, data.phone, data.city, data.state,
+              data.business_type, data.company_name, data.gst_number))
+    conn.commit()
+    return {"status": "updated"}
+
+
+# ✅ Delete account API
+@app.delete("/user/{email}")
+def delete_user(email: str):
+    cursor.execute("DELETE FROM farmer_profiles WHERE email = ?", (email,))
+    cursor.execute("DELETE FROM buyer_profiles WHERE email = ?", (email,))
+    cursor.execute("DELETE FROM bids WHERE buyer_email = ?", (email,))
+    cursor.execute("DELETE FROM farmers WHERE farmer_email = ?", (email,))
+    cursor.execute("DELETE FROM users WHERE email = ?", (email,))
+    conn.commit()
+    return {"status": "deleted"}
+
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # 🌾 CROP LISTINGS
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
