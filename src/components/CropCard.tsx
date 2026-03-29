@@ -58,14 +58,21 @@ const CropCard = ({ listing, onBid, showBid = true, transparent = false }: CropC
          <div className="pt-2 space-y-2"
   style={{borderTop: transparent ? "1px solid rgba(255,255,255,0.2)" : "1px solid #e5e7eb"}}>
             <div className="flex gap-2">
-              <input
-                type="number"
-                placeholder={t("card_yourBidPlaceholder")}
-                value={bidAmount}
-                onChange={(e) => setBidAmount(e.target.value)}
-                className="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none text-white placeholder-white/40"
-style={{backgroundColor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)"}}
-              />
+          <input
+        
+  type="number"
+  min="0"
+  placeholder={t("card_yourBidPlaceholder")}
+  value={bidAmount}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (Number(value) >= 0 || value === "") {
+      setBidAmount(value);
+    }
+  }}
+  className="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none text-black placeholder-gray-500"
+  style={{ backgroundColor: "white", border: "1px solid #d1d5db" }}
+/>
               <button
                 onClick={() => {
                   const amt = parseFloat(bidAmount);
