@@ -70,9 +70,10 @@ const Navbar = () => {
         {/* Desktop Right */}
         <div className="hidden lg:flex items-center gap-3">
           <select value={lang} onChange={(e) => setLang(e.target.value as any)}
-            className="border px-1 rounded text-sm">
-            <option value="en">EN</option>
-            <option value="hi">हिं</option>
+          className="border px-1 rounded text-sm">
+          <option value="en">EN</option>
+          <option value="hi">हिं</option>
+          <option value="pa">ਪੰਜਾਬੀ</option>
           </select>
 
           {user ? (
@@ -149,6 +150,7 @@ const Navbar = () => {
                     className="w-full mt-2 border px-1 rounded">
                     <option value="en">EN</option>
                     <option value="hi">हिं</option>
+                    <option value="pa">ਪੰਜਾਬੀ</option>
                   </select>
                 </div>
               ) : (
@@ -157,11 +159,12 @@ const Navbar = () => {
                     className="block px-3 py-2.5 rounded-md text-sm font-medium bg-primary text-primary-foreground text-center">
                     {t("loginSignup")}
                   </Link>
-                  <select value={lang} onChange={(e) => { setLang(e.target.value as any); setMobileOpen(false); }}
-                    className="w-full mt-2 border px-1 rounded">
-                    <option value="en">EN</option>
-                    <option value="hi">हिं</option>
-                  </select>
+                  <select value={lang} onChange={(e) => setLang(e.target.value as any)}
+                    className="border px-1 rounded text-sm">
+                   <option value="en">EN</option>
+                   <option value="hi">हिं</option>
+                   <option value="pa">ਪੰਜਾਬੀ</option>
+                   </select>
                 </>
               )}
             </div>
