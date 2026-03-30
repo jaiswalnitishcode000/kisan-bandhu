@@ -8,12 +8,6 @@ const Footer = () => {
       
     <footer style={{background: "linear-gradient(135deg, #0c0c0c 0%, #2b2b2b 40%, #585858 70%, #626362 100%)"}}>
     
-      {/* Top wave */}
-      <div style={{lineHeight: 0}}>
-        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" style={{display: "block"}}>
-          <path d="M0,30 C360,60 1080,0 1440,30 L1440,0 L0,0 Z" fill="#f0fdf4"/>
-        </svg>
-      </div>
 
       <div className="container mx-auto px-4 pt-8 pb-6">
 
