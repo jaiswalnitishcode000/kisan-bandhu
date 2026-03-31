@@ -285,9 +285,9 @@ class FarmerModel(BaseModel):
 
 
 def get_bids_for_listing(listing_id):
-    cursor.execute("SELECT buyer_name, amount, status FROM bids WHERE listing_id = ?", (listing_id,))
+    cursor.execute("SELECT buyer_name, amount, status, buyer_email FROM bids WHERE listing_id = ?", (listing_id,))
     rows = cursor.fetchall()
-    return [{"buyerName": r[0], "amount": r[1], "status": r[2]} for r in rows]
+    return [{"buyerName": r[0], "amount": r[1], "status": r[2], "buyer_email": r[3]} for r in rows]
 
 
 @app.post("/add-farmer")
