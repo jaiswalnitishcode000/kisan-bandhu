@@ -74,6 +74,7 @@ const Navbar = () => {
           <option value="en">EN</option>
           <option value="hi">हिं</option>
           <option value="pa">ਪੰਜਾਬੀ</option>
+          <option value="gu">ગુજ</option>
           </select>
 
           {user ? (
@@ -151,6 +152,7 @@ const Navbar = () => {
                     <option value="en">EN</option>
                     <option value="hi">हिं</option>
                     <option value="pa">ਪੰਜਾਬੀ</option>
+                    <option value="gu">ગુજ</option>
                   </select>
                 </div>
               ) : (
@@ -164,6 +166,7 @@ const Navbar = () => {
                    <option value="en">EN</option>
                    <option value="hi">हिं</option>
                    <option value="pa">ਪੰਜਾਬੀ</option>
+                   <option value="gu">ગુજ</option>
                    </select>
                 </>
               )}
